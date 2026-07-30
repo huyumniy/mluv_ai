@@ -1,0 +1,121 @@
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-index-sticky);
+
+  background: color-mix(
+    in srgb,
+    var(--color-background) 88%,
+    transparent
+  );
+
+  border-block-end: 1px solid transparent;
+  backdrop-filter: blur(1rem);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-8);
+
+  inline-size: min(
+    calc(100% - (var(--page-padding-inline) * 2)),
+    var(--content-width-xl)
+  );
+
+  min-block-size: 5rem;
+  margin-inline: auto;
+}
+
+.logo {
+  color: var(--color-text-primary);
+
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.navigation a {
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.navigation a:hover {
+  color: var(--color-text-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.loginLink,
+.registerLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-block-size: 2.75rem;
+  padding-inline: var(--space-5);
+
+  border-radius: var(--radius-round);
+
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.loginLink {
+  color: var(--color-text-primary);
+}
+
+.registerLink {
+  color: var(--color-text-on-primary);
+  background: var(--color-primary);
+
+  transition:
+    background-color var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
+}
+
+.registerLink:hover {
+  color: var(--color-text-on-primary);
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+@media (width <= 56rem) {
+  .navigation {
+    display: none;
+  }
+
+  .container {
+    grid-template-columns: auto 1fr;
+  }
+
+  .actions {
+    justify-self: end;
+  }
+}
+
+@media (width <= 34rem) {
+  .loginLink {
+    display: none;
+  }
+
+  .registerLink {
+    min-block-size: 2.5rem;
+    padding-inline: var(--space-4);
+  }
+}

@@ -1,0 +1,201 @@
+:root {
+    /* Brand colors */
+    
+    --color-primary-100: #FFE5B9;
+    --color-primary-200: #ECB914;
+    --color-primary-300: #BD940E;
+    --color-primary-400: #917008;
+    --color-primary-500: #664F04;
+    --color-primary-600: #3F2F01;
+    --color-primary-700: #1B1300;
+
+    --color-secondary-100: #FFEFCE;
+    --color-secondary-200: #f7cc13;
+    --color-secondary-300: #c9a60e;
+    --color-secondary-400: #9D8108;
+    --color-secondary-500: #735e04;
+    --color-secondary-600: #4c3d02;
+    --color-secondary-700: #281f00;
+
+    --color-tertiary-100: #F6D579;
+    --color-tertiary-200: #caae5d;
+    --color-tertiary-300: #9f8947;
+    --color-tertiary-400: #766533;
+    --color-tertiary-500: #504420;
+    --color-tertiary-600: #2c250f;
+    --color-tertiary-700: #151005;
+
+    --color-quaternary-100: #ebe1d6;
+    --color-quaternary-200: #CBB8A0;
+    --color-quaternary-300: #a2927f;
+    --color-quaternary-400: #7a6e5f;
+    --color-quaternary-500: #554c41;
+    --color-quaternary-600: #322d25;
+    --color-quaternary-700: #13100d;
+
+    --color-quinary-100: #f5f0ee;
+    --color-quinary-200: #e2d0c9;
+    --color-quinary-300: #cca392;
+    --color-quinary-400: #a17f70;
+    --color-quinary-500: #775d52;
+    --color-quinary-600: #4F3D35;
+    --color-quinary-700: #2a201b;
+
+
+    /* Supporting colors */
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray: #bdbdbd;
+
+    /* Semantic colors */
+
+    --color-primary: #ECB914;
+    --color-secondary: #9D8108;
+    --color-tertiary: #F6D579;
+    --color-quaternary: #CBB8A0;
+    --color-quinary: #4F3D35;
+    --color-senary: #F6D579;
+    --color-septenary: #4F3D35;
+    --color-octonary: #4F3D35;
+    
+    --color-success: #86E384;
+    --color-error: #F1605B;
+    --color-info: #307DF5;
+
+    --color-background: #F8F1E7;
+    --color-background-secondary: #FEF9F4;
+
+    --color-text-primary: var(--color-quinary);
+    --color-text-secondary: #7B7B7B;
+    --color-text-muted: 
+    color-mix(
+        in srgb,
+        var(--color-quinary) 50%,
+        transparent
+    );
+
+    --color-focus-ring: var(--color-primary);
+    --color-border: color-mix(
+        in srgb,
+        var(--color-gray) 50%,
+    );
+    
+    --color-overlay: rgba(37 29 26 / 56%);
+    
+    /* Typography */
+
+    --font-family-body:
+        'Inter',
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    --font-family-heading:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    --font-family-monospace:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+    
+    --font-size-xs: 14px;
+    --font-size-sm: 18px;
+    --font-size-md: 24px;
+    --font-size-lg: 36px;
+    --font-size-xl: 48px;
+    --font-size-xxl: 64px;
+    --font-size-3xl: 96px;
+    --font-size-4xl: 128px;
+    --font-size-5xl: 160px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+
+    --line-height-tight: 1.1;
+    --line-height-heading: 1.25;
+    --line-height-body: 1.5;
+
+    --letter-spacing-tight: -0.03em;
+    --letter-spacing-normal: 0em;
+    --letter-spacing-wide: 0.08em;
+
+    --font-body-large: 20px;
+    --font-body-default: 16px;
+    --font-body-small: 14px;
+
+    /* Spacing */
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-14: 3.5rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-28: 7rem;
+    --space-32: 8rem;
+
+    /* Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-round: 999px;
+
+    /* Borders */
+
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+    --border-width-thick: 4px;
+
+    /* Layout */
+
+    --layout-container-height-xl: 64px;
+    --layout-container-width-xl: 96px;
+    --layout-container-height-lg: 48px;
+    --layout-container-width-lg: 72px;
+    --layout-container-height-md: 24px;
+    --layout-container-width-md: 48px;
+
+    /* Layering */
+
+    --z-index-dropdown: 100;
+    --z-index-sticky: 200;
+    --z-index-overlay: 300;
+    --z-index-modal: 400;
+    --z-index-toast: 500;
+}
+
+
+[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-background:#171410;
+    --color-background-secondary: var(--color-septenary);
+
+    --color-text-primary: var(--color-white);
+
+    --font-size-xs: 18px;
+    --font-size-md: 22px;
+    --font-size-lg: 28px;
+    --font-size-xl: 32px;
+    --font-size-xxl: 40px;
+    
+}

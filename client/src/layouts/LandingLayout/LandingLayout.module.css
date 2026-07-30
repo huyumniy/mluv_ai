@@ -1,0 +1,11 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+
+    min-block-size: 100dvh;
+}
+
+.main {
+    flex: 1;
+    min-inline-size: 0;
+}
