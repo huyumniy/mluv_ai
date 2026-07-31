@@ -1,7 +1,9 @@
-import React from 'react'
+import styles from "./LandingFooter.module.css"
 
 export function LandingFooter() {
   return (
-    <div>LandingFooter</div>
+    <div className={styles.footer}>
+      LandingFooter
+    </div>
   )
 }

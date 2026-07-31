@@ -10,6 +10,7 @@ export function Button({
     trailingIcon = null,
     disabled = false,
     loading = false,
+    className,
     ...buttonProps
 }: ButtonProps) {
     const isDisabled = disabled || loading;
@@ -20,6 +21,7 @@ export function Button({
                 styles.button,
                 styles[variant],
                 styles[size],
+                className,
             )}
             disabled={isDisabled}
             aria-busy={loading || undefined}

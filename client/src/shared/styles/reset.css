@@ -22,6 +22,8 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	text-decoration: none;
+
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -46,3 +48,11 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+/*
+Source - https://stackoverflow.com/a/18281117
+Posted by Itay, modified by community. See post 'Timeline' for change history
+Retrieved 2026-07-31, License - CC BY-SA 3.0
+*/
+
+a:link    { color: black; }
+a:visited { color: black; }

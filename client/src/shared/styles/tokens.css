@@ -111,7 +111,7 @@
     --font-size-md: 24px;
     --font-size-lg: 36px;
     --font-size-xl: 48px;
-    --font-size-xxl: 64px;
+    --font-size-2xl: 64px;
     --font-size-3xl: 96px;
     --font-size-4xl: 128px;
     --font-size-5xl: 160px;
@@ -130,33 +130,33 @@
     --letter-spacing-normal: 0em;
     --letter-spacing-wide: 0.08em;
 
-    --font-body-large: 20px;
-    --font-body-default: 16px;
-    --font-body-small: 14px;
+    --font-size-body-large: 20px;
+    --font-size-body-default: 16px;
+    --font-size-body-small: 14px;
 
     /* Spacing */
 
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.25rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --space-10: 2.5rem;
-    --space-12: 3rem;
-    --space-14: 3.5rem;
-    --space-16: 4rem;
-    --space-20: 5rem;
-    --space-24: 6rem;
-    --space-28: 7rem;
-    --space-32: 8rem;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-14: 56px;
+    --space-16: 64px;
+    --space-20: 80px;
+    --space-24: 96px;
+    --space-28: 112px;
+    --space-32: 128px;
 
     /* Radius */
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
     --radius-round: 999px;
 
     /* Borders */
@@ -167,12 +167,12 @@
 
     /* Layout */
 
-    --layout-container-height-xl: 64px;
-    --layout-container-width-xl: 96px;
-    --layout-container-height-lg: 48px;
-    --layout-container-width-lg: 72px;
-    --layout-container-height-md: 24px;
-    --layout-container-width-md: 48px;
+    --layout-xs: 16px;
+    --layout-sm: 24px;
+    --layout-md: 36px;
+    --layout-lg: 48px;
+    --layout-xl: 64px;
+    --layout-2xl: 96px;
 
     /* Layering */
 
@@ -181,6 +181,37 @@
     --z-index-overlay: 300;
     --z-index-modal: 400;
     --z-index-toast: 500;
+    --z-index-999: 999;
+}
+
+
+@media (width < 1200px) {
+  :root {
+    --font-size-xs: 18px;
+    --font-size-md: 22px;
+    --font-size-lg: 28px;
+    --font-size-xl: 32px;
+    --font-size-xxl: 40px;
+
+    --layout-xs: 18px;
+    --layout-sm: 22px;
+    --layout-md: 28px;
+    --layout-lg: 32px;
+    --layout-xl: 40px;
+    --layout-2xl: 64px;
+  }
+}
+
+@media (width < 576px) {
+  :root {
+
+    --layout-xs: 14px;
+    --layout-sm: 18px;
+    --layout-md: 22px;
+    --layout-lg: 28px;
+    --layout-xl: 32px;
+    --layout-2xl: 40px;
+  }
 }
 
 
@@ -190,12 +221,6 @@
     --color-background:#171410;
     --color-background-secondary: var(--color-septenary);
 
-    --color-text-primary: var(--color-white);
-
-    --font-size-xs: 18px;
-    --font-size-md: 22px;
-    --font-size-lg: 28px;
-    --font-size-xl: 32px;
-    --font-size-xxl: 40px;
-    
+    --color-text-primary: var(--color-white); 
 }
+

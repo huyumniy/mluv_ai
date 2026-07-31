@@ -1,0 +1,4 @@
+.footer {
+    min-inline-size: 0;
+    padding: var(--layout-md) var(--layout-xl);
+}
