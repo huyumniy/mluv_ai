@@ -79,6 +79,7 @@
     --color-border: color-mix(
         in srgb,
         var(--color-gray) 50%,
+        transparent
     );
     
     --color-overlay: rgba(37 29 26 / 56%);

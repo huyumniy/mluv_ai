@@ -1,0 +1,79 @@
+.audiobarCard {
+    --height: 80px;
+
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    background-color: var(--color-white);
+    border: solid var(--border-width-thin) var(--color-quaternary-100);
+    border-radius: var(--radius-lg);
+    padding: 0 var(--space-4);
+    width: fit-content;
+    height: var(--height);
+
+}
+
+
+.audioWave {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+
+  background: #cbb8a0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.audioWave::-webkit-slider-thumb {
+  appearance: none;
+
+  width: 16px;
+  height: 16px;
+
+  background: #ecb914;
+  border-radius: 50%;
+  cursor: grab;
+}
+
+
+.audioWave::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+
+  border: none;
+  background: #ecb914;
+  border-radius: 50%;
+  cursor: grab;
+}
+
+.iconButton {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.playIcon svg {
+    color: var(--color-septenary);
+    width: 50px;
+    height: 50px;
+}
+
+.muteIcon svg {
+    color: var(--color-septenary);
+    width: 35px;
+    height: 35px;
+}
+
+.trackDuration {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-1);
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    width: 100px;
+}

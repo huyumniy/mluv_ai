@@ -4,11 +4,13 @@ import { ArrowLongRightIcon } from "@/shared/assets/icons/ArrowLongRightIcon";
 import { Button } from "@/shared/ui/Button";
 import { PlayCircleIcon } from "@/shared/assets/icons/PlayCircleIcon";
 import { CheckCircleIcon } from "@/shared/assets/icons/CheckCircleIcon";
+import { ContinueLessonCard } from "@/entities/lesson/ui/ContinueLessonCard";
+import { restaurantLesson } from "@/entities/lesson/model";
 
 export function HeroSection() {
   return (
     <div className={styles.hero}>
-        <div className={styles.content}>
+        {/* <div className={styles.content}>
             <div className={styles.eyebrow}>
                 <MagicIcon/>
                 AI-Powered Audio Lessons
@@ -40,6 +42,12 @@ export function HeroSection() {
                     <CheckCircleIcon /> Structured lesson notes and rules
                 </div>
             </div>
+        </div> */}
+        <div className={styles.content}>
+            <ContinueLessonCard
+                lesson={restaurantLesson}
+                orientation="horizontal"
+            />
         </div>
     </div>
   )

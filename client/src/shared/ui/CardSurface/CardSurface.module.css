@@ -1,0 +1,22 @@
+.card {
+  color: var(--color-text-primary);
+  background: var(--color-white);
+  height:fit-content;
+  padding: var(--space-6);
+  border: var(--border-width-small) solid var(--color-gray);
+  border-radius: var(--radius-md);
+  gap: var(--space-1);
+  overflow: hidden;
+}
+
+.vertical {
+  min-inline-size: 500px;
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-block-size: 220px;
+  min-inline-size: 500px;
+}

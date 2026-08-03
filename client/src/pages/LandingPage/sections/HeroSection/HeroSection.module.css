@@ -14,7 +14,8 @@
 }
 
 .eyebrow {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-body-default);
+    height: 45px;
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -25,8 +26,8 @@
 }
 
 .eyebrow svg {
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
 }
 
 .title {

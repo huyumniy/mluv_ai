@@ -1,0 +1,55 @@
+
+.levelBadge {
+    --level-color: var(--color-text-primary);
+    --level-background: transparent;
+    --level-border-color: var(--color-gray);
+
+    min-inline-size: 45px;
+    block-size: 35px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--level-color);
+    background-color: var(--level-background);
+    border: solid 1px var(--level-border-color);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-body-default);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    
+    white-space: nowrap;
+    user-select: none;
+}
+
+.levelBadge[data-level="A1"] {
+  --level-color: #42C627;
+  --level-background: rgb(47 158 68 / 14%);
+  --level-border-color: #42C627;
+}
+
+.levelBadge[data-level="A2"] {
+  --level-color: #ECB914;
+  --level-background: rgb(236 185 20 / 14%);
+  --level-border-color: #ECB914;
+}
+
+.levelBadge[data-level="B1"] {
+  --level-color: #D03B36;
+  --level-background: rgb(217 119 6 / 14%);
+  --level-border-color: #D03B36;
+}
+
+.levelBadge[data-level="B2"] {
+  --level-color: #B436D0;
+  --level-background: rgb(124 58 237 / 14%);
+  --level-border-color: #B436D0;
+}
+
+.levelBadge[data-level="C1"] {
+  --level-color: #3676D0;
+  --level-background: rgb(37 99 235 / 14%);
+  --level-border-color: #3676D0;
+}
