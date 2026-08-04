@@ -1,0 +1,46 @@
+
+.statusTag {
+    --level-color: var(--color-text-primary);
+    --level-background: transparent;
+    --level-border-color: var(--color-gray);
+
+    min-inline-size: 45px;
+    block-size: 35px;
+    gap: var(--space-2);
+    padding: var(--space-2);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--level-color);
+    background-color: var(--level-background);
+    border: solid 1px var(--level-border-color);
+    border-radius: var(--radius-sm);
+    height: 24px;
+
+    font-size: var(--font-size-body-default);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    
+    white-space: nowrap;
+    user-select: none;
+    text-transform: capitalize;
+}
+
+.statusTag svg {
+  width: 24px;
+  height: 24px;
+}
+
+.statusTag[data-level="listened"] {
+  --level-color: #42C627;
+  --level-background: rgb(47 158 68 / 14%);
+  --level-border-color: #42C627;
+}
+
+.statusTag[data-level="continue"] {
+  --level-color: #ECB914;
+  --level-background: rgb(236 185 20 / 14%);
+  --level-border-color: #ECB914;
+}

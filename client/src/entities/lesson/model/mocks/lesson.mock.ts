@@ -3,69 +3,140 @@ import type {
   LessonSummary,
   TranscriptLine,
   VocabularyItem,
-} from "./lesson.types";
+} from "../lesson.types";
 import atTheRestaurantImage from "@/shared/assets/images/at-the-restaurant.png"
-
 export const lessonSummaries: LessonSummary[] = [
   {
     id: "lesson-restaurant-a2",
     title: "At the Restaurant",
+    description:
+      "Learn practical Czech phrases for ordering food, asking about the menu, speaking with waiters, and paying the bill.",
+
     level: "A2",
     topic: "Food and restaurants",
+
     durationMinutes: 18,
     phraseCount: 28,
-    imageSrc: atTheRestaurantImage,
     progress: 65,
+
+    imageSrc: atTheRestaurantImage,
+
+    availableFiles: ["mp3", "pdf"],
+
+    createdAt: "2026-07-12T10:30:00.000Z",
+    updatedAt: "2026-08-02T18:15:00.000Z",
+
+    status: "listened",
   },
   {
     id: "lesson-verb-constructions-a1",
     title: "Verb Constructions",
+    description:
+      "Practice common Czech verb constructions and learn how verbs combine with nouns, pronouns, and infinitives.",
+
     level: "A1",
     topic: "Grammar",
+
     durationMinutes: 16,
     phraseCount: 50,
-    imageSrc: "/images/lessons/verbs.png",
     progress: 20,
+
+    imageSrc: "/images/lessons/verbs.png",
+
+    availableFiles: ["mp3", "pdf"],
+
+    createdAt: "2026-07-15T09:00:00.000Z",
+    updatedAt: "2026-07-28T14:20:00.000Z",
+
+    status: "continue",
   },
   {
     id: "lesson-past-tense-a2",
     title: "Past Tense 1",
+    description:
+      "Learn the foundations of the Czech past tense, including auxiliary verbs, participles, and gender agreement.",
+
     level: "A2",
     topic: "Past tense",
+
     durationMinutes: 22,
     phraseCount: 35,
-    imageSrc: "/images/lessons/past-tense.png",
     progress: 0,
+
+    imageSrc: "/images/lessons/past-tense.png",
+
+    availableFiles: ["mp3", "pdf"],
+
+    createdAt: "2026-07-18T12:45:00.000Z",
+    updatedAt: "2026-07-18T12:45:00.000Z",
+
+    status: "not-started",
   },
   {
     id: "lesson-shopping-a1",
     title: "Shopping in Czech",
+    description:
+      "Learn how to ask about prices, sizes, payment methods, and product availability while shopping in Czech.",
+
     level: "A1",
     topic: "Shopping",
+
     durationMinutes: 14,
     phraseCount: 24,
-    imageSrc: "/images/lessons/shopping.png",
     progress: 100,
+
+    imageSrc: "/images/lessons/shopping.png",
+
+    availableFiles: ["mp3", "pdf"],
+
+    createdAt: "2026-06-25T16:00:00.000Z",
+    updatedAt: "2026-07-10T19:35:00.000Z",
+
+    status: "listened",
   },
   {
     id: "lesson-workplace-b1",
     title: "Conversations at Work",
+    description:
+      "Practice Czech conversations for meetings, workplace requests, instructions, problems, and communication with colleagues.",
+
     level: "B1",
     topic: "Work and communication",
+
     durationMinutes: 27,
     phraseCount: 42,
-    imageSrc: "/images/lessons/workplace.png",
     progress: 40,
+
+    imageSrc: "/images/lessons/workplace.png",
+
+    availableFiles: ["mp3"],
+
+    createdAt: "2026-07-22T08:10:00.000Z",
+    updatedAt: "2026-08-01T11:50:00.000Z",
+
+    status: "continue",
   },
   {
     id: "lesson-travel-b2",
     title: "Handling Travel Problems",
+    description:
+      "Learn how to explain travel problems, ask for assistance, report missing luggage, and handle delays in Czech.",
+
     level: "B2",
     topic: "Travel",
+
     durationMinutes: 31,
     phraseCount: 46,
-    imageSrc: "/images/lessons/travel.png",
     progress: 10,
+
+    imageSrc: "/images/lessons/travel.png",
+
+    availableFiles: ["mp3", "pdf"],
+
+    createdAt: "2026-07-30T13:25:00.000Z",
+    updatedAt: "2026-08-03T17:40:00.000Z",
+
+    status: "continue",
   },
 ];
 

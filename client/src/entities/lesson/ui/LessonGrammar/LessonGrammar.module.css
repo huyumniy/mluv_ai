@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-6);
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text-secondary);
+}

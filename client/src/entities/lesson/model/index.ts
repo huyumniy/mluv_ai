@@ -15,4 +15,12 @@ export {
   restaurantTranscript,
   verbConstructionsLesson,
   verbVocabulary,
-} from "./lesson.mock";
+} from "./mocks/lesson.mock";
+
+export {
+    lessonTabs,
+} from "./lessonTabs";
+
+export type {
+  LessonTab,
+} from "./lessonTabs";

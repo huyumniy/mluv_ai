@@ -1,0 +1,1 @@
+export { LessonVocabulary } from "./LessonVocabulary";

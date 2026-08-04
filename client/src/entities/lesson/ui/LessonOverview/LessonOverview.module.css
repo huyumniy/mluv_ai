@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-6);
+}
+
+.items {
+    width: 100%;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 4fr;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-text-secondary);
+}
+
+.value {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-gray);
+}
