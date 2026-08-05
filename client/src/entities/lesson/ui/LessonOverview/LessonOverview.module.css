@@ -32,3 +32,137 @@
     height: 24px;
     color: var(--color-gray);
 }
+
+.progressContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
+}
+
+.progress {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.progressCircle {
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    inline-size: fit-content;
+    block-size: fit-content;
+}
+
+.outer {
+  --progress: 0%;
+
+  display: grid;
+  place-items: center;
+
+  inline-size: 100px;
+  block-size: 100px;
+
+  border-radius: 50%;
+
+  background: conic-gradient(
+    from -90deg,
+    var(--color-primary) 0 var(--progress),
+    color-mix(
+      in srgb,
+      #E9DCC9 35%,
+      transparent
+    ) var(--progress) 100%
+  );
+
+}
+
+.inner {
+  display: grid;
+  place-items: center;
+
+  inline-size: 90px;
+  block-size: 90px;
+  
+
+  background-color: var(--color-white);
+  border-radius: 50%;
+}
+
+.number {
+  color: var(--color-text-primary);
+
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+}
+
+.progressInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  min-inline-size: 0;
+}
+
+.progressInfo strong {
+  color: var(--color-text-primary);
+}
+
+.progressInfo span {
+  color: var(--color-text-secondary);
+}
+
+.foldersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.folders {
+    display: flex;
+    gap: var(--space-6);
+}
+
+.folder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4) var(--space-6);
+}
+
+.folder svg {
+    width: 24px;
+    height: 24px;
+}
+
+.actionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.actions button {
+    padding: 0;
+}
+
+.actions svg {
+    width: 24px;
+    height: 24px;
+}
+
+.actions .share {
+    color: var(--color-text-secondary);
+}
+
+.actions .delete {
+    color: var(--color-error);
+}

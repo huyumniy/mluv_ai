@@ -18,6 +18,7 @@ export interface LessonSummary {
   createdAt: string;
   updatedAt: string;
   status: LessonStatus;
+  folderIds: string[];
 }
 
 export interface TranscriptLine {

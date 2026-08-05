@@ -27,6 +27,10 @@ export const lessonSummaries: LessonSummary[] = [
     updatedAt: "2026-08-02T18:15:00.000Z",
 
     status: "listened",
+    folderIds: [
+      "folder-grammar",
+      "folder-verbs",
+    ]
   },
   {
     id: "lesson-verb-constructions-a1",
@@ -49,6 +53,10 @@ export const lessonSummaries: LessonSummary[] = [
     updatedAt: "2026-07-28T14:20:00.000Z",
 
     status: "continue",
+    folderIds: [
+      "folder-grammar",
+      "folder-verbs",
+    ]
   },
   {
     id: "lesson-past-tense-a2",
@@ -71,6 +79,10 @@ export const lessonSummaries: LessonSummary[] = [
     updatedAt: "2026-07-18T12:45:00.000Z",
 
     status: "not-started",
+    folderIds: [
+      "folder-grammar",
+      "folder-verbs",
+    ]
   },
   {
     id: "lesson-shopping-a1",
@@ -93,6 +105,10 @@ export const lessonSummaries: LessonSummary[] = [
     updatedAt: "2026-07-10T19:35:00.000Z",
 
     status: "listened",
+    folderIds: [
+      "folder-grammar",
+      "folder-verbs",
+    ]
   },
   {
     id: "lesson-workplace-b1",
@@ -115,6 +131,10 @@ export const lessonSummaries: LessonSummary[] = [
     updatedAt: "2026-08-01T11:50:00.000Z",
 
     status: "continue",
+    folderIds: [
+      "folder-grammar",
+      "folder-verbs",
+    ]
   },
   {
     id: "lesson-travel-b2",
@@ -137,6 +157,10 @@ export const lessonSummaries: LessonSummary[] = [
     updatedAt: "2026-08-03T17:40:00.000Z",
 
     status: "continue",
+    folderIds: [
+      "folder-grammar",
+      "folder-verbs",
+    ]
   },
 ];
 

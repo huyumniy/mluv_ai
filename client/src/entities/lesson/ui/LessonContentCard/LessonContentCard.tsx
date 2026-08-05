@@ -22,7 +22,7 @@ export function LessonContentCard({
   vocabulary,
   transcript,
 }: LessonContentCardProps) {
-  const [activeTab, setActiveTab] = useState<LessonTab>("grammar");
+  const [activeTab, setActiveTab] = useState<LessonTab>("overview");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const contentInnerRef = useRef<HTMLDivElement>(null);
@@ -49,8 +49,8 @@ export function LessonContentCard({
 
   const renderContent = () => {
     switch (activeTab) {
-        case "overview":
-          return <LessonOverview lesson={lesson} />;
+      case "overview":
+        return <LessonOverview lesson={lesson} />;
 
       case "grammar":
         return <LessonGrammar content={grammar} />;

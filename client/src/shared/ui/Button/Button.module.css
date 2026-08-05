@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
-
+    inline-size: fit-content;
     max-inline-size: 100%;
 
     border: var(--border-width-medium) solid transparent;
@@ -84,24 +84,14 @@
 }
 
 .icon {
-    display: inline-grid;
-    place-items: center;
-
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
-
-    flex: none;
-}
-
-.icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
   flex: 0 0 auto;
 
-  inline-size: 50px;
-  block-size: 50px;
+  inline-size: fit-content;
+  block-size: fit-content;
 
   line-height: 0;
 }
