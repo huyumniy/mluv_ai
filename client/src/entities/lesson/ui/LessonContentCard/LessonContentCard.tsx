@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 
-import { CardSurface } from "@/shared/ui/CardSurface";
 import { Tabs } from "@/shared/ui/Tabs";
 
 import { lessonTabs, type LessonTab } from "../../model";
@@ -64,7 +63,7 @@ export function LessonContentCard({
   };
 
   return (
-    <CardSurface orientation="vertical" className={styles.card}>
+    <div>
       <Tabs<LessonTab>
         items={lessonTabs}
         value={activeTab}
@@ -84,6 +83,6 @@ export function LessonContentCard({
       >
         <div className={styles.contentInner} ref={contentInnerRef}>{renderContent()}</div>
       </div>
-    </CardSurface>
+    </div>
   );
 }

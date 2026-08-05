@@ -7,7 +7,7 @@
     max-inline-size: 100%;
 
     border: var(--border-width-medium) solid transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-lg);
 
     font-family: inherit;
     font-weight: var(--font-weight-medium);
@@ -90,17 +90,23 @@
 
   flex: 0 0 auto;
 
-  inline-size: fit-content;
-  block-size: fit-content;
+  inline-size: 50px;
+  block-size: 50px;
 
   line-height: 0;
 }
 
-.icon > svg {
+.icon > svg,
+.icon > img {
   display: block;
 
   inline-size: 100%;
   block-size: 100%;
+
+  max-inline-size: 100%;
+  max-block-size: 100%;
+
+  object-fit: contain;
 }
 
 @media (width < 1200px) {

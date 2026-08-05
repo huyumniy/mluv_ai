@@ -11,7 +11,13 @@
     border: solid var(--border-width-thin) var(--color-quaternary-100);
     border-radius: var(--radius-lg);
     padding: 0 var(--space-4);
-    width: fit-content;
+    align-self: stretch;
+
+    inline-size: 100%;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+
+    box-sizing: border-box;
     height: var(--height);
 
 }

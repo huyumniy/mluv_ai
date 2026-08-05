@@ -13,7 +13,6 @@ export function ContinueLessonCard({
   lesson,
   orientation = "horizontal",
   onContinue,
-  onPlay,
 }: ContinueLessonCardProps) {
   return (
     <CardSurface className={clsx(styles.card)} orientation={orientation}>

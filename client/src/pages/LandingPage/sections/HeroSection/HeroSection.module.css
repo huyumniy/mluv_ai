@@ -2,15 +2,26 @@
     display: flex;
     flex-direction: row;
     padding: var(--layout-xl) 0;
+    position: relative;
 
 }
 
 .content {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content:space-between;
     width: 800px;
     height: 650px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 800px;
+    height: fit-content;
 }
 
 .eyebrow {
@@ -72,6 +83,19 @@
     width: 24px;
     height: 24px;
     color: var(--color-secondary);
+}
+
+.headphones {
+    position: absolute;
+    z-index: 2;
+
+    inline-size: 350px;
+    block-size: 350px;
+    bottom: 0;
+    right: -100px;
+
+    object-fit: contain;
+    pointer-events: none;
 }
 
 

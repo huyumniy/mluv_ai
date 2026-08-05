@@ -1,6 +1,7 @@
 import type { LessonHeaderProps } from "./LessonHeader.types";
 
 import styles from "./LessonHeader.module.css";
+import { LevelBadge } from "@/shared/ui/LevelBadge";
 
 export function LessonHeader({
   lesson,
@@ -9,7 +10,8 @@ export function LessonHeader({
 }: LessonHeaderProps) {
   return (
     <header className={styles.header}>
-      {icon && (
+      <div className={styles.headerInner}>
+        {icon && (
         <div className={styles.icon}>
           {icon}
         </div>
@@ -21,18 +23,17 @@ export function LessonHeader({
             {lesson.title}
           </h3>
 
-          <span className={styles.level}>
-            {lesson.level}
-          </span>
+          <LevelBadge variant={lesson.level}>{lesson.level}</LevelBadge>
         </div>
 
-        <p className={styles.meta}>
+        <p className={styles.details}>
           {lesson.durationMinutes} min
 
-          <span aria-hidden="true">·</span>
+          <span aria-hidden="true"> · </span>
 
           {lesson.phraseCount} phrases
         </p>
+      </div>
       </div>
 
       {menuAction && (

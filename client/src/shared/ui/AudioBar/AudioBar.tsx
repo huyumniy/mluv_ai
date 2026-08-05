@@ -7,9 +7,9 @@ import { PauseCircleIcon } from "@/shared/assets/icons/PauseCircleIcon";
 import { SpeakerWaveIcon } from "@/shared/assets/icons/SpeakerWaveIcon";
 import { SpeakerWaveMutedIcon } from "@/shared/assets/icons/SpeakerWaveMutedIcon";
 
-import temp from "@/shared/assets/audios/temp.mp3"
+import temp from "@/shared/assets/audios/temp.mp3";
 
-export function AudioBar({ lesson }) {
+export function AudioBar({ lesson, className }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -52,7 +52,7 @@ export function AudioBar({ lesson }) {
   }
 
   return (
-    <div className={styles.audiobarCard}>
+    <div className={clsx(styles.audiobarCard, className)}>
       <button
         className={clsx(styles.iconButton, styles.playIcon)}
         onClick={handlePlay}
