@@ -5,6 +5,10 @@ import type {
   VocabularyItem,
 } from "../lesson.types";
 import atTheRestaurantImage from "@/shared/assets/images/at-the-restaurant.png"
+import spellCheckImage from "@/shared/assets/images/spell-check.png";
+import audio from "@/shared/assets/audios/lesson.mp3";
+import temp from "@/shared/assets/audios/temp.mp3";
+
 export const lessonSummaries: LessonSummary[] = [
   {
     id: "lesson-restaurant-a2",
@@ -20,6 +24,7 @@ export const lessonSummaries: LessonSummary[] = [
     progress: 65,
 
     imageSrc: atTheRestaurantImage,
+    audioSrc: temp,
 
     availableFiles: ["mp3", "pdf"],
 
@@ -33,25 +38,25 @@ export const lessonSummaries: LessonSummary[] = [
     ]
   },
   {
-    id: "lesson-verb-constructions-a1",
-    title: "Verb Constructions",
+    id: "lesson-hard-and-soft-adjectives-a2",
+    title: "Hard and Soft Adjectives",
     description:
       "Practice common Czech verb constructions and learn how verbs combine with nouns, pronouns, and infinitives.",
 
-    level: "A1",
+    level: "A2",
     topic: "Grammar",
 
     durationMinutes: 16,
     phraseCount: 50,
     progress: 20,
 
-    imageSrc: "/images/lessons/verbs.png",
+    imageSrc: spellCheckImage,
 
     availableFiles: ["mp3", "pdf"],
 
     createdAt: "2026-07-15T09:00:00.000Z",
     updatedAt: "2026-07-28T14:20:00.000Z",
-
+    audioSrc: audio,
     status: "continue",
     folderIds: [
       "folder-grammar",

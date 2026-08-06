@@ -6,10 +6,9 @@ import { PlayCircleIcon } from "@/shared/assets/icons/PlayCircleIcon";
 import { PauseCircleIcon } from "@/shared/assets/icons/PauseCircleIcon";
 import { SpeakerWaveIcon } from "@/shared/assets/icons/SpeakerWaveIcon";
 import { SpeakerWaveMutedIcon } from "@/shared/assets/icons/SpeakerWaveMutedIcon";
+import type { AudioBarProps } from "./AudioBar.types";
 
-import temp from "@/shared/assets/audios/temp.mp3";
-
-export function AudioBar({ lesson, className }) {
+export function AudioBar({ src, className }: AudioBarProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -70,7 +69,7 @@ export function AudioBar({ lesson, className }) {
       <div className={styles.audioContainer}>
         <audio
           ref={audioRef}
-          src={temp}
+          src={src}
           onLoadedMetadata={() => {
             setDuration(audioRef.current.duration);
           }}

@@ -5,6 +5,8 @@ import { Button } from "@/shared/ui/Button";
 import { PlayCircleIcon } from "@/shared/assets/icons/PlayCircleIcon";
 import { CheckCircleIcon } from "@/shared/assets/icons/CheckCircleIcon";
 import { LessonCard } from "@/entities/lesson/ui/LessonCard";
+import { reflexivePronounsGrammar, restaurantLesson, restaurantTranscript, verbVocabulary } from "@/entities/lesson/model";
+import RestaurantIcon from "@/shared/assets/icons/RestaurantIcon";
 
 export function HeroSection() {
   return (
@@ -48,7 +50,13 @@ export function HeroSection() {
       </div>
       <div className={styles.card}>
         <img className={styles.headphones} src="/images/headphones.png" alt="headphones" />
-        <LessonCard />
+        <LessonCard
+          headerIcon={<RestaurantIcon />}
+          lesson={restaurantLesson}
+          grammar={reflexivePronounsGrammar}
+          vocabulary={verbVocabulary}
+          transcript={restaurantTranscript}
+        />
       </div>
     </div>
   );

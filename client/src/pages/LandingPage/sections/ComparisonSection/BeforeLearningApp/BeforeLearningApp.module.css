@@ -136,6 +136,7 @@
     aspect-ratio: 1/1;
     border-radius: var(--radius-lg);
     background: #D8D8D8;
+    cursor: pointer;
 }
 
 .wordInfo {

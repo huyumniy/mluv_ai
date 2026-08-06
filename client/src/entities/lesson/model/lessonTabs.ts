@@ -4,7 +4,8 @@ export type LessonTab =
   | "overview"
   | "grammar"
   | "vocabulary"
-  | "transcript";
+  | "transcript"
+  | "custom"
 
 export const lessonTabs = [
   {

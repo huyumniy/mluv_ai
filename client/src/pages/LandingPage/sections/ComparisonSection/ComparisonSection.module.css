@@ -24,3 +24,24 @@
     gap: 50px;
     align-self: stretch;
 }
+
+.magicCircle {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    aspect-ratio: 1/1;
+    border-radius: 100px;
+    background: #ECB914;
+}
+
+@media (width <= 992px) {
+    .comparison {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -12,7 +12,7 @@ export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <mask
-        id="mask0_360_6213"
+        id="mask0_28_602"
         style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x={0}
@@ -20,22 +20,22 @@ export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
         width={50}
         height={50}
       >
-        <rect width={50} height={50} fill="url(#pattern0_360_6213)" />
+        <rect width={50} height={50} fill="url(#pattern0_28_602)" />
       </mask>
-      <g mask="url(#mask0_360_6213)">
-        <rect width={50} height={50} fill="#ECB914" />
+      <g mask="url(#mask0_28_602)">
+        <rect width={50} height={50} fill="#4F3D35" />
       </g>
       <defs>
         <pattern
-          id="pattern0_360_6213"
+          id="pattern0_28_602"
           patternContentUnits="objectBoundingBox"
           width={1}
           height={1}
         >
-          <use xlinkHref="#image0_360_6213" transform="scale(0.00195312)" />
+          <use xlinkHref="#image0_28_602" transform="scale(0.00195312)" />
         </pattern>
         <image
-          id="image0_360_6213"
+          id="image0_28_602"
           width={512}
           height={512}
           preserveAspectRatio="none"

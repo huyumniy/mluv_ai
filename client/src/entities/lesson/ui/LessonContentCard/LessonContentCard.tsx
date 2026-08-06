@@ -1,30 +1,117 @@
-import { useState, useRef } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
+import clsx from "clsx";
 
 import { Tabs } from "@/shared/ui/Tabs";
+import { useOverflow } from "@/shared/hooks/useOverflow";
 
-import { lessonTabs, type LessonTab } from "../../model";
+import {
+  lessonTabs,
+  type LessonTab,
+} from "../../model";
 
 import { LessonGrammar } from "../LessonGrammar";
 import { LessonOverview } from "../LessonOverview";
 import { LessonTranscript } from "../LessonTranscript";
 import { LessonVocabulary } from "../LessonVocabulary";
 
-import { useOverflow } from "@/shared/hooks/useOverflow";
-import type { LessonContentCardProps } from "./LessonContentCard.types";
+import type {
+  CustomLessonTab,
+  LessonContentCardProps,
+} from "./LessonContentCard.types";
 
 import styles from "./LessonContentCard.module.css";
-import clsx from "clsx";
+
+type LessonContentTabId =
+  | LessonTab
+  | `custom:${string}`;
+
+interface AvailableTab {
+  value: LessonContentTabId;
+  label: string;
+}
+
+function getCustomTabId(
+  tab: CustomLessonTab,
+): `custom:${string}` {
+  return `custom:${tab.id}`;
+}
 
 export function LessonContentCard({
   lesson,
   grammar,
   vocabulary,
   transcript,
+  customTabs = [],
 }: LessonContentCardProps) {
-  const [activeTab, setActiveTab] = useState<LessonTab>("overview");
-  const contentRef = useRef<HTMLDivElement>(null);
+  const availableTabs = useMemo<
+    AvailableTab[]
+  >(() => {
+    const builtInTabs = lessonTabs.filter(
+      (tab) => {
+        switch (tab.value) {
+          case "overview":
+            return Boolean(lesson);
 
-  const contentInnerRef = useRef<HTMLDivElement>(null);
+          case "grammar":
+            return Boolean(grammar);
+
+          case "vocabulary":
+            return Boolean(
+              vocabulary?.length,
+            );
+
+          case "transcript":
+            return Boolean(
+              transcript?.length,
+            );
+
+          default:
+            return false;
+        }
+      },
+    );
+
+    const additionalTabs = customTabs.map(
+      (tab) => ({
+        value: getCustomTabId(tab),
+        label: tab.label,
+      }),
+    );
+
+    return [
+      ...builtInTabs,
+      ...additionalTabs,
+    ];
+  }, [
+    lesson,
+    grammar,
+    vocabulary,
+    transcript,
+    customTabs,
+  ]);
+
+  const firstAvailableTab =
+    availableTabs[0]?.value;
+
+  const [activeTab, setActiveTab] =
+    useState<LessonContentTabId>(
+      firstAvailableTab ?? "overview",
+    );
+
+  const [isExpanded, setIsExpanded] =
+    useState(false);
+
+  const contentRef =
+    useRef<HTMLDivElement>(null);
+
+  const contentInnerRef =
+    useRef<HTMLDivElement>(null);
 
   const hasOverflow = useOverflow({
     containerRef: contentRef,
@@ -32,40 +119,105 @@ export function LessonContentCard({
     dependency: activeTab,
   });
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  useEffect(() => {
+    const activeTabExists =
+      availableTabs.some(
+        (tab) => tab.value === activeTab,
+      );
+
+    if (
+      !activeTabExists &&
+      firstAvailableTab
+    ) {
+      setActiveTab(firstAvailableTab);
+      setIsExpanded(false);
+    }
+  }, [
+    activeTab,
+    availableTabs,
+    firstAvailableTab,
+  ]);
+
   const handleTabChange = (
-    nextTab: LessonTab,
+    nextTab: LessonContentTabId,
   ) => {
     setActiveTab(nextTab);
     setIsExpanded(false);
   };
 
   const handleContentClick = () => {
-    if (hasOverflow) {
+    if (hasOverflow && !isExpanded) {
       setIsExpanded(true);
     }
   };
 
-  const renderContent = () => {
+  const renderBuiltInContent = () => {
     switch (activeTab) {
       case "overview":
-        return <LessonOverview lesson={lesson} />;
+        return lesson ? (
+          <LessonOverview lesson={lesson} />
+        ) : null;
 
       case "grammar":
-        return <LessonGrammar content={grammar} />;
+        return grammar ? (
+          <LessonGrammar content={grammar} />
+        ) : null;
 
       case "vocabulary":
-        return <LessonVocabulary items={vocabulary} />;
+        return vocabulary?.length ? (
+          <LessonVocabulary
+            items={vocabulary}
+          />
+        ) : null;
 
       case "transcript":
-        return <LessonTranscript lines={transcript} />;
+        return transcript?.length ? (
+          <LessonTranscript
+            lines={transcript}
+          />
+        ) : null;
+
+      default:
+        return null;
     }
   };
 
+  const renderCustomContent = () => {
+    if (
+      !activeTab.startsWith("custom:")
+    ) {
+      return null;
+    }
+
+    const customTabId = activeTab.slice(
+      "custom:".length,
+    );
+
+    const customTab = customTabs.find(
+      (tab) => tab.id === customTabId,
+    );
+
+    return customTab?.content ?? null;
+  };
+
+  const renderContent = () => {
+    if (
+      activeTab.startsWith("custom:")
+    ) {
+      return renderCustomContent();
+    }
+
+    return renderBuiltInContent();
+  };
+
+  if (!firstAvailableTab) {
+    return null;
+  }
+
   return (
-    <div>
-      <Tabs<LessonTab>
-        items={lessonTabs}
+    <section className={styles.card}>
+      <Tabs<LessonContentTabId>
+        items={availableTabs}
         value={activeTab}
         onValueChange={handleTabChange}
         ariaLabel="Lesson content"
@@ -75,14 +227,22 @@ export function LessonContentCard({
         ref={contentRef}
         className={clsx(
           styles.content,
-          hasOverflow && !isExpanded && styles.hasOverflow,
+          hasOverflow &&
+            !isExpanded &&
+            styles.hasOverflow,
+          isExpanded && styles.expanded,
         )}
         role="tabpanel"
-        onClick={handleContentClick}
         id={`lesson-panel-${activeTab}`}
+        onClick={handleContentClick}
       >
-        <div className={styles.contentInner} ref={contentInnerRef}>{renderContent()}</div>
+        <div
+          ref={contentInnerRef}
+          className={styles.contentInner}
+        >
+          {renderContent()}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

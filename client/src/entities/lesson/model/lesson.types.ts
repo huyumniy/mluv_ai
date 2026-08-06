@@ -15,6 +15,7 @@ export interface LessonSummary {
   progress: number;
   imageSrc?: string;
   availableFiles: LessonFileType[];
+  audioSrc?: string;
   createdAt: string;
   updatedAt: string;
   status: LessonStatus;

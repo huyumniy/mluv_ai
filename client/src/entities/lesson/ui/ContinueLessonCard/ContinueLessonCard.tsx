@@ -36,7 +36,7 @@ export function ContinueLessonCard({
             </div>
           </div>
           <div className={styles.controls}>
-            <AudioBar lesson={lesson} />
+            <AudioBar className={styles.audiobar} src={lesson.audioSrc} />
             <div className={styles.actionArea}>
               <Button
                 variant="primary"

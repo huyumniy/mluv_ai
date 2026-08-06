@@ -99,6 +99,12 @@
 }
 
 
-@media (width <= 1200px) {
+@media (width <= 1400px) {
+    .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-6);
 
+    }
 }

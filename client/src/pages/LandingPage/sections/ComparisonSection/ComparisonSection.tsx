@@ -1,3 +1,4 @@
+import { SparkleIcon } from "@/shared/assets/icons/SparkleIcon";
 import BeforeLearningApp from "./BeforeLearningApp/BeforeLearningApp";
 import styles from "./ComparisonSection.module.css";
 import { MluvLearningApp } from "./MluvLearningApp";
@@ -15,6 +16,9 @@ export function ComparisonSection() {
         </header>  
       <div className={styles.comparison}>
         <BeforeLearningApp />
+        <div className={styles.magicCircle}>
+          <SparkleIcon />
+        </div>
         <MluvLearningApp />
       </div>
     </section>

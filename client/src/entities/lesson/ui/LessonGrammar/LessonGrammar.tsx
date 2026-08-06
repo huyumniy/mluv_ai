@@ -2,7 +2,7 @@ import type { GrammarContent } from "../../model"
 import styles from "./LessonGrammar.module.css";
 
 interface LessonGrammarProps {
-    content: GrammarContent;
+    content: GrammarContent ;
 }
 
 export function LessonGrammar({

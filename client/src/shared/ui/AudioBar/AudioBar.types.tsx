@@ -1,6 +1,5 @@
 import type {
   AudioHTMLAttributes,
-  CSSProperties,
 } from "react";
 
 export type AudioBarSize =
@@ -14,17 +13,9 @@ export interface AudioBarProps
     AudioHTMLAttributes<HTMLAudioElement>,
     "src"
   > {
-  src: string;
+  src: string | undefined;
 
   size?: AudioBarSize;
-  barCount?: number;
 
   className?: string;
-  style?: CSSProperties;
-
-  onPlayChange?: (isPlaying: boolean) => void;
-  onProgressChange?: (
-    currentTime: number,
-    duration: number,
-  ) => void;
 }
