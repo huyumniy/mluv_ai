@@ -1,0 +1,26 @@
+.section {
+    --before-color: #3B4431;
+    padding: var(--layout-2xl) 0;
+    position: relative;
+}
+
+.eyebrow {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-wide);
+    font-size: var(--font-size-body-default);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.comparison {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    align-self: stretch;
+}

@@ -15,7 +15,7 @@ import { LevelBadge } from "@/shared/ui/LevelBadge";
 import { Button } from "@/shared/ui/Button";
 import type { CSSProperties } from "react";
 import { getLessonFolders } from "@/shared/lib/getLessonFolders";
-import { lessonFolders } from "../../model/lesson-folder";
+import { lessonFolders } from "../../../folder/model/lesson-folder";
 import { ClosedFolderIcon } from "@/shared/assets/icons/ClosedFolderIcon";
 import { PlusIcon } from "@/shared/assets/icons/PlusIcon";
 import { ShareIcon } from "@/shared/assets/icons/ShareIcon";

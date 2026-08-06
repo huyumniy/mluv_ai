@@ -1,4 +1,4 @@
-import type { LessonFolder } from "@/entities/lesson/model/lesson-folder";
+import type { LessonFolder } from "@/entities/folder/model/lesson-folder";
 import type { LessonSummary } from "@/entities/lesson/model";
 
 export function getLessonFolders(
