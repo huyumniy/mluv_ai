@@ -16,7 +16,6 @@
     font-weight: var(--font-weight-bold);
 }
 
-
 .content {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -120,4 +119,15 @@
     opacity: 1;
     transform: scale(1);
   }
+}
+
+@media (width <= 992px) {
+    .content {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .feature {
+        height: 200px;
+    }
 }

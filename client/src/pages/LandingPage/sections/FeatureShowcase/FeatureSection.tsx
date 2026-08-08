@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "./FeatureSection.module.css";
 import ListenAndRepeat from "@/shared/assets/images/ListenAndRepeat.png";
 import SmartReview from "@/shared/assets/images/SmartReview.png";
@@ -6,6 +6,7 @@ import BuildYourLesson from "@/shared/assets/images/BuildYourLesson.png";
 
 export function FeatureSection() {
   const [activeFeatureIdx, setActiveFeatureIdx] = useState(0);
+  const previewRef = useRef<HTMLDivElement>(null);
 
   const features = [
     {
@@ -27,6 +28,20 @@ export function FeatureSection() {
       img: BuildYourLesson,
     },
   ];
+
+  const handleFeatureClick = (index: number) => {
+    setActiveFeatureIdx(index);
+
+    if (window.innerWidth <= 992) {
+      requestAnimationFrame(() => {
+        previewRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      });
+    }
+  };
+
   return (
     <div className={styles.section}>
       <header>
@@ -38,7 +53,7 @@ export function FeatureSection() {
         </div>
       </header>
       <div className={styles.content}>
-        <div className={styles.preview}>
+        <div className={styles.preview} ref={previewRef}>
           <img
             key={features[activeFeatureIdx].img}
             src={features[activeFeatureIdx].img}
@@ -48,12 +63,12 @@ export function FeatureSection() {
         <div className={styles.featuresList}>
           {features.map((feature, index) => (
             <div
-              onClick={() => setActiveFeatureIdx(index)}
+              onClick={() => handleFeatureClick(index)}
               data-active={activeFeatureIdx === index}
               key={index}
               className={styles.feature}
             >
-              <div className={styles.number}>{index}</div>
+              <div className={styles.number}>{index + 1}</div>
               <div className={styles.featureInfo}>
                 <div className={styles.title}>{feature.title}</div>
                 <div className={styles.description}>{feature.description}</div>
