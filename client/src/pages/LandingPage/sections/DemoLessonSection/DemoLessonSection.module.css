@@ -1,0 +1,258 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap");
+
+.section {
+    padding: var(--layout-2xl) 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.eyebrow {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-wide);
+    font-size: var(--font-size-body-default);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.description {
+    font-size: var(--font-size-md);
+    font-width: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: var(--space-8);
+  width: 100%;
+  align-items: stretch;
+}
+
+.info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
+    align-self: stretch;    
+    gap: var(--space-8);
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+    align-self: stretch;
+}
+
+.item {
+    display: flex;
+    inline-size: 100%;
+    block-size: 100px;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.icon {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    border-radius: 999px;
+    background: var(--color-primary-100);
+}
+
+.icon svg {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    fill: var(--color-primary);
+}
+
+.item .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.item .detailsTitle {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+}
+
+.item .detailsDescription {
+    align-self: stretch;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+}
+
+.preview {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-inline-size: 0;
+
+  padding-block: var(--space-16);
+}
+
+.preview img {
+  display: block;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+
+  max-width: 100%;
+  object-fit: contain;
+}
+.cta {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+}
+
+.demoHint {
+  position: absolute;
+
+  left: calc(100% + var(--space-4));
+  bottom: -10px;
+
+  width: 170px;
+  height: 100px;
+
+  pointer-events: none;
+}
+
+.demoLabel {
+  position: absolute;
+
+  top: 0;
+  left: 20px;
+
+  color: var(--color-text-secondary);
+
+  font-family: "Caveat", cursive;
+  font-size: var(--space-8);
+
+  white-space: nowrap;
+}
+
+.demoVector {
+  position: absolute;
+
+  left: -10px;
+  bottom: 0;
+}
+
+.ellipseLeft {
+  position: absolute;
+  z-index: 0;
+
+  inset-inline-start: -10%;
+  inset-block-start: 28%;
+
+  inline-size: 35%;
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 229, 185, 0.65);
+
+  filter: blur(18px);
+}
+
+.ellipseBottom {
+  position: absolute;
+  z-index: 0;
+
+  inset-inline-start: 30%;
+  inset-block-end: -5%;
+
+  inline-size: 55%;
+  aspect-ratio: 1.8 / 1;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 229, 185, 0.6);
+
+  filter: blur(20px);
+}
+
+.ellipseRight {
+  position: absolute;
+  z-index: 0;
+
+  inset-inline-end: -8%;
+  inset-block-start: 28%;
+
+  inline-size: 42%;
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 229, 185, 0.55);
+
+  filter: blur(20px);
+}
+
+.dots {
+  position: absolute;
+  z-index: 1;
+
+  inset-inline-end: -2%;
+  inset-block-end: 8%;
+
+  inline-size: 175px;
+  block-size: 175px;
+
+  background-image:
+    radial-gradient(
+      circle,
+      var(--color-primary) 3px,
+      transparent 3.5px
+    );
+
+  background-size: 18px 18px;
+
+  opacity: 0.9;
+
+  mask-image:
+    linear-gradient(
+      135deg,
+      transparent 55%,
+      black 90%,
+      black 100%
+    );
+}
+
+@media (width <= 992px) {
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+}

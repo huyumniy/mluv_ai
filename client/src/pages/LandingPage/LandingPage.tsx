@@ -1,5 +1,6 @@
 import styles from "./LandingPage.module.css"
 import { ComparisonSection } from "./sections/ComparisonSection"
+import { DemoLessonSection } from "./sections/DemoLessonSection"
 import { FeatureSection } from "./sections/FeatureShowcase"
 import { FeaturesStrip } from "./sections/FeaturesStrip"
 import { HeroSection } from "./sections/HeroSection"
@@ -13,6 +14,7 @@ export function LandingPage() {
       <ComparisonSection />
       <FeatureSection />
       <ProductFilm />
+      <DemoLessonSection />
     </main>
   )
 }
