@@ -4,6 +4,7 @@ import { DemoLessonSection } from "./sections/DemoLessonSection"
 import { FeatureSection } from "./sections/FeatureShowcase"
 import { FeaturesStrip } from "./sections/FeaturesStrip"
 import { HeroSection } from "./sections/HeroSection"
+import { PricingSection } from "./sections/PricingSection"
 import { ProductFilm } from "./sections/ProductFilm"
 
 export function LandingPage() {
@@ -15,6 +16,7 @@ export function LandingPage() {
       <FeatureSection />
       <ProductFilm />
       <DemoLessonSection />
+      <PricingSection />
     </main>
   )
 }

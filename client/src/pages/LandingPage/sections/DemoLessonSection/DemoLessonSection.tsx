@@ -24,6 +24,7 @@ export function DemoLessonSection() {
       icon: <MagicIcon />,
     },
   ];
+  
   return (
     <section className={styles.section}>
       <header>
