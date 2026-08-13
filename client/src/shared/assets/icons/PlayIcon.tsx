@@ -1,12 +1,20 @@
 import type { SVGProps } from "react";
 
-export function PlayIcon(props: SVGProps<SVGSVGElement>) {
+interface PlayIconProps
+  extends SVGProps<SVGSVGElement> {
+  fill?: string;
+}
+
+
+export function PlayIcon({
+  fill = "currentColor",
+  ...props
+}: PlayIconProps) {
   return (
     <svg
       width={50}
       height={50}
       viewBox="0 0 50 50"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
@@ -23,7 +31,7 @@ export function PlayIcon(props: SVGProps<SVGSVGElement>) {
         <rect width={50} height={50} fill="url(#pattern0_561_5901)" />
       </mask>
       <g mask="url(#mask0_561_5901)">
-        <rect width={50} height={50} fill="#ECB914" />
+        <rect width={50} height={50} fill={fill} />
       </g>
       <defs>
         <pattern

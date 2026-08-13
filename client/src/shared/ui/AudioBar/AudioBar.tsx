@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import clsx from "clsx";
 
 import styles from "./AudioBar.module.css";
