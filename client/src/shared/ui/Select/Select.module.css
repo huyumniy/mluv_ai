@@ -1,0 +1,169 @@
+.select {
+  position: relative;
+
+  display: inline-flex;
+
+  min-inline-size: 200px;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-3);
+
+  inline-size: 100%;
+
+  padding:
+    var(--space-3)
+    var(--space-4);
+
+  color: var(--color-text-primary);
+  background: var(--color-background);
+
+  border: 1px solid
+    var(--color-border);
+
+  border-radius:
+    var(--radius-md);
+
+  font: inherit;
+
+  cursor: pointer;
+}
+
+.selectedContent {
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-2);
+
+  min-inline-size: 0;
+}
+
+.chevron {
+  flex: 0 0 auto;
+
+  transition:
+    transform 150ms ease;
+}
+
+.chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  
+  z-index: 100;
+
+  inset-block-start:
+    calc(100% + var(--space-2));
+  inset-inline-start: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  inline-size: 100%;
+  min-inline-size: 200px;
+
+  padding: var(--space-2);
+
+  background:
+    var(--color-background);
+
+  border: 1px solid
+    var(--color-border);
+
+  border-radius:
+    var(--radius-md);
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.12);
+}
+
+.openUpward {
+  inset-block-start: auto;
+
+  inset-block-end:
+    calc(100% + var(--space-2));
+}
+
+.alignRight {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-3);
+
+  inline-size: 100%;
+
+  padding:
+    var(--space-3)
+    var(--space-4);
+
+  color: var(--color-text-primary);
+  background: transparent;
+
+  border: 0;
+
+  border-radius:
+    var(--radius-sm);
+
+  font: inherit;
+  text-align: start;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease;
+}
+
+.option:hover {
+  background:
+    var(--color-background-secondary);
+}
+
+.option[data-selected="true"] {
+  background:
+    var(--color-primary-100);
+}
+
+.option:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 20px;
+
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.label {
+  flex: 1;
+
+  min-inline-size: 0;
+}
+
+.check {
+  flex: 0 0 auto;
+
+  color: var(--color-primary);
+}

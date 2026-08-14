@@ -1,4 +1,122 @@
 .footer {
     min-inline-size: 0;
     padding: var(--layout-md) var(--layout-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    align-self: stretch;
+    border-radius: 50px 50px 0 0;
+    border: 2px solid var(--color-border);
+    background: var(--color-background-secondary);
+}
+
+.main {
+    display: flex;
+    align-items: flex-start;
+    flex-shrink: 0;
+    align-self: stretch;
+    flex-wrap: wrap;
+
+}
+
+.brand {
+    display: flex;
+    min-inline-size: 500px;
+    max-inline-size: 700px;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    align-self: stretch;
+}
+
+.brand img {
+    width: 114px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.text .title {
+    color: var(--color-text);
+    text-align: center;
+    font-size: var(--font-size-lg);
+    font-style: normal;
+    font-weight: var(--font-weight-bold);
+    line-height: 50px;
+}
+
+.text .description {
+    color: var(--color-text-secondary);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-style: normal;
+    font-weight: var(--font-weight-regular);
+    line-height: 50px;
+}
+
+.linksContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    align-self: stretch;
+    flex-wrap: wrap;
+}
+
+.links {
+    display: flex;
+    padding: var(--space-12);
+    flex-direction: column;
+    gap: var(--space-6);
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.links a {
+    color: var(--color-text-secondary);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.dividerContainer {
+    display: flex;
+    padding: 0 var(--space-12);
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    align-self: stretch;
+}
+
+.divider {
+    height: 2px;
+    border-radius: var(--radius-lg);
+    flex: 1 0 0;
+    background-color: var(--color-primary);
+}
+
+.rights {
+    display: flex;
+    color: var(--color-text-secondary);
+    padding: var(--space-12) var(--space-8);
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+
+@media (width <= 1200px) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
 }

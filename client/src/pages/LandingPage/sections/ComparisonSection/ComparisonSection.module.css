@@ -39,7 +39,7 @@
     background: #ECB914;
 }
 
-@media (width <= 992px) {
+@media (width <= 1200px) {
     .comparison {
         display: flex;
         flex-direction: column;
