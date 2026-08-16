@@ -89,6 +89,6 @@
 
 @media (width <= 1400px) {
     .accordions {
-        inline-size: 700px;
+        inline-size: 100%
     }
 }

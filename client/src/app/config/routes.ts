@@ -1,6 +1,11 @@
 export const routes = {
     landing: "/",
 
+    features: "/#features",
+    howItWorks: "/#how-it-works",
+    pricing: "/#pricing",
+    faq: "/#faq",
+
     login: "/login",
     register: "/register",
 

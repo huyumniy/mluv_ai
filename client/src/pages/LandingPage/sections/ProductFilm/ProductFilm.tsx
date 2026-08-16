@@ -2,7 +2,7 @@ import styles from "./ProductFilm.module.css";
 
 export function ProductFilm() {
   return (
-    <section className={styles.section}>
+    <section id="product-film" className={styles.section}>
       <header>
         <div className={styles.eyebrow}>SEE IT IN MOTION</div>
         <div className={styles.innerContainer}>

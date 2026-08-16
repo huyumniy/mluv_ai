@@ -26,7 +26,7 @@ export function DemoLessonSection() {
   ];
   
   return (
-    <section className={styles.section}>
+    <section id="how-it-works" className={styles.section}>
       <header>
         <div className={styles.eyebrow}>TRY A REAL LESSON</div>
         <div className={styles.title}>

@@ -28,7 +28,7 @@ export function PricingSection() {
   };
 
   return (
-    <section className={styles.section}>
+    <section id="pricing" className={styles.section}>
       <header>
         <div className={styles.eyebrow}>PRICING</div>
         <div className={styles.title}>

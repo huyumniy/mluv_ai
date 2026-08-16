@@ -33,7 +33,7 @@ export function FAQSection() {
   ];
 
   return (
-    <section className={styles.section}>
+    <section id="faq" className={styles.section}>
       <header>
         <div className={styles.eyebrow}>FAQ</div>
         <div className={styles.title}>

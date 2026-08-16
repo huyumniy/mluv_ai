@@ -32,7 +32,7 @@ export function FeaturesStrip() {
   ]
 
   return (
-    <div className={styles.container}>
+    <div id='features-strip' className={styles.container}>
         <div className={styles.block}>
             {items.map((item) => (
                 <div className={styles.item} key={item.label}>

@@ -5,7 +5,7 @@ import { MluvLearningApp } from "./MluvLearningApp";
 
 export function ComparisonSection() {
   return (
-    <section className={styles.section}>
+    <section id="comparison" className={styles.section}>
       <header>
         <div className={styles.eyebrow}>REAL-LIFE PRACTICE</div>
             <div className={styles.title}>

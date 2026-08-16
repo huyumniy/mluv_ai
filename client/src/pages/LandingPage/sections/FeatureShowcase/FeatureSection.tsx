@@ -43,7 +43,7 @@ export function FeatureSection() {
   };
 
   return (
-    <div className={styles.section}>
+    <section id="features" className={styles.section}>
       <header>
         <div className={styles.eyebrow}>WHY IT STICKS</div>
         <div className={styles.title}>
@@ -77,6 +77,6 @@ export function FeatureSection() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

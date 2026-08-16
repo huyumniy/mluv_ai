@@ -10,7 +10,7 @@ import RestaurantIcon from "@/shared/assets/icons/RestaurantIcon";
 
 export function HeroSection() {
   return (
-    <div className={styles.hero}>
+    <section id="hero-section" className={styles.hero}>
       <div className={styles.content}>
         <div className={styles.eyebrow}>
           <MagicIcon />
@@ -58,6 +58,6 @@ export function HeroSection() {
           transcript={restaurantTranscript}
         />
       </div>
-    </div>
+    </section>
   );
 }

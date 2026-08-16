@@ -188,14 +188,16 @@ hr {
     transparent
   );
 }
+/* 
+html {
+  overflow-x: hidden;
+} */
 
 dialog::backdrop {
   background: var(--color-overlay);
   backdrop-filter: blur(0.25rem);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+section[id] {
+  scroll-margin-block-start: 100px;
 }
