@@ -7,7 +7,7 @@
     position: relative;
     display: flex;
 
-    inline-size: 372px;
+    min-inline-size: 332px;
     block-size: 680px;
 
     flex-direction: column;
@@ -20,7 +20,6 @@
 
 .header {
     display: flex;
-    block-size: 182px;
     padding: 10px 16px;
     flex-direction: column;
     align-items: center;
@@ -113,9 +112,9 @@
     justify-content: center;
     align-items: center;
     gap: var(--space-4);
-    position: absolute;
+    /* position: absolute;
     left: var(--space-8);
-    top: var(--space-24);
+    top: var(--space-24); */
     border-radius: var(--radius-lg);
     background: var(--card-background);
     box-shadow: 4px 4px 15px 0 rgba(0, 0, 0, 0.25);
@@ -163,9 +162,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    position: absolute;
-    left: var(--space-8);
-    top: 300px;
+    /* position: absolute; */
+    /* left: var(--space-8); */
+
     border-radius: var(--radius-lg);
     background: var(--card-background);
     box-shadow: 4px 4px 15px 0 rgba(0, 0, 0, 0.25);
@@ -201,56 +200,76 @@
 .activeOption button {
     background-color: rgba(134, 227, 132, 0.2)
 }
-
 .footer {
     display: flex;
-    flex-direction: row;
-    block-size: 40px;
-    padding: var(--space-2) var(--space-4);
-    align-items: start;
+    align-items: flex-start;
     gap: var(--space-2);
+
+    inline-size: 100%;
+    min-inline-size: 0;
+    block-size: 56px;
+
+    padding: var(--space-2) var(--space-4);
+
     flex-shrink: 0;
-    align-self: stretch;
+
+    box-sizing: border-box;
+
     background: var(--app-background);
 }
 
 .overallProgress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    flex: 1;
+    min-inline-size: 0;
+
     color: var(--app-color);
-    inline-size: fit-content;
+
     font-size: var(--font-size-body-small);
-    font-style: normal;
     font-weight: var(--font-weight-medium);
-    gap: var(--space-3);
 }
 
 .progressbar {
-    inline-size: 256px;
+    inline-size: 100%;
     block-size: 8px;
+
+    overflow: hidden;
+
     border-radius: 50px;
-    background: rgba(189, 189, 189, 0.50);
+
+    background: rgba(189, 189, 189, 0.5);
 }
 
 .progressbarInner {
-    inline-size: 163px;
-    block-size: 8px;
-    border-radius: 50px;
+    inline-size: 64%;
+    block-size: 100%;
+
+    border-radius: inherit;
+
     background: #7B876F;
 }
 
 .levelProgress {
     display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
     align-items: flex-end;
+
     gap: var(--space-1);
-    flex-shrink: 0;
-    align-self: stretch;
 }
 
 .level {
     font-size: var(--font-size-body-small);
     font-weight: var(--font-weight-bold);
+
+    white-space: nowrap;
 }
 
 .experience {
     font-size: 10px;
+
+    white-space: nowrap;
 }
