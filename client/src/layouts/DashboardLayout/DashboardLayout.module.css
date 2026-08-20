@@ -1,0 +1,13 @@
+.layout {
+    display: flex;
+    flex-direction: row;
+
+    min-block-size: 100dvh;
+    
+}
+
+.main {
+    flex: 1;
+    min-inline-size: 0;
+    padding: var(--layout-md) var(--layout-xl);
+}

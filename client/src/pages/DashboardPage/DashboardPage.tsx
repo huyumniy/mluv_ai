@@ -1,8 +1,9 @@
-import React from "react"
-import "./Dashboard.module.css"
+import styles from "./Dashboard.module.css"
 
 export function DashboardPage() {
   return (
-    <div>DashboardPage</div>
+    <div className={styles.container}>
+        
+    </div>
   )
 }

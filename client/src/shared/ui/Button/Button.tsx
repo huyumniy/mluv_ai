@@ -43,9 +43,9 @@ export function Button({
                 </span>
             )}
 
-            <span className={styles.label}>
+            {children && <span className={styles.label}>
                 {children}
-            </span>
+            </span> }
 
             {!loading && trailingIcon && (
                 <span

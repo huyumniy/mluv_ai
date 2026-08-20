@@ -17,6 +17,8 @@ import { LessonContentCard } from "../LessonContentCard";
 import { LessonHeader } from "../LessonHeader";
 
 import styles from "./LessonCard.module.css";
+import { DownloadIcon } from "@/shared/assets/icons/DownloadIcon";
+import { BookmarkIcon } from "@/shared/assets/icons/BookmarkIcon";
 
 interface LessonCardProps {
   lesson?: LessonSummary;
@@ -72,11 +74,11 @@ export function LessonCard({
           <hr className={styles.divider} />
 
           <div className={styles.actions}>
-            <Button size="lg" variant="secondary" onClick={onDownload}>
+            <Button leadingIcon={<DownloadIcon />} size="lg" variant="secondary" onClick={onDownload}>
               Download
             </Button>
 
-            <Button size="lg" variant="primary" onClick={onSave}>
+            <Button leadingIcon={<BookmarkIcon />} size="lg" variant="primary" onClick={onSave}>
               Save Lesson
             </Button>
           </div>
