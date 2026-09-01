@@ -13,10 +13,11 @@ export interface DropdownItem {
 }
 
 export interface DropdownProps {
-  trigger: ReactNode;
+  trigger?: ReactNode;
   items: DropdownItem[];
 
   align?: "left" | "right";
 
   className?: string;
+  defaultOpen?: boolean;
 }

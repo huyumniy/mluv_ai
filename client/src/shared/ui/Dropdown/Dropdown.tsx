@@ -12,8 +12,9 @@ export function Dropdown({
   items,
   align = "left",
   className,
+  defaultOpen = false,
 }: DropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -35,15 +36,17 @@ export function Dropdown({
 
   return (
     <div ref={dropdownRef} className={clsx(styles.dropdown, className)}>
-      <button
-        type="button"
-        className={styles.trigger}
-        onClick={() => setIsOpen((current) => !current)}
-        aria-expanded={isOpen}
-        aria-haspopup="menu"
-      >
-        {trigger}
-      </button>
+      {trigger && (
+        <button
+          type="button"
+          className={styles.trigger}
+          onClick={() => setIsOpen((current) => !current)}
+          aria-expanded={isOpen}
+          aria-haspopup="menu"
+        >
+          {trigger}
+        </button>
+      )}
 
       {isOpen && (
         <div

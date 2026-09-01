@@ -9,6 +9,7 @@ import { BookOpenedIcon } from "@/shared/assets/icons/BookOpenedIcon";
 import { SettingsIcon } from "@/shared/assets/icons/SettingsIcon";
 import { ArrowLeftIcon } from "@/shared/assets/icons/ArrowLeftIcon";
 import { ArrowRightIcon } from "@/shared/assets/icons/ArrowRightIcon";
+import clsx from "clsx";
 
 const pages = [
   {
@@ -33,18 +34,25 @@ const pages = [
   },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  className?: string;
+}
+
+export function Sidebar({ className }: SidebarProps) {
   const [isActivePage, setIsActivePage] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div data-active={isCollapsed} className={styles.sidebarWrapper}>
+    <div
+      data-active={isCollapsed}
+      className={clsx(styles.sidebarWrapper, className)}
+    >
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
           <img src="/images/logo.png" alt="logo" />
           <span className={styles.logoText}>mluv</span>
         </div>
-        <div className={styles.content}>
+        <nav className={styles.content}>
           {pages.map((page, idx) => (
             <Link to={page.link}>
               <Button
@@ -59,7 +67,7 @@ export function Sidebar() {
               </Button>
             </Link>
           ))}
-        </div>
+        </nav>
       </aside>
       <Button
         size="sm"

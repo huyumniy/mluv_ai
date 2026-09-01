@@ -1,0 +1,440 @@
+.bottombar {
+    position: fixed;
+    flex-direction: column;
+    gap: var(--space-4);
+    bottom: 0;
+    left: 0;
+    inline-size: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-background-secondary);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border: 2px solid var(--color-border);
+}
+
+.buttons {
+    padding: var(--layout-xs);
+
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pageButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    align-self: stretch;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+}
+
+.pageButton[data-active="true"] {
+    color: var(--color-primary);
+}
+
+.pageButton span svg {
+    width: 90px;
+    height: 90px;
+}
+
+.lessonPlayer {
+    display: flex;
+    padding: var(--space-6);
+    align-items: center;
+
+    gap: var(--space-2);
+    align-self: stretch;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border-bottom: var(--border-width-medium) solid var(--color-border);
+    background-color: var(--color-background-secondary);
+}
+
+.swipeHandle {
+    position: relative;
+
+    width: 100%;
+    height: 24px;
+
+    background: transparent;
+    border: none;
+    cursor: grab;
+}
+
+
+.swipeHandle::before {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 75px;
+    height: 4px;
+
+    border-radius: var(--radius-round);
+
+    background: var(--color-gray);
+}
+
+.bottombar {
+    transition: height 350ms cubic-bezier(.2,.8,.2,1);
+}
+
+.bottombar[data-expanded="true"] {
+    height: 100dvh;
+
+    .swipeHandle {
+        position: absolute;
+        top: 0;
+    }
+}
+
+.lessonInfo {
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.icon {
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1/1;
+    background-color: var(--color-primary);
+    display: flex;
+    padding: var(--space-2);
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-round);
+
+    img {
+        inline-size: 100%;
+        block-size: 100%;
+    }
+}
+
+.text {
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+}
+
+.title {
+    font-weight: var(--font-weight-semibold);
+}
+
+.audiobar.audiobar {
+    display: flex;
+    background-color: var(--color-background-secondary);
+    border: none;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+
+    .muteIcon{
+        display: none;
+    }
+}
+
+.audioWave {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+
+  background: #cbb8a0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.audioWave::-webkit-slider-thumb {
+  appearance: none;
+
+  width: 16px;
+  height: 16px;
+
+  background: #ecb914;
+  border-radius: 50%;
+  cursor: grab;
+}
+
+.expandedPlayer {
+    display: flex;
+    inline-size: 100%;
+    block-size: 100%;
+    flex-direction: column;
+    gap: var(--layout-md);
+    padding: var(--layout-2xl) var(--layout-lg);
+    block-size: 100dvh;
+    min-block-size: 0;
+}
+
+.cover {
+    inline-size: 100px;
+    block-size: 100px;
+}
+
+.nowPlaying {
+    display: flex;
+    flex-direction: row;
+    inline-size: 100%;
+    block-size: 120px;
+    gap: var(--space-8);
+}
+
+.lessonMeta {
+    display: flex;
+    flex-direction: column;
+    block-size: 120px;
+    justify-content: space-between;
+
+    .eyebrow {
+        font-size: 10px;
+        color: var(--color-text-primary);
+    }
+    .lessonTitle {
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+    }
+    .lessonTopic {
+        font-size: var(--font-size-body-small);
+        color: var(--color-text-secondary);
+    }
+}
+
+.quickActions {
+    display: flex;
+    gap: var(--space-2);
+
+    .quickActionButton {
+        display: flex;
+        flex-direction: row;
+        text-wrap: wrap;
+        background-color: var(--color-background);
+        border-radius: var(--radius-sm);
+        max-inline-size: 100px;
+        font-size: 12px;
+
+        span:first-child {
+            inline-size: 20px;
+            block-size: 20px;
+        }
+
+        .quickActionIcon {
+            inline-size: 100%;
+            block-size: 100%;
+        }
+    }
+}
+
+
+.audioWave::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+
+  border: none;
+  background: #ecb914;
+  border-radius: 50%;
+  cursor: grab;
+}
+
+.progressSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.progressTime {
+    display: flex;
+    flex-direction: row;
+    inline-size: 100%;
+    justify-content: space-between;
+    font-size: var(--font-size-body-default);
+    color: var(--color-text-secondary);
+}
+
+.playbackControls {
+    display: flex;
+    inline-size: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.iconButton {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.playIcon svg {
+    color: var(--color-septenary);
+    width: 50px;
+    height: 50px;
+}
+
+
+.trackDuration {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-1);
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+    width: 100px;
+}
+
+.additional {
+    font-size: var(--font-size-body-small);
+    color: var(--color-text-secondary);
+}
+
+.ternaryIcon svg {
+    width: 30px;
+    height: 30px;
+    color: var(--color-text-secondary);
+}
+
+
+.ternaryIcon[data-active="repeat-playlist"] svg,
+.ternaryIcon[data-active="repeat-lesson"] svg {
+    color: var(--color-primary);
+}
+
+.secondaryIcon svg {
+    width: 40px;
+    height: 40px;
+    color: var(--color-quinary);
+}
+
+.primaryIcon svg {
+    width: 100px;
+    height: 100px;
+    color: var(--color-primary);
+}
+
+.tabContent {
+  flex: 1;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.queue {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    inline-size: 100%;
+    flex: 1;
+    min-block-size: 0;
+    inline-size: 100%;
+
+    overflow-y: auto;
+
+    .queueItem {
+        position: inherit;
+        display: grid;
+        max-block-size: 100px;
+        grid-template-columns: 0.5fr 4fr 1fr;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-lg);
+        gap: var(--space-8);
+        inline-size: 100%;
+        cursor: pointer;
+    }
+
+    .queueItem[data-active="true"] {
+        background-color: var(--color-primary-100);
+    }
+
+    .queueImage {
+        inline-size: 60px;
+        block-size: 60px;
+    }
+
+    .queueMeta {
+        display: flex;
+        flex-direction: column;
+
+        .queueTitle {
+            font-size: var(--font-size-body-default);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-primary);
+        }
+        .queueTopic {
+            font-size: var(--font-size-body-small);
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-regular);
+        }
+    }
+
+    .queueMoreButton {
+        position: relative;
+        inline-size: 50px;
+        block-size: 100%;
+        
+        svg {
+            inline-size: 100%;
+            block-size: 100%;
+            color: var(--color-quinary);
+        }
+    }
+
+    
+}
+
+.dropdown.dropdown {
+    display: flex;
+    position: absolute;
+    right: 45px;
+    bottom: 45px;
+    font-size: var(--font-size-body-default);
+    z-index: 999;
+}
+
+.info {
+    inline-size: 100%;
+    flex: 1;
+    min-block-size: 0;
+    inline-size: 100%;
+
+    overflow-y: auto;
+
+}
+
+@media (width <= 420px) {
+    .nowPlaying {
+        img {
+            inline-size: 74px;
+            block-size: 74px;
+        }
+    }
+    .playbackControls {
+        button {
+            padding: 0;
+        }
+        .ternaryIcon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--color-text-secondary);
+        }
+
+        .secondaryIcon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--color-quinary);
+        }
+
+        .primaryIcon svg {
+            width: 74px;
+            height: 74px;
+            color: var(--color-primary);
+        }
+    }
+}

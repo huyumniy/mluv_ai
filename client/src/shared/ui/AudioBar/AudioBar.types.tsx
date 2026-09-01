@@ -1,6 +1,4 @@
-import type {
-  AudioHTMLAttributes,
-} from "react";
+import type { LessonSummary } from "@/entities/lesson/model";
 
 export type AudioBarSize =
   | "big"
@@ -8,12 +6,8 @@ export type AudioBarSize =
   | "table"
   | "mobile";
 
-export interface AudioBarProps
-  extends Omit<
-    AudioHTMLAttributes<HTMLAudioElement>,
-    "src"
-  > {
-  src: string | undefined;
+export interface AudioBarProps {
+  lesson: LessonSummary;
 
   size?: AudioBarSize;
 

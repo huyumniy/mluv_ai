@@ -58,7 +58,7 @@ export function LessonCard({
       {lesson && <LessonHeader lesson={lesson} icon={headerIcon} />}
 
       {lesson && showAudioBar && (
-        <AudioBar src={lesson.audioSrc} className={styles.audioBar} />
+        <AudioBar lesson={lesson} className={styles.audioBar} />
       )}
 
       <LessonContentCard

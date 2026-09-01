@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lesson {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lessonActions {
+  display: flex;
+  gap: 8px;
+}
+
+.audiobar {
+  width: 100%;
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 16px;
+
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+.queueItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px;
+}
+
+.queueItem[data-active="true"] {
+  font-weight: 700;
+}

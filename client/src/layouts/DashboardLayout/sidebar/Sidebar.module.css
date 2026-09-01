@@ -1,7 +1,7 @@
 .sidebarWrapper {
   --sidebar-width: 320px;
   position: relative;
-  display: flex;
+  /* display: flex; */
 }
 
 .sidebarWrapper[data-active="true"] {

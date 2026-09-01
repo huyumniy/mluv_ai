@@ -2,6 +2,7 @@
   display: flex;
   align-items: stretch;
   inline-size: 100%;
+  overflow-y: hidden;
 
   border-block-end:
     var(--border-width-small)
@@ -12,11 +13,9 @@
 
 .tab {
   position: relative;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-inline-size: 0;
   padding:
     var(--space-4)

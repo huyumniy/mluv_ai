@@ -73,7 +73,7 @@ export function MluvLearningApp() {
 
         <LessonHeader lesson={verbConstructionsLesson} icon={<AaIcon />}/>
 
-        <AudioBar className={styles.audiobar} src={verbConstructionsLesson.audioSrc} />
+        <AudioBar className={styles.audiobar} lesson={verbConstructionsLesson} />
 
         <Tabs<MluvTab>
           items={tabItems}

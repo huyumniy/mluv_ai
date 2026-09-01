@@ -11,3 +11,22 @@
     min-inline-size: 0;
     padding: var(--layout-md) var(--layout-xl);
 }
+
+.desktopSidebar {
+  display: flex;
+}
+
+.mobileBottombar {
+  display: none;
+}
+
+
+@media (width <= 992px) {
+    .desktopSidebar {
+        display: none;
+    }
+
+    .mobileBottombar {
+        display: flex;
+    }
+}
