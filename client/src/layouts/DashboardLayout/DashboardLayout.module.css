@@ -1,15 +1,23 @@
 .layout {
-    display: flex;
-    flex-direction: row;
+  display: flex;
 
-    min-block-size: 100dvh;
-    
+  block-size: 100dvh;
+  overflow: hidden;
 }
 
 .main {
-    flex: 1;
-    min-inline-size: 0;
-    padding: var(--layout-md) var(--layout-xl);
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+
+  min-inline-size: 0;
+  min-block-size: 0;
+
+  padding: var(--layout-md) var(--layout-xl);
+
+  overflow: hidden;
+
 }
 
 .desktopSidebar {

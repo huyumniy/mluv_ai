@@ -18,7 +18,9 @@ export function ContinueLessonCard({
     <CardSurface className={clsx(styles.card)} orientation={orientation}>
       <h3 className={styles.heading}>
         Continue Learning
-        <EllipsisVerticalIcon />
+        <Button variant="ternary" size="sm" className={styles.moreButton}>
+          <EllipsisVerticalIcon />
+        </Button>
       </h3>
 
       <div className={styles.lesson}>
