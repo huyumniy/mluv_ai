@@ -1,0 +1,230 @@
+.container {
+    --background-color: rgba(246, 213, 121, 0.25);
+    display: flex;
+    padding: 100px 200px;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-12);
+    flex: 1 0 0;
+    align-self: stretch;
+
+    min-inline-size: 0;
+    min-block-size: 0;
+
+    inline-size: 100%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+}
+
+
+.selectedTopic {
+    display: flex;
+    height: 80px;
+    padding: var(--space-6);
+    align-items: center;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-body-large);
+    gap: var(--space-6);
+    border-radius: var(--radius-lg);
+    border: var(--border-width-medium) solid var(--color-border);
+    background: var(--background-color);
+
+    img {
+        block-size: 48px;
+        inline-size: 48px;
+    }
+
+    span {
+        cursor: pointer;
+        color: var(--color-primary);
+
+    }
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+
+    .title {
+        color: var(--color-text-primary);
+        text-align: center;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: var(--line-height-body)
+    }
+
+    .description {
+        color: var(--color-text-secondary);
+        text-align: center;
+        font-size: var(--font-size-body-large);
+    }
+}
+
+.modes {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-12);
+}
+
+.mode {
+    --mode-color-icon: var(--color-text-primary);
+    --mode-background-color: var(--color-background);
+    --mode-border-color: var(--color-border);
+    display: flex;
+    width: 380px;
+    height: 350px;
+    background: none;
+    padding: var(--space-12);
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:flex-start;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--mode-border-color);
+    background-color: var(--mode-background-color);
+    
+    cursor: pointer;
+    .icon {
+        color: var(--mode-color-icon);
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+        aspect-ratio: 1/1;
+    }
+
+    .label {
+        text-align: start;
+        color: var(--color-text-primary);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--line-height-heading);
+    }
+
+    .description {
+        text-align: start;
+        color: var(--color-text-secondary);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--line-height-tight);
+        font-size: var(--font-size-body-large);
+    }
+}
+
+.mode[data-selected="true"] {
+    --color-icon: var(--color-primary);
+    --color-border: var(--color-primary);
+    --color-background: var(--background-color);
+}
+
+.options {
+  --option-background-color: var(--color-background);
+  --option-border-color: var(--color-border);
+  --option-text-color: var(--color-text-primary);
+
+  display: flex;
+  inline-size: 100%;
+  max-inline-size: 900px;
+  flex-direction: column;
+
+  gap: var(--space-12);
+
+  .optionContainer {
+    display: grid;
+
+    inline-size: 100%;
+
+    grid-template-columns: max-content 1fr;
+
+    align-items: center;
+
+    column-gap: var(--space-12);
+  }
+
+  .label {
+    display: flex;
+    align-items: center;
+
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-medium);
+
+    color: var(--color-text-primary);
+  }
+
+  .optionValues {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: var(--space-6);
+  }
+
+  .optionValue {
+    --option-background-color: var(--color-background);
+    --option-border-color: var(--color-border);
+    --option-text-color: var(--color-text-primary);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-inline-size: 70px;
+    block-size: 48px;
+
+    padding-inline: var(--space-6);
+
+    border: 2px solid var(--option-border-color);
+    border-radius: var(--radius-md);
+
+    background-color: var(--option-background-color);
+
+    color: var(--option-text-color);
+
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-medium);
+
+    cursor: pointer;
+
+    transition:
+      border-color 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .optionValue:hover {
+    border-color: var(--color-primary);
+  }
+
+  .optionValue:active {
+    transform: scale(0.97);
+  }
+
+  .optionValue[data-active="true"] {
+    --option-border-color: var(--color-primary);
+    --option-background-color: var(--background-color);
+    --option-text-color: var(--color-primary);
+  }
+}
+
+.commandButtons {
+    display: flex;
+    height: 150px;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+
+    button {
+        width: 100%;
+        svg {
+            width: 35px;
+            height: 35px;
+        }
+    }
+}

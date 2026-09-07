@@ -13,6 +13,9 @@ import { LoginPage } from "@/pages/LoginPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { SettingsPage } from "@/pages/SettingsPage";
+import { CreateLessonSettingsPage } from "@/pages/CreateLessonSettingsPage";
+import { CreateLessonPhrasesPage } from "@/pages/CreateLessonPhrasesPage";
+import { CreateLessonFlow } from "@/layouts/DashboardLayout/create-lesson-flow";
 
 export const router = createBrowserRouter([
   {
@@ -52,8 +55,21 @@ export const router = createBrowserRouter([
         element: <LessonsPage />,
       },
       {
-        path: "/create-lesson",
-        element: <CreateLessonPage />,
+        element: <CreateLessonFlow />,
+        children: [
+          {
+            path: "/create-lesson",
+            element: <CreateLessonPage />,
+          },
+          {
+            path: "/create-lesson/:topicId/settings",
+            element: <CreateLessonSettingsPage />,
+          },
+          {
+            path: "/create-lesson/:topicId/phrases",
+            element: <CreateLessonPhrasesPage />,
+          }
+        ]
       },
       {
         path: "/billing",

@@ -1,0 +1,1 @@
+export { CreateLessonPhrasesPage } from "./CreateLessonPhrasesPage";
