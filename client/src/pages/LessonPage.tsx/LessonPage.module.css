@@ -1,0 +1,150 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-12);
+    flex: 1 0 0;
+    align-self: stretch;
+
+    min-inline-size: 0;
+    min-block-size: 0;
+
+    inline-size: 100%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+
+    container-type: inline-size;
+}
+
+.successMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+
+    .imageContainer {
+        display: flex;
+        inline-size: 100px;
+        block-size: 100px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        aspect-ratio: 1/1;
+        border-radius: var(--radius-round);
+        background: var(--color-primary-100);
+
+        img {
+            width: 75px;
+            height: 75px;
+            flex-shrink: 0;
+            aspect-ratio: 1/1;
+        }
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .description {
+        text-align: center;
+        color: var(--color-text-secondary);
+    }
+}
+
+.content {
+    display: flex;
+    padding: var(--space-6);
+    align-items: center;
+    inline-size: 100%;
+    max-inline-size: 1440px;
+    gap: 10px;
+    border-radius: var(--radius-lg);
+    border: var(--border-width-medium) solid var(--color-border);
+    background: var(--color-white);
+    color: var(--color-text-primary);
+
+    .infoSection {
+        display: flex;
+        flex: 1;
+        padding: var(--space-6);
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    .infoItem {
+        display: flex;
+        min-block-size: 75px;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        align-self: stretch;
+    }
+
+    .leftSide {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+
+        svg {
+            width: 48px;
+            height: 48px;
+            fill: var(--color-text-primary);
+        }
+    }
+
+    .rightSide {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        align-self: stretch;
+    }
+}
+
+.audiobarSection {
+    width: 100%;
+}
+
+.contentCardSection {
+    inline-size: 667px;
+}
+
+.commandButtons {
+    display: flex;
+    flex-wrap: wrap;
+
+    min-block-size: 100px;
+    padding: var(--space-2);
+    align-items: center;
+    gap: var(--space-2);
+    inline-size: 100%;
+
+    button {
+        flex: 1 1 300px;
+        min-inline-size: 220px;
+
+        min-block-size: 60px;
+
+        svg {
+            inline-size: 35px;
+            block-size: 35px;
+        }
+    }
+}
+
+@container (width <= 992px) {
+    .content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contentCardSection {
+        inline-size: 100%;
+    }
+}

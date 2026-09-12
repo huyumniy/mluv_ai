@@ -6,7 +6,7 @@ export function ClockIcon(props: SVGProps<SVGSVGElement>) {
       width={25}
       height={25}
       viewBox="0 0 25 25"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
@@ -28,7 +28,7 @@ export function ClockIcon(props: SVGProps<SVGSVGElement>) {
         />
       </mask>
       <g mask="url(#mask0_248_2350)">
-        <rect x="-0.199951" width={25} height={25} fill="#7B7B7B" />
+        <rect x="-0.199951" width={25} height={25} fill="currentColor" />
       </g>
       <defs>
         <pattern

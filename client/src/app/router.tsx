@@ -16,6 +16,7 @@ import { SettingsPage } from "@/pages/SettingsPage";
 import { CreateLessonSettingsPage } from "@/pages/CreateLessonSettingsPage";
 import { CreateLessonPhrasesPage } from "@/pages/CreateLessonPhrasesPage";
 import { CreateLessonFlow } from "@/layouts/DashboardLayout/create-lesson-flow";
+import { LessonPage } from "@/pages/LessonPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: "/lessons",
         element: <LessonsPage />,
+      },
+      {
+        path: "/lessons/:lessonId",
+        element: <LessonPage />,
       },
       {
         element: <CreateLessonFlow />,

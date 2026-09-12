@@ -25,6 +25,7 @@ export interface LessonSummary {
 export interface TranscriptLine {
     id: string;
     original: string;
+    originalSlowed: string;
     translation: string;
 }
 

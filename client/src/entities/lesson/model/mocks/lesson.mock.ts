@@ -173,41 +173,49 @@ export const restaurantTranscript: TranscriptLine[] = [
   {
     id: "transcript-restaurant-1",
     original: "Dobrý den, vítejte v naší restauraci.",
+    originalSlowed: "Dobrý... den..., vítejte... v... naší... restauraci.",
     translation: "Good afternoon, welcome to our restaurant.",
   },
   {
     id: "transcript-restaurant-2",
     original: "Máte rezervaci?",
+    originalSlowed: "Máte... rezervaci?",
     translation: "Do you have a reservation?",
   },
   {
     id: "transcript-restaurant-3",
     original: "Ano, rezervace je na jméno Novák.",
+    originalSlowed: "Ano..., rezervace... je... na... jméno... Novák.",
     translation: "Yes, the reservation is under the name Novák.",
   },
   {
     id: "transcript-restaurant-4",
     original: "Co si dáte k pití?",
+    originalSlowed: "Co... si... dáte... k... pití?",
     translation: "What would you like to drink?",
   },
   {
     id: "transcript-restaurant-5",
     original: "Dám si minerální vodu, prosím.",
+    originalSlowed: "Dám... si... minerální... vodu..., prosím.",
     translation: "I’ll have mineral water, please.",
   },
   {
     id: "transcript-restaurant-6",
     original: "Už jste si vybrali?",
+    originalSlowed: "Už... jste... si... vybrali?",
     translation: "Have you already chosen?",
   },
   {
     id: "transcript-restaurant-7",
     original: "Ano, dám si kuřecí řízek s bramborami.",
+    originalSlowed: "Ano..., dám... si... kuřecí... řízek... s... bramborami.",
     translation: "Yes, I’ll have chicken schnitzel with potatoes.",
   },
   {
     id: "transcript-restaurant-8",
     original: "Mohu dostat účet, prosím?",
+    originalSlowed: "Mohu... dostat... účet..., prosím?",
     translation: "Can I have the bill, please?",
   },
 ];

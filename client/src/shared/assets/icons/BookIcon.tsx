@@ -6,7 +6,7 @@ export function BookIcon(props: SVGProps<SVGSVGElement>) {
       width={50}
       height={50}
       viewBox="0 0 50 50"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
@@ -23,7 +23,7 @@ export function BookIcon(props: SVGProps<SVGSVGElement>) {
         <rect width={50} height={50} fill="url(#pattern0_360_6220)" />
       </mask>
       <g mask="url(#mask0_360_6220)">
-        <rect width={50} height={50} fill="#ECB914" />
+        <rect width={50} height={50} fill="currentColor" />
       </g>
       <defs>
         <pattern
