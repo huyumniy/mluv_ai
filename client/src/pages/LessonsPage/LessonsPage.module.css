@@ -1,0 +1,72 @@
+.container {
+  position: relative;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  gap: var(--space-12);
+
+  min-inline-size: 0;
+  min-block-size: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+  container-type: inline-size;
+}
+
+.content {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.libraryContainer {
+    display: flex;
+    flex: 1;
+    min-inline-size: 0;
+    gap: var(--space-6);
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.folders {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    align-self: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.folders::-webkit-scrollbar {
+  display: none;
+}
+
+
+.tabs {
+    font-size: var(--font-size-body-large);
+    justify-content: space-between;
+
+    button {
+        flex:none;
+    }
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.wideCardContainer {
+    display: flex;
+}
+
+@container (width <= 992px) {
+    .wideCardContainer {
+        display: none;
+    }
+}

@@ -11,162 +11,286 @@ import temp from "@/shared/assets/audios/temp.mp3";
 
 export const lessonSummaries: LessonSummary[] = [
   {
-    id: "lesson-restaurant-a2",
-    title: "At the Restaurant",
-    description:
-      "Learn practical Czech phrases for ordering food, asking about the menu, speaking with waiters, and paying the bill.",
+  id: "lesson-doctor-a2",
+  title: "At the Doctor",
+  description:
+    "Learn how to describe symptoms, understand basic questions from a doctor, and talk about pain and medication.",
 
-    level: "A2",
-    topic: "Food and restaurants",
+  level: "A2",
+  topic: "Health",
 
-    durationMinutes: 18,
-    phraseCount: 28,
-    progress: 65,
+  durationMinutes: 19,
+  phraseCount: 31,
+  progress: 35,
 
-    imageSrc: atTheRestaurantImage,
-    audioSrc: temp,
+  imageSrc: spellCheckImage,
+  audioSrc: temp,
 
-    availableFiles: ["mp3", "pdf"],
+  availableFiles: ["mp3", "pdf"],
 
-    createdAt: "2026-07-12T10:30:00.000Z",
-    updatedAt: "2026-08-02T18:15:00.000Z",
+  createdAt: "2026-08-05T09:20:00.000Z",
+  updatedAt: "2026-08-12T18:40:00.000Z",
 
-    status: "listened",
-    folderIds: [
-      "folder-grammar",
-      "folder-verbs",
-    ]
-  },
-  {
-    id: "lesson-hard-and-soft-adjectives-a2",
-    title: "Hard and Soft Adjectives",
-    description:
-      "Practice common Czech verb constructions and learn how verbs combine with nouns, pronouns, and infinitives.",
+  status: "continue",
 
-    level: "A2",
-    topic: "Grammar",
+  folderIds: [
+    "folder-daily-life",
+    "folder-vocabulary",
+  ],
+},
+{
+  id: "lesson-factory-instructions-a2",
+  title: "Factory Instructions",
+  description:
+    "Practice common Czech instructions used at work, including safety commands, machine operation, and production tasks.",
 
-    durationMinutes: 16,
-    phraseCount: 50,
-    progress: 20,
+  level: "A2",
+  topic: "Work",
 
-    imageSrc: spellCheckImage,
+  durationMinutes: 24,
+  phraseCount: 38,
+  progress: 75,
 
-    availableFiles: ["mp3", "pdf"],
+  imageSrc: spellCheckImage,
+  audioSrc: audio,
 
-    createdAt: "2026-07-15T09:00:00.000Z",
-    updatedAt: "2026-07-28T14:20:00.000Z",
-    audioSrc: audio,
-    status: "continue",
-    folderIds: [
-      "folder-grammar",
-      "folder-verbs",
-    ]
-  },
-  {
-    id: "lesson-past-tense-a2",
-    title: "Past Tense 1",
-    description:
-      "Learn the foundations of the Czech past tense, including auxiliary verbs, participles, and gender agreement.",
+  availableFiles: ["mp3", "pdf"],
 
-    level: "A2",
-    topic: "Past tense",
+  createdAt: "2026-08-07T06:30:00.000Z",
+  updatedAt: "2026-09-01T14:10:00.000Z",
 
-    durationMinutes: 22,
-    phraseCount: 35,
-    progress: 0,
+  status: "continue",
 
-    imageSrc: "/images/lessons/past-tense.png",
+  folderIds: [
+    "folder-work",
+    "folder-custom-factory-czech",
+    "folder-verbs",
+  ],
+},
+{
+  id: "lesson-perfective-verbs-b1",
+  title: "Perfective vs Imperfective Verbs",
+  description:
+    "Understand how Czech speakers choose between completed and ongoing actions using perfective and imperfective verbs.",
 
-    availableFiles: ["mp3", "pdf"],
+  level: "B1",
+  topic: "Verb aspect",
 
-    createdAt: "2026-07-18T12:45:00.000Z",
-    updatedAt: "2026-07-18T12:45:00.000Z",
+  durationMinutes: 28,
+  phraseCount: 44,
+  progress: 0,
 
-    status: "not-started",
-    folderIds: [
-      "folder-grammar",
-      "folder-verbs",
-    ]
-  },
-  {
-    id: "lesson-shopping-a1",
-    title: "Shopping in Czech",
-    description:
-      "Learn how to ask about prices, sizes, payment methods, and product availability while shopping in Czech.",
+  imageSrc: spellCheckImage,
+  audioSrc: temp,
 
-    level: "A1",
-    topic: "Shopping",
+  availableFiles: ["mp3", "pdf"],
 
-    durationMinutes: 14,
-    phraseCount: 24,
-    progress: 100,
+  createdAt: "2026-08-10T17:15:00.000Z",
+  updatedAt: "2026-08-10T17:15:00.000Z",
 
-    imageSrc: "/images/lessons/shopping.png",
+  status: "not-started",
 
-    availableFiles: ["mp3", "pdf"],
+  folderIds: [
+    "folder-verbs",
+    "folder-grammar",
+  ],
+},
+{
+  id: "lesson-small-talk-a1",
+  title: "Everyday Small Talk",
+  description:
+    "Learn simple Czech expressions for greetings, weather, weekends, work, and short everyday conversations.",
 
-    createdAt: "2026-06-25T16:00:00.000Z",
-    updatedAt: "2026-07-10T19:35:00.000Z",
+  level: "A1",
+  topic: "Daily conversation",
 
-    status: "listened",
-    folderIds: [
-      "folder-grammar",
-      "folder-verbs",
-    ]
-  },
-  {
-    id: "lesson-workplace-b1",
-    title: "Conversations at Work",
-    description:
-      "Practice Czech conversations for meetings, workplace requests, instructions, problems, and communication with colleagues.",
+  durationMinutes: 12,
+  phraseCount: 21,
+  progress: 100,
 
-    level: "B1",
-    topic: "Work and communication",
+  imageSrc: atTheRestaurantImage,
+  audioSrc: audio,
 
-    durationMinutes: 27,
-    phraseCount: 42,
-    progress: 40,
+  availableFiles: ["mp3"],
 
-    imageSrc: "/images/lessons/workplace.png",
+  createdAt: "2026-07-02T12:00:00.000Z",
+  updatedAt: "2026-08-18T20:15:00.000Z",
 
-    availableFiles: ["mp3"],
+  status: "listened",
 
-    createdAt: "2026-07-22T08:10:00.000Z",
-    updatedAt: "2026-08-01T11:50:00.000Z",
+  folderIds: [
+    "folder-daily-life",
+    "folder-vocabulary",
+  ],
+},
+{
+  id: "lesson-phone-calls-a2",
+  title: "Making Phone Calls",
+  description:
+    "Practice answering the phone, asking for someone, leaving messages, and arranging appointments in Czech.",
 
-    status: "continue",
-    folderIds: [
-      "folder-grammar",
-      "folder-verbs",
-    ]
-  },
-  {
-    id: "lesson-travel-b2",
-    title: "Handling Travel Problems",
-    description:
-      "Learn how to explain travel problems, ask for assistance, report missing luggage, and handle delays in Czech.",
+  level: "A2",
+  topic: "Communication",
 
-    level: "B2",
-    topic: "Travel",
+  durationMinutes: 17,
+  phraseCount: 27,
+  progress: 15,
 
-    durationMinutes: 31,
-    phraseCount: 46,
-    progress: 10,
+  imageSrc: atTheRestaurantImage,
+  audioSrc: temp,
 
-    imageSrc: "/images/lessons/travel.png",
+  availableFiles: ["mp3", "pdf"],
 
-    availableFiles: ["mp3", "pdf"],
+  createdAt: "2026-08-14T11:30:00.000Z",
+  updatedAt: "2026-08-20T16:05:00.000Z",
 
-    createdAt: "2026-07-30T13:25:00.000Z",
-    updatedAt: "2026-08-03T17:40:00.000Z",
+  status: "continue",
 
-    status: "continue",
-    folderIds: [
-      "folder-grammar",
-      "folder-verbs",
-    ]
-  },
+  folderIds: [
+    "folder-daily-life",
+    "folder-work",
+  ],
+},
+{
+  id: "lesson-czech-cases-b1",
+  title: "Czech Cases in Practice",
+  description:
+    "Practice the most common Czech case patterns through practical sentences rather than isolated grammar tables.",
+
+  level: "B1",
+  topic: "Cases",
+
+  durationMinutes: 34,
+  phraseCount: 52,
+  progress: 5,
+
+  imageSrc: spellCheckImage,
+  audioSrc: audio,
+
+  availableFiles: ["mp3", "pdf"],
+
+  createdAt: "2026-08-21T19:20:00.000Z",
+  updatedAt: "2026-08-25T08:50:00.000Z",
+
+  status: "continue",
+
+  folderIds: [
+    "folder-grammar",
+    "folder-custom-difficult-phrases",
+  ],
+},
+{
+  id: "lesson-apartment-problems-a2",
+  title: "Problems in the Apartment",
+  description:
+    "Learn how to explain problems with heating, water, electricity, appliances, and repairs to a landlord.",
+
+  level: "A2",
+  topic: "Housing",
+
+  durationMinutes: 20,
+  phraseCount: 33,
+  progress: 0,
+
+  imageSrc: atTheRestaurantImage,
+  audioSrc: temp,
+
+  availableFiles: ["mp3", "pdf"],
+
+  createdAt: "2026-08-27T15:10:00.000Z",
+  updatedAt: "2026-08-27T15:10:00.000Z",
+
+  status: "not-started",
+
+  folderIds: [
+    "folder-daily-life",
+    "folder-vocabulary",
+  ],
+},
+{
+  id: "lesson-shift-conversation-a2",
+  title: "Talking During a Work Shift",
+  description:
+    "Learn practical Czech for asking coworkers for help, reporting problems, changing tasks, and talking about breaks.",
+
+  level: "A2",
+  topic: "Workplace",
+
+  durationMinutes: 23,
+  phraseCount: 36,
+  progress: 55,
+
+  imageSrc: spellCheckImage,
+  audioSrc: audio,
+
+  availableFiles: ["mp3"],
+
+  createdAt: "2026-08-30T05:45:00.000Z",
+  updatedAt: "2026-09-10T17:25:00.000Z",
+
+  status: "continue",
+
+  folderIds: [
+    "folder-work",
+    "folder-custom-factory-czech",
+  ],
+},
+{
+  id: "lesson-pronouns-a2",
+  title: "Personal and Reflexive Pronouns",
+  description:
+    "Practice Czech personal, object, and reflexive pronouns in common conversational situations.",
+
+  level: "A2",
+  topic: "Pronouns",
+
+  durationMinutes: 21,
+  phraseCount: 34,
+  progress: 100,
+
+  imageSrc: spellCheckImage,
+  audioSrc: temp,
+
+  availableFiles: ["mp3", "pdf"],
+
+  createdAt: "2026-07-19T14:30:00.000Z",
+  updatedAt: "2026-08-16T10:00:00.000Z",
+
+  status: "listened",
+
+  folderIds: [
+    "folder-grammar",
+    "folder-custom-difficult-phrases",
+  ],
+},
+{
+  id: "lesson-train-station-a1",
+  title: "At the Train Station",
+  description:
+    "Learn how to buy tickets, ask about platforms, understand delays, and find the right train.",
+
+  level: "A1",
+  topic: "Travel",
+
+  durationMinutes: 15,
+  phraseCount: 26,
+  progress: 0,
+
+  imageSrc: atTheRestaurantImage,
+  audioSrc: audio,
+
+  availableFiles: ["mp3", "pdf"],
+
+  createdAt: "2026-09-02T13:00:00.000Z",
+  updatedAt: "2026-09-02T13:00:00.000Z",
+
+  status: "not-started",
+
+  folderIds: [
+    "folder-daily-life",
+    "folder-vocabulary",
+  ],
+},
 ];
 
 export const restaurantTranscript: TranscriptLine[] = [

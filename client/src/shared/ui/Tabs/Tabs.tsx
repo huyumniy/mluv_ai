@@ -5,6 +5,7 @@ import type {
 } from "./Tabs.types";
 
 import styles from "./Tabs.module.css";
+import { handleHorizontalWheel } from "@/shared/lib/handleHorizontalWheel";
 
 export function Tabs<TValue extends string>({
     items,
@@ -18,6 +19,7 @@ export function Tabs<TValue extends string>({
             className={clsx(styles.tabs, className)}
             role="tablist"
             aria-label={ariaLabel}
+            onWheel={handleHorizontalWheel}
         >
             {items.map((item) => {
                 const isActive = item.value === value;

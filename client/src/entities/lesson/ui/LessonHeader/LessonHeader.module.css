@@ -29,6 +29,13 @@
 .icon svg {
     width: 64px;
     height: 64px;
+    aspect-ratio: 1/1;
+}
+
+.icon img {
+    width: 64px;
+    height: 64px;
+    aspect-ratio: 1/1;
 
 }
 

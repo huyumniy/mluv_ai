@@ -1,0 +1,56 @@
+.folder {
+    display: flex;
+    min-inline-size: 200px;
+    block-size: 100px;
+    padding: var(--space-6);
+    align-items: center;
+    gap: var(--space-2);
+    border-radius: var(--radius-lg);
+    border: var(--border-width-medium) solid var(--color-border);
+    cursor: pointer;
+}
+
+.folder[data-active="true"] {
+    border-color: var(--color-primary);
+}
+
+.folder:hover {
+    transform: translateY(-1px);
+}
+
+.foler:active {
+    scale: 1.04;
+}
+
+.folderIcon {
+  width: 50px;
+  height: 50px;
+  stroke-width: var(--border-width-medium);
+  color: var(--folder-color);
+  stroke: var(--stroke-color);
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    
+
+    .title {
+        color: var(--color-text-primary);
+        font-size: var(--font-size-body-default);
+        font-weight: var(--font-weight-semibold);
+        text-wrap: wrap;
+    }
+
+    .count {
+        font-size: var(--font-size-body-small);
+        font-weight: var(--font-weight-regular);
+        color: var(--color-text-secondary);
+    }
+}

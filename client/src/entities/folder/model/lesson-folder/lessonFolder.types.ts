@@ -1,22 +1,20 @@
+import type { ReactNode } from "react";
+
 export type LessonFolderType =
+  | "system"
   | "predefined"
   | "custom";
 
-export type LessonFolderIcon =
-  | "grammar"
-  | "verbs"
-  | "vocabulary"
-  | "conversation"
-  | "travel"
-  | "work"
-  | "custom";
+
+  export type LessonFolderColor = `#${string}`;
 
 export interface LessonFolder {
   id: string;
   name: string;
   type: LessonFolderType;
 
-  icon: LessonFolderIcon;
+  color: LessonFolderColor;
+  icon?: ReactNode;
 
   createdAt: string;
   updatedAt: string;
