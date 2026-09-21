@@ -36,9 +36,12 @@ export function useLessonPlayer(lesson?: LessonSummary) {
 
                 context.togglePlay();
             },
+
+            playLesson: context.playLesson,
             
             next: context.playNext,
             previous: context.playPrevious,
+            playQueue: context.playQueue,
             playFromQueue: context.playFromQueue,
 
             addToQueue: context.addToQueue,

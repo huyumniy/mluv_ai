@@ -60,6 +60,10 @@ export const router = createBrowserRouter([
         element: <LessonsPage />,
       },
       {
+        path: "/lessons/playlists/:playlistId",
+        element: <LessonsPage />,
+      },
+      {
         path: "/lessons/:lessonId",
         element: <LessonPage />,
       },

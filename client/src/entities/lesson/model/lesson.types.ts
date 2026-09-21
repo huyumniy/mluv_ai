@@ -4,8 +4,25 @@ export type LessonStatus = "listened" | "continue" | "not-started";
 
 export type LessonFileType = "pdf" | "mp3";
 
+export type LessonLibraryItem = LessonSummary | LessonPlaylistSummary;
+export interface LessonPlaylistSummary {
+    id: string;
+    type: "playlist";
+
+    title: string;
+    description: string;
+    topic: string;
+
+    imageSrc?: string;
+    lessonIds: string[];
+    folderIds: string[];
+
+    createdAt: string;
+    updatedAt: string;
+}
 export interface LessonSummary {
   id: string;
+  type: "lesson",
   title: string;
   description: string;
   level: LessonLevel;
@@ -13,9 +30,11 @@ export interface LessonSummary {
   durationMinutes: number;
   phraseCount: number;
   progress: number;
+
   imageSrc?: string;
-  availableFiles: LessonFileType[];
   audioSrc?: string;
+
+  availableFiles: LessonFileType[];
   createdAt: string;
   updatedAt: string;
   status: LessonStatus;

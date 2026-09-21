@@ -18,5 +18,7 @@ export interface LessonContentCardProps {
   vocabulary?: VocabularyItem[];
   transcript?: TranscriptLine[];
 
+  isDetailed?: boolean;
+  fixedHeight?: boolean;
   customTabs?: CustomLessonTab[];
 }

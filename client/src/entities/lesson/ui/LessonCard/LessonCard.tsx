@@ -32,8 +32,10 @@ interface LessonCardProps {
   headerIcon?: ReactNode;
 
   showAudioBar?: boolean;
+  fixedHeight?: boolean;
   showActions?: boolean;
-
+  isDetailed?: boolean;
+  
   onDownload?: () => void;
   onSave?: () => void;
 }
@@ -49,6 +51,8 @@ export function LessonCard({
 
   showAudioBar = true,
   showActions = true,
+  fixedHeight = true,
+  isDetailed = true,
 
   onDownload,
   onSave,
@@ -67,6 +71,8 @@ export function LessonCard({
         vocabulary={vocabulary}
         transcript={transcript}
         customTabs={customTabs}
+        isDetailed={isDetailed}
+        fixedHeight={fixedHeight}
       />
 
       {showActions && (

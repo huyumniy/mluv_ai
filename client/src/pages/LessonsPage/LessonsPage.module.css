@@ -57,8 +57,77 @@
     }
 }
 
+.infoContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+
+    .icon {
+        display: flex;
+        padding: var(--space-2);
+        gap: var(--space-2);
+        border-radius: var(--radius-round);
+        inline-size: fit-content;
+        background: var(--lesson-color);
+        img {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+    .info {
+        display: flex;
+        gap: var(--space-2);
+        flex-direction: column;
+
+        .title {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+        }
+
+        .description {
+            font-size: var(--font-size-body-small);
+            color: var(--color-text-secondary);
+        }
+    }
+}
+
+.actionsButtonContainer {
+    display: flex;
+    inline-size: 100%;
+    justify-content: flex-end;
+}
+
+.actionsButton {    
+    svg {
+        width: 30px;
+        height: 30px;
+        color: var(--color-quinary);
+    }
+}
+
 .tabs::-webkit-scrollbar {
   display: none;
+}
+
+.activePlaylist {
+    display: flex;
+    padding: 25px;
+    align-self: stretch;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 0 0;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-border);
+
+    .icon {
+        padding: var(--space-3);
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
 }
 
 .wideCardContainer {

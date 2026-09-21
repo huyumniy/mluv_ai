@@ -23,6 +23,7 @@ import { TrashBoxIcon } from "@/shared/assets/icons/TrashBoxIcon";
 
 interface LessonOverviewProps {
   lesson: LessonSummary;
+  isDetailed: boolean;
 }
 
 function formatDate(dateString: string): string {
@@ -33,7 +34,7 @@ function formatDate(dateString: string): string {
   }).format(new Date(dateString));
 }
 
-export function LessonOverview({ lesson }: LessonOverviewProps) {
+export function LessonOverview({ lesson, isDetailed }: LessonOverviewProps) {
   const progress = Math.min(100, Math.max(0, lesson.progress ?? 0));
   const folders = getLessonFolders(lesson, lessonFolders)
 
@@ -101,57 +102,62 @@ export function LessonOverview({ lesson }: LessonOverviewProps) {
           </div>
         ))}
       </div>
-      <hr />
-      <div className={styles.progressContainer}>
-        <h5>Progress</h5>
-        <div className={styles.progress}>
-          <div
-            className={styles.progressCircle}
-            role="progressbar"
-            aria-label="Lesson progress"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={progress}
-          >
-            <div className={styles.outer} style={progressStyle}>
-              <div className={styles.inner}>
-                <span className={styles.number}>{progress}%</span>
+      {isDetailed && (
+        <>
+          <hr />
+          <div className={styles.progressContainer}>
+            <h5>Progress</h5>
+            <div className={styles.progress}>
+              <div
+                className={styles.progressCircle}
+                role="progressbar"
+                aria-label="Lesson progress"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progress}
+              >
+                <div className={styles.outer} style={progressStyle}>
+                  <div className={styles.inner}>
+                    <span className={styles.number}>{progress}%</span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.progressInfo}>
+                <strong>{progressTitle}</strong>
+                <span>{progressDescription}</span>
+              </div>
+            </div>
+            <Button variant="primary" size="md">
+              Mark as Listened
+            </Button>
+          </div>
+          <hr />
+          <div className={styles.foldersContainer}>
+            <h5>In Library</h5>
+            <div className={styles.folders}>
+              {folders.map((folder) => (
+                <div className={styles.folder} key={folder.id}>
+                  <ClosedFolderIcon />
+                  {folder.name}
+                </div>
+              ))}
+              <div className={styles.folder} key="custom">
+                <PlusIcon />
+                Add tag
               </div>
             </div>
           </div>
-          <div className={styles.progressInfo}>
-            <strong>{progressTitle}</strong>
-            <span>{progressDescription}</span>
-          </div>
-        </div>
-        <Button variant="primary" size="md">
-          Mark as Listened
-        </Button>
-      </div>
-      <hr />
-      <div className={styles.foldersContainer}>
-        <h5>In Library</h5>
-        <div className={styles.folders}>
-          {folders.map((folder) => (
-            <div className={styles.folder} key={folder.id}>
-              <ClosedFolderIcon />
-              {folder.name}
+          <hr />
+          <div className={styles.actionsContainer}>
+            <h5>Actions</h5>
+            <div className={styles.actions}>
+              <Button className={styles.share} leadingIcon={<ShareIcon />} size="sm" variant="ternary" >Share Lesson</Button>
+              <Button className={styles.delete} leadingIcon={<TrashBoxIcon />} size="sm" variant="ternary" >Delete Lesson</Button>
             </div>
-          ))}
-          <div className={styles.folder} key="custom">
-            <PlusIcon />
-            Add tag
           </div>
-        </div>
-      </div>
-      <hr />
-      <div className={styles.actionsContainer}>
-        <h5>Actions</h5>
-        <div className={styles.actions}>
-          <Button className={styles.share} leadingIcon={<ShareIcon />} size="sm" variant="ternary" >Share Lesson</Button>
-          <Button className={styles.delete} leadingIcon={<TrashBoxIcon />} size="sm" variant="ternary" >Delete Lesson</Button>
-        </div>
-      </div>
+        </>
+        )}
+      
     </div>
   );
 }

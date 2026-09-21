@@ -28,6 +28,7 @@ export interface LessonPlayerActions {
 
     playNext: () => Promise<void>;
     playPrevious: () => Promise<void>;
+    playQueue: (lessons: LessonSummary[], startIndex?: number) => void;
     playFromQueue: (index: number) => Promise<void>;
     shuffleQueue: () => void;
     repeatQueueState: () => void;

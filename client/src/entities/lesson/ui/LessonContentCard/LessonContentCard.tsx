@@ -47,6 +47,8 @@ export function LessonContentCard({
   grammar,
   vocabulary,
   transcript,
+  isDetailed = true,
+  fixedHeight = true,
   customTabs = [],
 }: LessonContentCardProps) {
   const availableTabs = useMemo<
@@ -155,7 +157,7 @@ export function LessonContentCard({
     switch (activeTab) {
       case "overview":
         return lesson ? (
-          <LessonOverview lesson={lesson} />
+          <LessonOverview isDetailed={isDetailed} lesson={lesson} />
         ) : null;
 
       case "grammar":
@@ -232,6 +234,7 @@ export function LessonContentCard({
             styles.hasOverflow,
           isExpanded && styles.expanded,
         )}
+        fixed-height={fixedHeight}
         role="tabpanel"
         id={`lesson-panel-${activeTab}`}
         onClick={handleContentClick}

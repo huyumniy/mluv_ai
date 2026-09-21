@@ -1,11 +1,12 @@
 export type {
   LessonFolder,
-  LessonFolderIcon,
   LessonFolderType,
 } from "./lessonFolder.types";
 
 export {
+  allLessonsFolder,
   customLessonFolders,
+  displayLessonFolders,
   lessonFolders,
   predefinedLessonFolders,
 } from "./lessonFolder.mock";

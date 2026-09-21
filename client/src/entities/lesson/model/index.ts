@@ -4,6 +4,8 @@ export type {
   LessonSummary,
   TranscriptLine,
   VocabularyItem,
+  LessonPlaylistSummary,
+  LessonLibraryItem,
 } from "./lesson.types";
 
 export {

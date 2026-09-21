@@ -121,6 +121,28 @@ export function LessonPlayerProvider({ children }: LessonPlayerProviderProps) {
       return "no-repeat";
     });
   };
+  const playQueue = (
+    lessons: LessonSummary[],
+    startIndex = 0,
+  ) => {
+    if (lessons.length === 0) {
+      setQueueState([]);
+      setCurrentQueueIndex(-1);
+      return;
+    }
+
+    const index = Math.min(
+      Math.max(startIndex, 0),
+      lessons.length - 1,
+    );
+
+    const lesson = lessons[index];
+
+    setQueueState(lessons);
+    setCurrentQueueIndex(index);
+
+    playLesson(lesson);
+  };
 
   const playFromQueue = async (index: number) => {
     const lesson = queue[index];
@@ -297,6 +319,7 @@ export function LessonPlayerProvider({ children }: LessonPlayerProviderProps) {
         setQueue,
         addToQueue,
         removeFromQueue,
+        playQueue,
         playFromQueue,
         shuffleQueue,
         repeatQueueState,
