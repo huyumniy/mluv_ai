@@ -210,13 +210,19 @@ export function LessonsPage() {
               onLessonPlay={handleLessonPlay}
             />
           )}
-
-          <Pagination
-            totalItems={totalItems}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          <div className={styles.paginationContainer}>
+            <div className={styles.paginationInfo}>
+              {(currentPage - 1) * itemsPerPage + 1} {" - "}{" "}
+              {Math.min(currentPage * itemsPerPage, totalItems)} {" of "}{" "}
+              {totalItems}
+            </div>
+            <Pagination
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
         </div>
         <div className={styles.wideCardContainer}>
           {activeLesson && (
