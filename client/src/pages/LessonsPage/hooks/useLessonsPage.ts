@@ -15,9 +15,10 @@ export function useLessonsPage() {
           (playlist) => playlist.id === playlistId,
         )
       : undefined;
-  
+    
     const isFolderView = Boolean(currentFolder);
     const isPlaylistView = Boolean(currentPlaylist);
+    const isRootView = !isFolderView && !isPlaylistView;
 
     const playlists = currentFolder
         ? lessonPlaylists.filter((playlist) =>
@@ -45,5 +46,6 @@ export function useLessonsPage() {
 
         isFolderView,
         isPlaylistView,
+        isRootView,
     }
 }

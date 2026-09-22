@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import styles from "./LessonsPage.module.css";
@@ -14,13 +14,15 @@ import {
   type LessonPlaylistSummary,
   lessonSummaries,
 } from "@/entities/lesson/model";
-import { displayLessonFolders, type LessonFolder } from "@/entities/folder/model/lesson-folder";
+import { type LessonFolder } from "@/entities/folder/model/lesson-folder";
 
 import { PlaylistTable } from "./ui/PlaylistTable";
 import { LessonTable } from "./ui/LessonTable";
 import { LessonsHeader } from "./ui/LessonsHeader/LessonsHeader";
 import { FoldersList } from "./ui/FoldersList";
 import { getPlaylistLessons } from "@/entities/lesson/model/getPlaylistLessons";
+import { ActivePlaylist } from "./ui/ActivePlaylist";
+import { Pagination, usePagination } from "@/shared/ui/Pagination";
 
 type LessonTab = "all-lessons" | "my-library" | "explore-lessons" | "saved";
 
@@ -57,12 +59,40 @@ export function LessonsPage() {
 
     isFolderView,
     isPlaylistView,
+    isRootView,
   } = useLessonsPage();
-  const currentPlaylistFolder = currentPlaylist
-    ? displayLessonFolders.find((folder) =>
-        currentPlaylist.folderIds.includes(folder.id),
-      )
-    : undefined;
+
+  const totalItems = isFolderView
+    ? playlists.length + lessons.length
+    : isPlaylistView
+      ? lessons.length
+      : playlists.length;
+
+  const {
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    firstItemIndex,
+    lastItemIndex,
+  } = usePagination({ totalItems, itemsPerPage: 8 });
+
+  const currentPlaylists = isRootView
+    ? playlists.slice(firstItemIndex, lastItemIndex)
+    : isFolderView
+      ? playlists.slice(
+          firstItemIndex,
+          Math.min(lastItemIndex, playlists.length),
+        )
+      : [];
+
+  const currentLessons = isPlaylistView
+    ? lessons.slice(firstItemIndex, lastItemIndex)
+    : isFolderView
+      ? lessons.slice(
+          Math.max(0, firstItemIndex - playlists.length),
+          Math.max(0, lastItemIndex - playlists.length),
+        )
+      : [];
 
   const handleFolderClick = (folder: LessonFolder) => {
     if (folder.id === "all-lessons") {
@@ -87,16 +117,14 @@ export function LessonsPage() {
 
   const handleLessonPlay = (lesson: LessonSummary) => {
     if (currentPlaylist) {
-      const lessonIndex = lessons.findIndex(
-        (item) => item.id === lesson.id
-      );
+      const lessonIndex = lessons.findIndex((item) => item.id === lesson.id);
 
       playQueue(lessons, lessonIndex);
-      return
+      return;
     }
 
     playQueue([lesson]);
-  }
+  };
 
   const handlePlaylistMenu = (playlist: LessonPlaylistSummary) => {
     console.log("menu", playlist);
@@ -107,8 +135,11 @@ export function LessonsPage() {
 
     playQueue(playlistLessons);
     navigate(`/lessons/playlists/${playlist.id}`);
-  }
+  };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [currentFolder?.id, currentPlaylist?.id]);
 
   return (
     <div className={styles.container}>
@@ -126,43 +157,20 @@ export function LessonsPage() {
             className={styles.tabs}
           />
           {!currentFolder && currentPlaylist && (
-            <div className={styles.activePlaylist}>
-              <div className={styles.infoContainer}>
-                <div
-                    className={styles.icon}
-                    style={
-                      {
-                        "--lesson-color": currentPlaylistFolder?.color
-                          ? `color-mix(in srgb, ${currentPlaylistFolder.color} 30%, transparent)`
-                          : "var(--color-primary)",
-                      } as CSSProperties
-                    }
-                  >
-                  {currentPlaylist.imageSrc && (
-                    <img src={currentPlaylist.imageSrc} alt={currentPlaylist.title} />
-                  )}
-                </div>
-
-                <div className={styles.info}>
-                  <div className={styles.title}>{currentPlaylist.title}</div>
-
-                  <div className={styles.description}>{currentPlaylist.lessonIds.length} lessons in this folder</div>
-                </div>
-              </div>
-            </div>
+            <ActivePlaylist currentPlaylist={currentPlaylist} />
           )}
           {(currentFolder || !currentFolder) && !currentPlaylist && (
             <FoldersList
-            currentFolder={currentFolder}
-            onFolderClick={handleFolderClick}
-          />
+              currentFolder={currentFolder}
+              onFolderClick={handleFolderClick}
+            />
           )}
           {/* <Sort /> */}
 
           {/* Root /lessons */}
           {!isFolderView && !isPlaylistView && (
             <PlaylistTable
-              playlists={playlists}
+              playlists={currentPlaylists}
               currentFolder={currentFolder}
               onPlaylistClick={handlePlaylistClick}
               onPlaylistMenu={handlePlaylistMenu}
@@ -174,7 +182,7 @@ export function LessonsPage() {
           {isFolderView && (
             <>
               <PlaylistTable
-                playlists={playlists}
+                playlists={currentPlaylists}
                 currentFolder={currentFolder}
                 onPlaylistClick={handlePlaylistClick}
                 onPlaylistMenu={handlePlaylistMenu}
@@ -182,7 +190,7 @@ export function LessonsPage() {
               />
 
               <LessonTable
-                lessons={lessons}
+                lessons={currentLessons}
                 currentFolder={currentFolder}
                 activeLessonId={activeLesson?.id}
                 onLessonClick={handleLessonClick}
@@ -195,7 +203,7 @@ export function LessonsPage() {
           {/* /lessons/playlists/:playlistId */}
           {isPlaylistView && (
             <LessonTable
-              lessons={lessons}
+              lessons={currentLessons}
               activeLessonId={activeLesson?.id}
               onLessonClick={handleLessonClick}
               onLessonMenu={handleLessonMenu}
@@ -203,7 +211,12 @@ export function LessonsPage() {
             />
           )}
 
-          {/* <Pagination /> */}
+          <Pagination
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
         <div className={styles.wideCardContainer}>
           {activeLesson && (

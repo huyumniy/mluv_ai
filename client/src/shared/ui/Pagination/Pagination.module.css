@@ -1,0 +1,26 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.paginationButton {
+    display: flex;
+    min-inline-size: 50px;
+    block-size: 50px;
+    color: var(--color-text-primary);
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.paginationButton[data-active="true"] {
+    background-color: var(--color-primary-100);
+    border: none;
+    color: var(--color-primary);
+}

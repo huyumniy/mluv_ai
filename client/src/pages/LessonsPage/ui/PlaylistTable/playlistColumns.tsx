@@ -55,7 +55,7 @@ export function createPlaylistColumns({
             <div className={styles.info}>
               <div className={styles.title}>{String(value)}</div>
 
-              <div className={styles.description}>{playlist.topic}</div>
+              <div className={styles.description}>{playlist.description}</div>
             </div>
           </div>
         )

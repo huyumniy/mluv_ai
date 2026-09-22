@@ -359,6 +359,64 @@ export const lessonSummaries: LessonSummary[] = [
       "folder-vocabulary",
     ],
   },
+  {
+    id: "lesson-czech-idioms-b1",
+    type: "lesson",
+    
+    title: "Czech Idioms in Conversation",
+    description:
+      "Learn common Czech idioms and expressions used in everyday conversation, along with their meanings and usage.",
+    level: "B1",
+    topic: "Idioms",
+    
+    durationMinutes: 22,
+    phraseCount: 30,
+    progress: 0,
+    
+    imageSrc: spellCheckImage,
+    audioSrc: temp,
+    
+    availableFiles: ["mp3", "pdf"],
+    
+    createdAt: "2026-09-05T10:00:00.000Z",
+    updatedAt: "2026-09-05T10:00:00.000Z",
+    
+    status: "not-started",
+    
+    folderIds: [
+      "folder-daily-life",
+      "folder-custom-difficult-phrases",
+    ],
+  },
+  {
+    id: "lesson-czech-culture-a2",
+    type: "lesson",
+    
+    title: "Czech Culture and Traditions",
+    description:
+      "Explore Czech culture, traditions, holidays, and social customs to better understand the context of the language.",
+    level: "A2",
+    topic: "Culture",
+    
+    durationMinutes: 18,
+    phraseCount: 25,
+    progress: 0,
+    
+    imageSrc: atTheRestaurantImage,
+    audioSrc: temp,
+    
+    availableFiles: ["mp3", "pdf"],
+    
+    createdAt: "2026-09-08T14:00:00.000Z",
+    updatedAt: "2026-09-08T14:00:00.000Z",
+    
+    status: "not-started",
+    
+    folderIds: [
+      "folder-daily-life",
+      "folder-vocabulary",
+    ], 
+  },
 ];
 
 
