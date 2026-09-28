@@ -9,8 +9,6 @@ import { SoundWaveIcon } from "@/shared/assets/icons/SoundWaveIcon";
 import { restaurantTranscript, type LessonSummary } from "@/entities/lesson/model";
 import { ArrosClockwiseIcon } from "@/shared/assets/icons/ArrosClockwiseIcon";
 import audio from "@/shared/assets/audios/lesson.mp3";
-import temp from "@/shared/assets/audios/temp.mp3";
-
 
 export function CreateLessonPhrasesPage() {
   const { topicId } = useParams();
@@ -54,7 +52,7 @@ export function CreateLessonPhrasesPage() {
     };
 
     navigate(
-      `/lessons/${lesson.id}`,
+      `/create-lesson/${lesson.id}`,
       {
         state: {
           lesson,

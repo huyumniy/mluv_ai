@@ -1,10 +1,11 @@
 import { useEffect, useState, type ReactNode } from "react";
 
-import { useLocation, useNavigate, useParams } from "react-router";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router";
 
 import styles from "./LessonPage.module.css";
 
 import {
+  lessonSummaries,
   reflexivePronounsGrammar,
   restaurantTranscript,
   verbVocabulary,
@@ -42,22 +43,30 @@ interface InfoItem {
 export function LessonPage() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const { lessonId } = useParams();
 
-  const initialLesson = (location.state as LessonPageState | null)?.lesson;
+  const stateLesson = (location.state as LessonPageState | null)?.lesson;
 
-  // initial lesson for development
-  const [lesson, setLesson] = useState<LessonSummary | null>(
-    initialLesson ?? null,
-  );
+  const [lesson, setLesson] =
+    useState<LessonSummary | null>(() => {
+      if (stateLesson) {
+        return stateLesson;
+      }
+
+      return (
+        lessonSummaries.find(
+          (lesson) => lesson.id === lessonId,
+        ) ?? null
+      );
+    });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!lessonId) return;
+    if (!lessonId || lesson) return;
 
     const loadLesson = async () => {
       try {
@@ -75,7 +84,7 @@ export function LessonPage() {
     };
 
     loadLesson();
-  }, [lessonId]);
+  }, [lessonId, lesson]);
 
   const handleBack = () => {
     navigate(`/create-lesson/${lesson?.topic}/settings`);
@@ -83,7 +92,7 @@ export function LessonPage() {
   const handleSaveToLibrary = () => {
     // TODO: save lesson
   };
-  const handleRegenerate = () => { 
+  const handleRegenerate = () => {
     // TODO: regenerate lesson
   };
   const handleDownloadAudio = () => {
@@ -92,6 +101,14 @@ export function LessonPage() {
   const handleDownloadDocument = () => {
     // TODO: Download PDF
   };
+
+  if (isLoading) {
+    return <div>Loading lesson...</div>;
+  }
+
+  if (!lesson) {
+    return <Navigate to="/404" replace />;
+  }
 
   const infoItems: InfoItem[] = [
     {

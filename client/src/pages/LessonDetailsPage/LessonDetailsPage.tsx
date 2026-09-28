@@ -28,7 +28,9 @@ export function LessonDetailsPage() {
 
   const state = location.state;
   const lesson = lessonSummaries.find((ls) => ls.id === lessonId);
-
+  if (!lesson) {
+    return <div>Lesson not found</div>
+  }
   const customTabs: CustomLessonTab[] = [
     {
       id: "lesson-summary",
