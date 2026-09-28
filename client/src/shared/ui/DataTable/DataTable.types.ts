@@ -14,6 +14,7 @@ export interface Column<T> {
     value: T[keyof T] | undefined,
     row: T,
   ) => ReactNode;
+  sortable?: boolean;
   visibility?: ColumnVisibility;
 };
 

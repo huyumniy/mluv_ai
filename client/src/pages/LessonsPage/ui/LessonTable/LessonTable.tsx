@@ -10,9 +10,9 @@ interface LessonTableProps {
 
   activeLessonId?: string;
 
-  onLessonClick: (lesson: LessonSummary) => void;
-  onLessonMenu: (lesson: LessonSummary) => void;
-  onLessonPlay: (lesson: LessonSummary) => void;
+  onOpen: (lesson: LessonSummary) => void;
+  onClick: (lesson: LessonSummary) => void;
+  onPlay: (lesson: LessonSummary) => void;
 
 }
 
@@ -20,21 +20,21 @@ export function LessonTable({
   lessons,
   currentFolder,
   activeLessonId,
-  onLessonClick,
-  onLessonMenu,
-  onLessonPlay,
+  onOpen,
+  onClick,
+  onPlay,
 }: LessonTableProps) {
   const columns = createLessonColumns({
     currentFolder,
-    onLessonMenu,
-    onLessonPlay,
+    onOpen,
+    onPlay,
   });
 
   return (
     <DataTable
       data={lessons}
       columns={columns}
-      onRowClick={onLessonClick}
+      onRowClick={onClick}
       activeRowId={activeLessonId}
     />
   );

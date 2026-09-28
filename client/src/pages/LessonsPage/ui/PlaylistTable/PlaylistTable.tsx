@@ -10,29 +10,29 @@ interface PlaylistTableProps {
   currentFolder?: LessonFolder;
   activeLessonId?: string;
 
-  onPlaylistClick: (playlist: LessonPlaylistSummary) => void;
-  onPlaylistMenu: (playlist: LessonPlaylistSummary) => void;
-  onPlaylistPlay: (playlist: LessonPlaylistSummary) => void;
+  onClick: (playlist: LessonPlaylistSummary) => void;
+  onMenu: (playlist: LessonPlaylistSummary) => void;
+  onPlay: (playlist: LessonPlaylistSummary) => void;
 }
 
 export function PlaylistTable({
   playlists,
   currentFolder,
-  onPlaylistClick,
-  onPlaylistMenu,
-  onPlaylistPlay,
+  onClick,
+  onMenu,
+  onPlay,
 }: PlaylistTableProps) {
   const columns = createPlaylistColumns({
     currentFolder,
-    onPlaylistMenu,
-    onPlaylistPlay,
+    onMenu,
+    onPlay,
   });
 
   return (
     <DataTable
         data={playlists}
         columns={columns}
-        onRowClick={onPlaylistClick}
+        onRowClick={onClick}
     />
   );
 }

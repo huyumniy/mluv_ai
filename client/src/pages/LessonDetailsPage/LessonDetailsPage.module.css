@@ -1,0 +1,81 @@
+.container {
+  position: relative;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  gap: var(--space-12);
+
+  min-inline-size: 0;
+  min-block-size: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+  container-type: inline-size;
+}
+
+.content {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    inline-size: 100%;
+    min-inline-size: 0;
+    flex: 1 1 0;
+    align-self: stretch;
+}
+
+.detailedSection {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    max-inline-size: 992px;
+    inline-size: 100%;
+}
+
+.commandButtons {
+    display: flex;
+    flex-wrap: wrap;
+
+    min-block-size: 100px;
+    padding: var(--space-2);
+    align-items: center;
+    gap: var(--space-6);
+    inline-size: 100%;
+
+    button {
+        flex: 1 1 300px;
+        min-inline-size: 220px;
+
+        min-block-size: 60px;
+
+        svg, img {
+            inline-size: 35px;
+            block-size: 35px;
+        }
+    }
+}
+
+
+.wideCardContainer {
+    display: flex;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-border);
+    background: var(--color-white);
+    width: min-content;
+    min-inline-size: 500px;
+}
+
+
+@container (width <= 992px) {
+    .content {
+        flex-wrap: wrap;
+    }
+
+    .wideCardContainer {
+        flex: 1 1 100%;
+        inline-size: 100%;
+    }
+}

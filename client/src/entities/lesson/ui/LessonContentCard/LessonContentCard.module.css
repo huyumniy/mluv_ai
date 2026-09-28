@@ -5,8 +5,8 @@
   overflow: hidden;
 }
 
-.content[fixed-height="true"] {
-  block-size: 240px;
+.content[data-fixed-height="true"] {
+  block-size: var(--content-block-size);
 }
 
 .contentInner {

@@ -1,48 +1,44 @@
-import { displayLessonFolders } from "@/entities/folder/model/lesson-folder/lessonFolder.mock";
-import { getPlaylistLessons } from "@/entities/lesson/model/getPlaylistLessons";
-import { lessonPlaylists, lessonSummaries } from "@/entities/lesson/model/mocks/lesson.mock";
-import { useParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
+import type { LessonsQuery, LessonTab } from "../LessonPage.types";
+
+const lessonTabs: LessonTab[] = [
+    "all-lessons",
+    "my-library",
+    "explore-lessons",
+    "saved",
+];
+
+function isLessonTab(value: string | null): value is LessonTab {
+    return lessonTabs.includes(value as LessonTab)
+}
 
 export function useLessonsPage() {  
     const { folderId, playlistId } = useParams();
-    const currentFolder = folderId
-      ? (displayLessonFolders.find(
-          (folder) => folder.id === folderId)
-        )
-      : undefined;
-    const currentPlaylist = playlistId
-      ? lessonPlaylists.find(
-          (playlist) => playlist.id === playlistId,
-        )
-      : undefined;
+    const [searchParams] = useSearchParams();
+    const viewParam = searchParams.get("view");
+
+    const activeView = isLessonTab(viewParam)
+        ? viewParam
+        : "all-lessons";
     
-    const isFolderView = Boolean(currentFolder);
-    const isPlaylistView = Boolean(currentPlaylist);
+    const isFolderView = Boolean(folderId);
+    const isPlaylistView = Boolean(playlistId);
     const isRootView = !isFolderView && !isPlaylistView;
+    
 
-    const playlists = currentFolder
-        ? lessonPlaylists.filter((playlist) =>
-            playlist.folderIds.includes(currentFolder.id),
-        )
-        : lessonPlaylists;
-
-    const lessons = currentPlaylist
-        ? getPlaylistLessons(
-            currentPlaylist,
-            lessonSummaries,
-        )
-        : currentFolder
-        ? lessonSummaries.filter((lesson) =>
-            lesson.folderIds.includes(currentFolder.id),
-            )
-        : [];
+    const query: LessonsQuery = {
+        view: activeView,
+        folderId,
+        playlistId,
+    };
 
     return {
-        currentFolder,
-        currentPlaylist,
+        query,
 
-        playlists,
-        lessons,
+        activeView,
+
+        folderId,
+        playlistId,
 
         isFolderView,
         isPlaylistView,

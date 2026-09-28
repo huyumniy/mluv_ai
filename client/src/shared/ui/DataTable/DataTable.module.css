@@ -26,6 +26,10 @@
   text-align: start;
 }
 
+.table th:last-child {
+  text-align: end;
+}
+
 .tableRow {
     position: relative;
 }
@@ -34,7 +38,6 @@
     position: relative;
     border-bottom: var(--border-width-medium) solid var(--color-border);
 }
-
 
 .tableRow:has(+ .tableRow[data-active="true"]) td {
     border-block-end-color: transparent;

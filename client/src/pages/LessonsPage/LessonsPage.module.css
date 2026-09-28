@@ -17,10 +17,11 @@
   container-type: inline-size;
 }
 
+
 .content {
     display: flex;
     align-items: flex-start;
-    gap: 50px;
+    gap: var(--space-12);
     flex: 1 0 0;
     align-self: stretch;
 }
@@ -50,7 +51,8 @@
 
 .tabs {
     font-size: var(--font-size-body-large);
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: var(--space-2);
 
     button {
         flex:none;
@@ -100,6 +102,8 @@
 }
 
 .actionsButton {    
+    padding: var(--space-1) var(--space-4);
+
     svg {
         width: 30px;
         height: 30px;
@@ -148,11 +152,7 @@
     }
 }
 
-.wideCardContainer {
-    display: flex;
-}
-
-@container (width <= 992px) {
+@container (width <= 1200px) {
     .wideCardContainer {
         display: none;
     }

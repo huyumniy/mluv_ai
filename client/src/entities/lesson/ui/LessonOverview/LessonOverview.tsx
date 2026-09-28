@@ -20,21 +20,16 @@ import { ClosedFolderIcon } from "@/shared/assets/icons/ClosedFolderIcon";
 import { PlusIcon } from "@/shared/assets/icons/PlusIcon";
 import { ShareIcon } from "@/shared/assets/icons/ShareIcon";
 import { TrashBoxIcon } from "@/shared/assets/icons/TrashBoxIcon";
+import { formatDate } from "@/shared/lib/formatDate";
 
 interface LessonOverviewProps {
   lesson: LessonSummary;
   isDetailed: boolean;
+  showDescription?: boolean;
 }
 
-function formatDate(dateString: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-  }).format(new Date(dateString));
-}
 
-export function LessonOverview({ lesson, isDetailed }: LessonOverviewProps) {
+export function LessonOverview({ lesson, isDetailed = false, showDescription = true }: LessonOverviewProps) {
   const progress = Math.min(100, Math.max(0, lesson.progress ?? 0));
   const folders = getLessonFolders(lesson, lessonFolders)
 
@@ -92,7 +87,7 @@ export function LessonOverview({ lesson, isDetailed }: LessonOverviewProps) {
 
   return (
     <div className={styles.container}>
-      <p>{lesson.description}</p>
+      <p>{ showDescription && lesson.description}</p>
       <div className={styles.items}>
         {details.map((detail) => (
           <div key={detail.label} className={styles.item}>

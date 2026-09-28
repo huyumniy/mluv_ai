@@ -8,8 +8,10 @@
 
 .headerInner {
     display: flex;
-    width: 100%;
+    inline-size: 100%;
     gap: var(--space-6);
+
+    flex-wrap: wrap;
 }
 
 .lesson {
@@ -18,26 +20,33 @@
 }
 
 .icon {
-    background-color: var(--color-primary-100);
-    padding: var(--space-5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius-lg);
+  aspect-ratio: 1;
+  padding: var(--space-5);
+  flex-shrink: 0;
+  align-self: flex-start;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-primary-100);
+  border-radius: var(--radius-lg);
 }
 
-.icon svg {
-    width: 64px;
-    height: 64px;
-    aspect-ratio: 1/1;
-}
-
+.icon svg,
 .icon img {
-    width: 64px;
-    height: 64px;
-    aspect-ratio: 1/1;
-
+  inline-size: 64px;
+  block-size: 64px;
 }
+
+.icon[data-active="true"] {
+    svg,
+    img {
+        inline-size: 150px;
+        block-size: 150px;
+    }
+}
+
 
 .icon g rect {
     fill: var(--color-septenary);
@@ -45,7 +54,8 @@
 
 .content {
     display: flex;
-    width: 100%;
+    flex: 1 1 500px;
+    min-inline-size: 0;
     flex-direction: column;
     gap: var(--space-4);
 }
@@ -91,7 +101,61 @@
 }
 
 .details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
+}
+
+.folders {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--font-size-md);
+    flex-wrap: wrap;
+
+    span {
+        text-wrap: nowrap;
+    }
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    flex-wrap: wrap;
+    font-size: var(--font-size-body-default);
+}
+
+.infoItem {
+    display: flex;
+    gap: var(--space-1);
+    text-wrap: nowrap;
+}
+
+
+.infoItem svg {
+    block-size: 24px;
+    inline-size: 24px;
+    color: var(--color-text-secondary);
+}
+
+.infoItem:not(:last-child)::after {
+    content: "|";
+    margin-inline-start: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+@media (width <= 992px) {
+    .icon[data-active="true"] {
+        svg,
+        img {
+            inline-size: 100px;
+            block-size: 100px;
+        }
+    }
 }

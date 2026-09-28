@@ -36,3 +36,9 @@
 .separator {
   color: var(--color-text-secondary);
 }
+
+@media (width <= 576px) {
+  .breadcrumbs {
+    display: none;
+  }
+}

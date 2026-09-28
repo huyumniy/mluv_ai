@@ -8,23 +8,56 @@ import { PauseCircleIcon } from "@/shared/assets/icons/PauseCircleIcon";
 import { EllipsisVerticalIcon } from "@/shared/assets/icons/EllipsisVerticalIcon";
 
 import styles from "../../LessonsPage.module.css";
-
+import { OpenDetailedIcon } from "@/shared/assets/icons/OpenDetailedIcon";
+import { Dropdown } from "@/shared/ui/Dropdown";
 interface LessonActionsProps {
   lesson: LessonSummary;
 
+  onOpen: (lesson: LessonSummary) => void;
   onPlay: (lesson: LessonSummary) => void;
-  onMenu: (lesson: LessonSummary) => void;
 }
 
 export function LessonActions({
   lesson,
+  onOpen,
   onPlay,
-  onMenu,
+
 }: LessonActionsProps) {
   const { isPlaying } = useLessonPlayer(lesson);
 
+  const menuItems = [
+    {
+      id: "rename",
+      label: "Rename",
+      onClick: () => {},
+    },
+    {
+      id: "mark-listened",
+      label: "Mark as listened",
+      onClick: () => {},
+    },
+    {
+      id: "delete",
+      label: "Delete",
+      destructive: true,
+      onClick: () => {},
+    },
+  ];
+
   return (
     <div className={styles.actionsButtonContainer}>
+      <Button
+        onClick={(event) => {
+          event.stopPropagation();
+          onOpen(lesson);
+        }}
+        className={styles.actionsButton}
+        variant="ternary"
+        size="sm"
+      >
+        {<OpenDetailedIcon />}
+      </Button>
+
       <Button
         onClick={(event) => {
           event.stopPropagation();
@@ -41,17 +74,18 @@ export function LessonActions({
         )}
       </Button>
 
-      <Button
+      <div
+        className={styles.actionsButton}
         onClick={(event) => {
           event.stopPropagation();
-          onMenu(lesson);
         }}
-        className={styles.actionsButton}
-        variant="ternary"
-        size="sm"
       >
-        <EllipsisVerticalIcon />
-      </Button>
+        <Dropdown
+          align="right"
+          trigger={<EllipsisVerticalIcon />}
+          items={menuItems}
+        />
+      </div>
     </div>
   );
 }

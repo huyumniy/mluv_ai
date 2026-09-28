@@ -15,14 +15,14 @@ import { LessonActions } from "./LessonActions";
 
 interface CreateLessonColumnsParams {
   currentFolder?: LessonFolder;
-  onLessonMenu: (lesson: LessonSummary) => void;
-  onLessonPlay: (lesson: LessonSummary) => void;
+  onOpen: (lesson: LessonSummary) => void;
+  onPlay: (lesson: LessonSummary) => void;
 }
 
 export function createLessonColumns({
   currentFolder,
-  onLessonMenu,
-  onLessonPlay,
+  onOpen,
+  onPlay,
 }: CreateLessonColumnsParams): Column<LessonSummary>[] {
   return [
     {
@@ -119,8 +119,8 @@ export function createLessonColumns({
       render: (_, lesson) => (
         <LessonActions
           lesson={lesson}
-          onPlay={onLessonPlay}
-          onMenu={onLessonMenu} 
+          onOpen={onOpen}
+          onPlay={onPlay}
         />
       ),
       visibility: "always",

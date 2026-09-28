@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router";
 
 import styles from "./LessonsPage.module.css";
 
@@ -23,8 +23,8 @@ import { FoldersList } from "./ui/FoldersList";
 import { getPlaylistLessons } from "@/entities/lesson/model/getPlaylistLessons";
 import { ActivePlaylist } from "./ui/ActivePlaylist";
 import { Pagination, usePagination } from "@/shared/ui/Pagination";
-
-type LessonTab = "all-lessons" | "my-library" | "explore-lessons" | "saved";
+import type { LessonTab } from "./LessonPage.types";
+import { getMockLessonsData } from "./lib/getMockLessonsData";
 
 const tabItems: TabItem<LessonTab>[] = [
   {
@@ -46,21 +46,21 @@ const tabItems: TabItem<LessonTab>[] = [
 ];
 
 export function LessonsPage() {
-  const [activeTab, setActiveTab] = useState<LessonTab>("all-lessons");
+  const [, setSearchParams] = useSearchParams();
   const { activeLesson, playLesson, playQueue } = useLessonPlayer();
   const navigate = useNavigate();
 
   const {
-    currentFolder,
-    currentPlaylist,
-
-    playlists,
-    lessons,
+    query,
+    activeView,
 
     isFolderView,
     isPlaylistView,
     isRootView,
   } = useLessonsPage();
+
+  const { lessons, playlists, currentPlaylist, currentFolder } =
+    getMockLessonsData(query);
 
   const totalItems = isFolderView
     ? playlists.length + lessons.length
@@ -94,6 +94,17 @@ export function LessonsPage() {
         )
       : [];
 
+  const handleTabChange = (tab: LessonTab) => {
+    if (tab === "all-lessons") {
+      setSearchParams({});
+      return;
+    }
+
+    setSearchParams({
+      view: tab,
+    });
+  };
+
   const handleFolderClick = (folder: LessonFolder) => {
     if (folder.id === "all-lessons") {
       navigate("/lessons");
@@ -111,10 +122,6 @@ export function LessonsPage() {
     playLesson(lesson);
   };
 
-  const handleLessonMenu = (lesson: LessonSummary) => {
-    console.log("menu", lesson);
-  };
-
   const handleLessonPlay = (lesson: LessonSummary) => {
     if (currentPlaylist) {
       const lessonIndex = lessons.findIndex((item) => item.id === lesson.id);
@@ -124,6 +131,38 @@ export function LessonsPage() {
     }
 
     playQueue([lesson]);
+  };
+
+  const handleLessonOpen = (lesson: LessonSummary) => {
+    const breadcrumbs = [
+      {
+        label: "Lessons",
+        path: "/lessons",
+      },
+
+      ...(currentFolder
+        ? [
+            {
+              label: currentFolder.name,
+              path: `/lessons/folders/${currentFolder.id}`,
+            },
+          ]
+        : []),
+
+      ...(currentPlaylist
+        ? [
+            {
+              label: currentPlaylist.title,
+              path: `/lessons/playlists/${currentPlaylist.id}`,
+            },
+          ]
+        : []),
+    ];
+    navigate(`/lessons/${lesson.id}`, {
+      state: {
+        breadcrumbs,
+      },
+    });
   };
 
   const handlePlaylistMenu = (playlist: LessonPlaylistSummary) => {
@@ -139,7 +178,7 @@ export function LessonsPage() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [currentFolder?.id, currentPlaylist?.id]);
+  }, [currentFolder?.id, currentPlaylist?.id, setCurrentPage]);
 
   return (
     <div className={styles.container}>
@@ -151,8 +190,8 @@ export function LessonsPage() {
         <div className={styles.libraryContainer}>
           <Tabs<LessonTab>
             items={tabItems}
-            value={activeTab}
-            onValueChange={setActiveTab}
+            value={activeView}
+            onValueChange={handleTabChange}
             ariaLabel="Lesson content"
             className={styles.tabs}
           />
@@ -165,16 +204,15 @@ export function LessonsPage() {
               onFolderClick={handleFolderClick}
             />
           )}
-          {/* <Sort /> */}
 
           {/* Root /lessons */}
           {!isFolderView && !isPlaylistView && (
             <PlaylistTable
               playlists={currentPlaylists}
               currentFolder={currentFolder}
-              onPlaylistClick={handlePlaylistClick}
-              onPlaylistMenu={handlePlaylistMenu}
-              onPlaylistPlay={handlePlaylistPlay}
+              onClick={handlePlaylistClick}
+              onMenu={handlePlaylistMenu}
+              onPlay={handlePlaylistPlay}
             />
           )}
 
@@ -184,18 +222,18 @@ export function LessonsPage() {
               <PlaylistTable
                 playlists={currentPlaylists}
                 currentFolder={currentFolder}
-                onPlaylistClick={handlePlaylistClick}
-                onPlaylistMenu={handlePlaylistMenu}
-                onPlaylistPlay={handlePlaylistPlay}
+                onClick={handlePlaylistClick}
+                onMenu={handlePlaylistMenu}
+                onPlay={handlePlaylistPlay}
               />
 
               <LessonTable
                 lessons={currentLessons}
                 currentFolder={currentFolder}
                 activeLessonId={activeLesson?.id}
-                onLessonClick={handleLessonClick}
-                onLessonMenu={handleLessonMenu}
-                onLessonPlay={handleLessonPlay}
+                onOpen={handleLessonOpen}
+                onClick={handleLessonClick}
+                onPlay={handleLessonPlay}
               />
             </>
           )}
@@ -205,9 +243,9 @@ export function LessonsPage() {
             <LessonTable
               lessons={currentLessons}
               activeLessonId={activeLesson?.id}
-              onLessonClick={handleLessonClick}
-              onLessonMenu={handleLessonMenu}
-              onLessonPlay={handleLessonPlay}
+              onOpen={handleLessonOpen}
+              onClick={handleLessonClick}
+              onPlay={handleLessonPlay}
             />
           )}
           <div className={styles.paginationContainer}>

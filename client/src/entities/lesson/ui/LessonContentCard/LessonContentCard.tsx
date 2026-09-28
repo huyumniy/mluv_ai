@@ -3,6 +3,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
 } from "react";
 
 import clsx from "clsx";
@@ -49,6 +50,7 @@ export function LessonContentCard({
   transcript,
   isDetailed = true,
   fixedHeight = true,
+  fixedBlockSize = "240px",
   customTabs = [],
 }: LessonContentCardProps) {
   const availableTabs = useMemo<
@@ -79,17 +81,25 @@ export function LessonContentCard({
       },
     );
 
-    const additionalTabs = customTabs.map(
-      (tab) => ({
-        value: getCustomTabId(tab),
-        label: tab.label,
-      }),
-    );
+    const startTabs = customTabs
+    .filter((tab) => tab.placement === "start")
+    .map((tab) => ({
+      value: getCustomTabId(tab),
+      label: tab.label,
+    }));
 
-    return [
-      ...builtInTabs,
-      ...additionalTabs,
-    ];
+  const endTabs = customTabs
+    .filter((tab) => tab.placement !== "start")
+    .map((tab) => ({
+      value: getCustomTabId(tab),
+      label: tab.label,
+    }));
+
+  return [
+    ...startTabs,
+    ...builtInTabs,
+    ...endTabs,
+  ];
   }, [
     lesson,
     grammar,
@@ -157,7 +167,7 @@ export function LessonContentCard({
     switch (activeTab) {
       case "overview":
         return lesson ? (
-          <LessonOverview isDetailed={isDetailed} lesson={lesson} />
+          <LessonOverview fixedHeight={fixedHeight} isDetailed={isDetailed} lesson={lesson} />
         ) : null;
 
       case "grammar":
@@ -234,7 +244,10 @@ export function LessonContentCard({
             styles.hasOverflow,
           isExpanded && styles.expanded,
         )}
-        fixed-height={fixedHeight}
+        data-fixed-height={fixedHeight}
+        style={{
+          "--content-block-size": fixedBlockSize,
+        } as CSSProperties}
         role="tabpanel"
         id={`lesson-panel-${activeTab}`}
         onClick={handleContentClick}

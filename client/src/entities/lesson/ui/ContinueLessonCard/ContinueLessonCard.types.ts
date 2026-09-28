@@ -10,5 +10,4 @@ export interface ContinueLessonCardProps {
 
   onContinue: (lessonId: string) => void;
   onPlay?: (lessonId: string) => void;
-  onMenuClick?: (lessonId: string) => void;
 }

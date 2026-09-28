@@ -9,14 +9,14 @@ import { displayLessonFolders, type LessonFolder } from "@/entities/folder/model
 interface CreatePlaylistColumnsParams {
   currentFolder?: LessonFolder;
 
-  onPlaylistMenu: (playlist: LessonPlaylistSummary) => void;
-  onPlaylistPlay: (playlist: LessonPlaylistSummary) => void;
+  onMenu: (playlist: LessonPlaylistSummary) => void;
+  onPlay: (playlist: LessonPlaylistSummary) => void;
 }
 
 export function createPlaylistColumns({
   currentFolder,
-  onPlaylistMenu,
-  onPlaylistPlay,
+  onMenu,
+  onPlay,
 }: CreatePlaylistColumnsParams): Column<LessonPlaylistSummary>[] {
   return [
     {
@@ -80,8 +80,8 @@ export function createPlaylistColumns({
       render: (_, playlist) => (
         <PlaylistActions
           playlist={playlist}
-          onPlay={onPlaylistPlay}
-          onMenu={onPlaylistMenu}
+          onPlay={onPlay}
+          onMenu={onMenu}
         />
       ),
 
