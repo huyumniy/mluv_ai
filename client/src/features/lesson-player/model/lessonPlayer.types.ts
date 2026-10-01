@@ -23,15 +23,15 @@ export interface LessonPlayerActions {
     playLesson: (lesson: LessonSummary) => Promise<void>;
 
     setQueue: (lesson: LessonSummary[]) => void;
-    addToQueue: (lesson: LessonSummary[]) => void;
-    removeFromQueue: (lesson: LessonSummary[]) => void;
+    addToQueue: (lesson: LessonSummary) => void;
+    removeFromQueue: (lessonId: string) => void;
 
     playNext: () => Promise<void>;
     playPrevious: () => Promise<void>;
     playQueue: (lessons: LessonSummary[], startIndex?: number) => void;
     playFromQueue: (index: number) => Promise<void>;
     shuffleQueue: () => void;
-    repeatQueueState: () => void;
+    repeatQueueState: RepeatQueueStatus;
     changeSpeed: (speed: number) => void;
     togglePlay: () => Promise<void>;
     toggleMute: () => void;

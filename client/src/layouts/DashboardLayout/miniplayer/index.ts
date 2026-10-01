@@ -1,0 +1,1 @@
+export { Miniplayer } from "./Miniplayer";

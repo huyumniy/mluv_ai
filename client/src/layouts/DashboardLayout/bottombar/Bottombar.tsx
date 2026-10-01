@@ -297,10 +297,12 @@ export function Bottombar({ className }: BottombarProps) {
       className={clsx(styles.bottombar, className)}
       data-expanded={expanded}
     >
-      {activeLesson && <button
-        onClick={() => setExpanded((prev) => !prev)}
-        className={styles.swipeHandle}
-      />}
+      {activeLesson && (
+        <button
+          onClick={() => setExpanded((prev) => !prev)}
+          className={styles.swipeHandle}
+        />
+      )}
       {expanded ? (
         <MobilePlayerExpanded />
       ) : (

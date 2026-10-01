@@ -4,7 +4,7 @@ export function PlusIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 16 16"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
@@ -19,7 +19,7 @@ export function PlusIcon(props: SVGProps<SVGSVGElement>) {
         <rect width={16} height={16} fill="url(#pattern0_248_6962)" />
       </mask>
       <g mask="url(#mask0_248_6962)">
-        <rect width={16} height={16} fill="#4F3D35" />
+        <rect width={16} height={16} fill="currentColor" />
       </g>
       <defs>
         <pattern
