@@ -1,4 +1,5 @@
-from typing import Annotated, List
+from typing import Annotated
+from fastapi_pagination import Page, paginate
 
 from fastapi import (
     APIRouter,
@@ -34,12 +35,13 @@ DbSession = Annotated[
 
 @router.get(
     "/",
-    response_model=List[LessonResponse],
+    response_model=Page[LessonResponse],
 )
 def get_lessons(
     db: DbSession,
 ):
-    return service.get_all(db)
+    lessons = service.get_all(db)
+    return paginate(lessons)
 
 
 @router.get(

@@ -51,6 +51,7 @@ def update(
 ) -> Lesson:
     values = data.model_dump(
         exclude_unset=True,
+        
     )
 
     for field, value in values.items():
