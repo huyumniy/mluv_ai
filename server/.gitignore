@@ -27,6 +27,7 @@ dist/
 *.db
 celerybeat-schedule
 celerybeat.pid
+uploads/
 
 .cache/
 !alembic/
