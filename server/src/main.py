@@ -11,7 +11,7 @@ from src.storage import UPLOAD_DIR
 
 app = FastAPI(
     title="MLUV API",
-    version="0.1.0,"
+    version="0.2.0"
 )
 
 @app.get('/')
