@@ -6,3 +6,9 @@ class LessonLevel(StrEnum):
     B1 = "B1"
     B2 = "B2"
     C1 = "C1"
+
+class LessonStatus(StrEnum):
+    CONTINUE = "continue"
+    NOT_STARTED = "not-started"
+    LISTENED = "listened"
+    
