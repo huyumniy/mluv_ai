@@ -20,7 +20,9 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from src.database import Base
-from src.lessons import models
+from src.lessons import models as lesson_models
+from src.playlists import models as playlist_models
+from src.folders import models as folder_models
 
 config = context.config
 

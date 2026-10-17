@@ -1,8 +1,8 @@
-"""add pagination
+"""playlist relationships models fixes
 
-Revision ID: 367f3ee507a4
-Revises: 1d17b6ee435b
-Create Date: 2026-10-07 18:06:33.520571
+Revision ID: be1c9486e4f1
+Revises: 61a09939b894
+Create Date: 2026-10-12 11:25:25.656416
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '367f3ee507a4'
-down_revision: Union[str, Sequence[str], None] = '1d17b6ee435b'
+revision: str = 'be1c9486e4f1'
+down_revision: Union[str, Sequence[str], None] = '61a09939b894'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
