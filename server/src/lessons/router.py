@@ -6,6 +6,9 @@ from fastapi import (
     Depends,
     HTTPException,
     status,
+    File,
+    UploadFile,
+    Path
 )
 from sqlalchemy.orm import Session
 
@@ -41,7 +44,10 @@ def get_lessons(
     db: DbSession,
 ):
     lessons = service.get_all(db)
-    return paginate(lessons)
+    return paginate([
+        service.to_response(lesson)
+        for lesson in lessons
+    ])
 
 
 @router.get(
@@ -49,12 +55,12 @@ def get_lessons(
     response_model=LessonResponse,
 )
 def get_lesson(
-    lesson_id: int,
+    lesson_id: Annotated[int, Path(gt=0)],
     db: DbSession,
 ):
     lesson = service.get_by_id(
         db,
-        lesson_id,
+        lesson_id
     )
 
     if not lesson:
@@ -63,7 +69,7 @@ def get_lesson(
             detail="Lesson not found",
         )
 
-    return lesson
+    return service.to_response(lesson)
 
 @router.post(
     "/",
@@ -74,10 +80,12 @@ def create_lesson(
     data: LessonCreate,
     db: DbSession,
 ):
-    return service.create(
+    result = service.create(
         db,
         data,
     )
+
+    return service.to_response(result)
 
 
 @router.patch(
@@ -85,7 +93,7 @@ def create_lesson(
     response_model=LessonResponse,
 )
 def update_lesson(
-    lesson_id: int,
+    lesson_id: Annotated[int, Path(gt=0)],
     data: LessonUpdate,
     db: DbSession,
 ):
@@ -100,11 +108,58 @@ def update_lesson(
             detail="Lesson not found",
         )
 
-    return service.update(
+    result = service.update(
         db,
         lesson,
         data,
     )
+
+    return service.to_response(result)
+
+
+@router.patch(
+    "/{lesson_id}/files",
+    response_model=LessonResponse,
+)
+def update_lesson_files(
+    lesson_id: Annotated[int, Path(gt=0)],
+    db: DbSession,
+
+    image: Annotated[
+        UploadFile | None,
+        File(),
+    ] = None,
+
+    audio: Annotated[
+        UploadFile | None,
+        File(),
+    ] = None,
+
+    pdf: Annotated[
+        UploadFile | None,
+        File(),
+    ] = None,
+):
+    lesson = service.get_by_id(
+        db,
+        lesson_id,
+    )
+
+    if not lesson:
+        raise HTTPException(
+            status_code=404,
+            detail="Lesson not found",
+        )
+
+    result = service.update_files(
+        db,
+        lesson,
+        image=image,
+        audio=audio,
+        pdf=pdf,
+    )
+
+    return service.to_response(result)
 
 
 @router.delete(
@@ -112,7 +167,7 @@ def update_lesson(
     status_code=status.HTTP_204_NO_CONTENT,
 )
 def delete_lesson(
-    lesson_id: int,
+    lesson_id: Annotated[int, Path(gt=0)],
     db: DbSession,
 ):
     lesson = service.get_by_id(
