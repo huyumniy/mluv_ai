@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 import src.folders.models
 import src.lessons.models
 import src.playlists.models
+import src.users.models
 
 ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 

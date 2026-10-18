@@ -1,7 +1,7 @@
 import pytest
 from httpx import AsyncClient
 
-from server.tests.integration.helpers import (
+from .helpers import (
     create_folder,
     create_lesson,
     create_playlist,

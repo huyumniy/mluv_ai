@@ -1,6 +1,6 @@
 import pytest
 from httpx import AsyncClient
-from helpers import create_lesson, create_folder
+from .helpers import create_lesson, create_folder
 
 @pytest.mark.anyio
 async def test_get_lesson(
