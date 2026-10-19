@@ -1,6 +1,6 @@
 import pytest
 from httpx import AsyncClient
-from .helpers import create_lesson, create_folder
+from .helpers import create_lesson, create_folder, get_authenticated_client, register_user
 
 @pytest.mark.anyio
 async def test_get_lesson(
@@ -141,9 +141,13 @@ async def test_update_lesson_preserves_omitted_fields(
 async def test_update_lesson_removes_all_folders(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+    
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     lesson = await create_lesson(
@@ -171,14 +175,20 @@ async def test_update_lesson_removes_all_folders(
 async def test_update_lesson_replaces_folder(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+    
     grammar = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     work = await create_folder(
         client,
         name="Work",
+        token=auth_client.token
+
     )
 
     lesson = await create_lesson(
@@ -210,9 +220,13 @@ async def test_update_lesson_replaces_folder(
 async def test_update_lesson_keeps_folders_when_folder_ids_omitted(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     lesson = await create_lesson(
@@ -359,9 +373,13 @@ async def test_delete_lesson(
 async def test_create_lesson_with_folder(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     folder = await create_folder(
         client,
-        name="Grammar"
+        name="Grammar",
+        token=auth_client.token
     )
 
     lesson = await create_lesson(
@@ -420,9 +438,12 @@ async def test_create_lesson_with_invalid_folder_id_type(
 async def test_create_lesson_rejects_if_one_folder_does_not_exist(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     response = await client.post(
@@ -446,14 +467,19 @@ async def test_create_lesson_rejects_if_one_folder_does_not_exist(
 async def test_create_lesson_with_multiple_folders(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     grammar = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     work = await create_folder(
         client,
         name="Work",
+        token=auth_client.token
     )
 
     lesson = await create_lesson(
@@ -474,9 +500,13 @@ async def test_create_lesson_with_multiple_folders(
 async def test_get_lesson_returns_folder_ids(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     lesson = await create_lesson(
@@ -501,9 +531,13 @@ async def test_get_lesson_returns_folder_ids(
 async def test_lessons_list_returns_folder_ids(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     await create_lesson(
@@ -527,40 +561,16 @@ async def test_lessons_list_returns_folder_ids(
 
 
 @pytest.mark.anyio
-async def test_update_lesson_removes_all_folders(
-    client: AsyncClient,
-):
-    folder = await create_folder(
-        client,
-        name="Grammar",
-    )
-
-    lesson = await create_lesson(
-        client,
-        folder_ids=[
-            folder["id"],
-        ],
-    )
-
-    response = await client.patch(
-        f"/lessons/{lesson['id']}",
-        json={
-            "folderIds": [],
-        },
-    )
-
-    assert response.status_code == 200
-
-    assert response.json()["folderIds"] == []
-
-
-@pytest.mark.anyio
 async def test_delete_folder_does_not_delete_lesson(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     lesson = await create_lesson(
@@ -570,7 +580,7 @@ async def test_delete_folder_does_not_delete_lesson(
         ],
     )
 
-    delete_response = await client.delete(
+    delete_response = await auth_client.delete(
         f"/folders/{folder['id']}"
     )
 

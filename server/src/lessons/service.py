@@ -17,15 +17,6 @@ from src.lessons.schemas import LessonResponse
 def to_response(
     lesson: Lesson,
 ) -> LessonResponse:
-    print(
-        "LESSON:",
-        lesson.id,
-        "FOLDERS:",
-        [
-            folder.slug
-            for folder in lesson.folders
-        ],
-    )
     return LessonResponse(
         id=lesson.id,
         slug=lesson.slug,

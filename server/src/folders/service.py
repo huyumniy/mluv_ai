@@ -25,8 +25,10 @@ def to_response(
     )
 
 
-def get_all(db: Session) -> list[Folder]:
-    statement = select(Folder)
+def get_all(db: Session, user_id: int) -> list[Folder]:
+    statement = select(Folder).where(
+        Folder.user_id == user_id
+    )
 
     return list(
         db.scalars(statement).all()
@@ -35,9 +37,11 @@ def get_all(db: Session) -> list[Folder]:
 def get_by_slug(
     db: Session,
     slug: str,
+    user_id: int,
 ) -> Folder | None:
     statement = select(Folder).where(
-        Folder.slug == slug
+        Folder.slug == slug,
+        Folder.user_id == user_id
     )
 
     return db.scalar(statement)
@@ -46,12 +50,14 @@ def get_by_slug(
 def create(
     db: Session,
     data: FolderCreate,
+    user_id: int
 ) -> Folder:
     folder = Folder(
         name=data.name,
         slug=slugify(data.name),
         color=data.color,
         type=data.type,
+        user_id=user_id,
     )
 
     db.add(folder)

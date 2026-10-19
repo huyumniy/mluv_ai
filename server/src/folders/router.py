@@ -12,6 +12,7 @@ from fastapi import (
 from sqlalchemy.orm import Session
 
 from src.database import get_db
+from src.auth.dependencies import CurrentUser
 from src.folders import service
 from src.folders.schemas import (
     FolderCreate,
@@ -44,8 +45,9 @@ DbSession = Annotated[
 )
 def get_folders(
     db: DbSession,
+    current_user: CurrentUser
 ):
-    folders = service.get_all(db)
+    folders = service.get_all(db, current_user.id)
     return paginate(folders)
 
 
@@ -56,10 +58,12 @@ def get_folders(
 def get_folder(
     folder_id: str,
     db: DbSession,
+    current_user: CurrentUser
 ):
     folder = service.get_by_slug(
         db,
         folder_id,
+        current_user.id
     )
 
     if not folder:
@@ -79,10 +83,12 @@ def get_folder(
 def create_folder(
     data: FolderCreate,
     db: DbSession,
+    current_user: CurrentUser
 ):
     result = service.create(
         db,
         data,
+        current_user.id
     )
 
     return service.to_response(result)
@@ -96,10 +102,12 @@ def update_folder(
     folder_id: str,
     data: FolderUpdate,
     db: DbSession,
+    current_user: CurrentUser
 ):
     folder = service.get_by_slug(
         db,
         folder_id,
+        current_user.id
     )
 
     if not folder:
@@ -124,10 +132,12 @@ def update_folder(
 def delete_folder(
     folder_id: str,
     db: DbSession,
+    current_user: CurrentUser
 ):
     folder = service.get_by_slug(
         db,
         folder_id,
+        current_user.id
     )
 
     if not folder:

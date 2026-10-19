@@ -30,6 +30,15 @@ class Folder(Base):
         nullable=False,
     )
 
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE",
+        ),
+        nullable=True,
+        index=True,
+    )
+
     type: Mapped[FolderType] = mapped_column(
         Enum(
             FolderType,

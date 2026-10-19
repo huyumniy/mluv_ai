@@ -5,6 +5,8 @@ from .helpers import (
     create_folder,
     create_lesson,
     create_playlist,
+    get_authenticated_client,
+    register_user
 )
 
 
@@ -96,9 +98,13 @@ async def test_playlist_preserves_lesson_order(
 async def test_create_playlist_with_folder(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     folder = await create_folder(
         client,
         name="Grammar",
+        token=auth_client.token
     )
 
     playlist = await create_playlist(

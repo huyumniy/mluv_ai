@@ -19,7 +19,6 @@ from src.playlists.models import (
 def to_response(
     playlist: Playlist,
 ) -> PlaylistResponse:
-    print(playlist.playlist_lessons)
     return PlaylistResponse(
         id=playlist.id,
         slug=playlist.slug,
