@@ -51,8 +51,10 @@ def to_response(
     )
 
 
-def get_all(db: Session) -> list[Lesson]:
-    statement = select(Lesson).options(selectinload(Lesson.folders))
+def get_all(db: Session, user_id: int) -> list[Lesson]:
+    statement = select(Lesson) \
+        .where(Lesson.user_id == user_id) \
+        .options(selectinload(Lesson.folders))
 
     return list(
         db.scalars(statement).all()
@@ -62,16 +64,26 @@ def get_all(db: Session) -> list[Lesson]:
 def get_by_id(
     db: Session,
     lesson_id: int,
+    user_id: int,
 ) -> Lesson | None:
-    return db.get(
-        Lesson,
-        lesson_id,
+    statement = (
+        select(Lesson)
+        .where(
+            Lesson.id == lesson_id,
+            Lesson.user_id == user_id,
+        )
+        .options(
+            selectinload(Lesson.folders)
+        )
     )
+
+    return db.scalar(statement)
 
 
 def create(
     db: Session,
     data: LessonCreate,
+    user_id: int,
 ) -> Lesson:
     lesson = Lesson(
         title=data.title,
@@ -79,12 +91,14 @@ def create(
         topic=data.topic,
         level=data.level,
         slug=slugify(data.title),
+        user_id=user_id
     )
 
     if data.folder_ids is not None:
         lesson.folders = get_folders_by_slugs(
             db,
             data.folder_ids,
+            user_id,
         )
 
     db.add(lesson)
@@ -98,6 +112,7 @@ def update(
     db: Session,
     lesson: Lesson,
     data: LessonUpdate,
+    user_id: int,
 ) -> Lesson:
     values = data.model_dump(
         exclude_unset=True,
@@ -118,6 +133,7 @@ def update(
         lesson.folders = get_folders_by_slugs(
             db,
             data.folder_ids,
+            user_id,
         )
 
     db.commit()

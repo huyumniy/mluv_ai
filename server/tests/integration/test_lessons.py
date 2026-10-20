@@ -6,13 +6,17 @@ from .helpers import create_lesson, create_folder, get_authenticated_client, reg
 async def test_get_lesson(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     lesson = await create_lesson(
         client,
         title="Czech Cases",
+        token=auth_client.token,
     )
 
-    response = await client.get(
-        f"/lessons/{lesson['id']}"
+    response = await auth_client.get(
+        f"/lessons/{lesson['id']}",
     )
 
     assert response.status_code == 200
@@ -27,7 +31,10 @@ async def test_get_lesson(
 async def test_get_non_existing_lesson_returns_404(
     client: AsyncClient,
 ):
-    response = await client.get(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+    
+    response = await auth_client.get(
         "/lessons/99999"
     )
 
@@ -38,9 +45,11 @@ async def test_get_non_existing_lesson_returns_404(
 async def test_get_invalid_lesson_returns_422(
     client: AsyncClient,
 ):
-    response = await client.get(
-        "/lessons/invalid"
-    )
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.get(
+        "/lessons/invalid"    )
 
     assert response.status_code == 422
 
@@ -49,7 +58,10 @@ async def test_get_invalid_lesson_returns_422(
 async def test_get_lesson_rejects_zero_id(
     client: AsyncClient,
 ):
-    response = await client.get("/lessons/0")
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.get("/lessons/0")
 
     assert response.status_code == 422
 
@@ -58,7 +70,10 @@ async def test_get_lesson_rejects_zero_id(
 async def test_get_lesson_rejects_negative_id(
     client: AsyncClient,
 ):
-    response = await client.get("/lessons/-1")
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.get("/lessons/-1")
 
     assert response.status_code == 422
 
@@ -67,7 +82,10 @@ async def test_get_lesson_rejects_negative_id(
 async def test_get_lesson_rejects_zero_id(
     client: AsyncClient,
 ):
-    response = await client.get("/lessons/0")
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.get("/lessons/0")
 
     assert response.status_code == 422
 
@@ -76,7 +94,10 @@ async def test_get_lesson_rejects_zero_id(
 async def test_get_lesson_rejects_negative_id(
     client: AsyncClient,
 ):
-    response = await client.get("/lessons/-1")
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.get("/lessons/-1")
 
     assert response.status_code == 422
 
@@ -85,12 +106,16 @@ async def test_get_lesson_rejects_negative_id(
 async def test_update_lesson(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     lesson = await create_lesson(
         client,
         title="Czech Cases",
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "title": "Advanced Czech Cases",
@@ -113,14 +138,18 @@ async def test_update_lesson(
 async def test_update_lesson_preserves_omitted_fields(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     lesson = await create_lesson(
         client,
         title="Czech Cases",
         topic="Grammar",
         level="B1",
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "title": "Updated Czech Cases",
@@ -155,9 +184,10 @@ async def test_update_lesson_removes_all_folders(
         folder_ids=[
             folder["id"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "folderIds": [],
@@ -196,9 +226,10 @@ async def test_update_lesson_replaces_folder(
         folder_ids=[
             grammar["id"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "folderIds": [
@@ -234,9 +265,10 @@ async def test_update_lesson_keeps_folders_when_folder_ids_omitted(
         folder_ids=[
             folder["id"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "title": "Updated Czech Cases",
@@ -256,11 +288,16 @@ async def test_update_lesson_keeps_folders_when_folder_ids_omitted(
 async def test_update_lesson_with_non_existing_folder_returns_422(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     lesson = await create_lesson(
         client,
+        token=auth_client.token
+
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "folderIds": [
@@ -276,7 +313,10 @@ async def test_update_lesson_with_non_existing_folder_returns_422(
 async def test_update_non_existing_lesson_returns_404(
     client: AsyncClient,
 ):
-    response = await client.patch(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.patch(
         "/lessons/999999",
         json={
             "title": "Updated",
@@ -290,11 +330,15 @@ async def test_update_non_existing_lesson_returns_404(
 async def test_update_lesson_with_invalid_level_returns_422(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     lesson = await create_lesson(
         client,
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/lessons/{lesson['id']}",
         json={
             "level": "Z99",
@@ -308,18 +352,21 @@ async def test_update_lesson_with_invalid_level_returns_422(
 async def test_delete_lesson(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     lesson = await create_lesson(
         client,
+        token=auth_client.token
     )
 
-    response = await client.delete(
+    response = await auth_client.delete(
         f"/lessons/{lesson['id']}"
     )
 
     assert response.status_code == 204
 
-    # Make sure it was REALLY deleted.
-    response = await client.get(
+    response = await auth_client.get(
         f"/lessons/{lesson['id']}"
     )
 
@@ -330,7 +377,10 @@ async def test_delete_lesson(
 async def test_delete_non_existing_lesson_returns_404(
     client: AsyncClient,
 ):
-    response = await client.delete(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.delete(
         "/lessons/999999"
     )
 
@@ -341,7 +391,10 @@ async def test_delete_non_existing_lesson_returns_404(
 async def test_delete_invalid_lesson_id_returns_422(
     client: AsyncClient,
 ):
-    response = await client.delete(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.delete(
         "/lessons/invalid"
     )
 
@@ -351,18 +404,22 @@ async def test_delete_invalid_lesson_id_returns_422(
 async def test_delete_lesson(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
     lesson = await create_lesson(
         client,
         title="Czech Cases",
+        token=auth_client.token
     )
 
-    response = await client.delete(
+    response = await auth_client.delete(
         f"/lessons/{lesson['id']}"
     )
 
     assert response.status_code == 204
 
-    response = await client.get(
+    response = await auth_client.get(
         f"/lessons/{lesson['id']}"
     )
 
@@ -386,7 +443,8 @@ async def test_create_lesson_with_folder(
         client,
         folder_ids= [
             folder["id"]
-        ]
+        ],
+        token=auth_client.token
     )
 
     assert lesson["folderIds"] == [
@@ -398,7 +456,10 @@ async def test_create_lesson_with_folder(
 async def test_create_lesson_with_non_existing_folder_id(
     client: AsyncClient,
 ):
-    response = await client.post(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.post(
         "/lessons/",
         json={
             "title": "Czech Cases",
@@ -418,7 +479,10 @@ async def test_create_lesson_with_non_existing_folder_id(
 async def test_create_lesson_with_invalid_folder_id_type(
     client: AsyncClient,
 ):
-    response = await client.post(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+        
+    response = await auth_client.post(
         "/lessons/",
         json={
             "title": "Czech Cases",
@@ -446,7 +510,7 @@ async def test_create_lesson_rejects_if_one_folder_does_not_exist(
         token=auth_client.token
     )
 
-    response = await client.post(
+    response = await auth_client.post(
         "/lessons/",
         json={
             "title": "Czech Cases",
@@ -488,6 +552,7 @@ async def test_create_lesson_with_multiple_folders(
             grammar["id"],
             work["id"],
         ],
+        token=auth_client.token
     )
 
     assert set(lesson["folderIds"]) == {
@@ -514,9 +579,10 @@ async def test_get_lesson_returns_folder_ids(
         folder_ids=[
             folder["id"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.get(
+    response = await auth_client.get(
         f"/lessons/{lesson['id']}"
     )
 
@@ -545,9 +611,10 @@ async def test_lessons_list_returns_folder_ids(
         folder_ids=[
             folder["id"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.get(
+    response = await auth_client.get(
         "/lessons/"
     )
 
@@ -578,6 +645,7 @@ async def test_delete_folder_does_not_delete_lesson(
         folder_ids=[
             folder["id"],
         ],
+        token=auth_client.token
     )
 
     delete_response = await auth_client.delete(
@@ -586,7 +654,7 @@ async def test_delete_folder_does_not_delete_lesson(
 
     assert delete_response.status_code == 204
 
-    lesson_response = await client.get(
+    lesson_response = await auth_client.get(
         f"/lessons/{lesson['id']}"
     )
 

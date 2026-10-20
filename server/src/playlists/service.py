@@ -1,9 +1,10 @@
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from slugify import slugify
 from src.playlists.models import Playlist
 from src.storage import get_file_url
 from src.helpers import get_folders_by_slugs, get_lessons_by_slugs
+from src.auth.dependencies import CurrentUser
 from src.playlists.models import Playlist
 from src.playlists.schemas import (
     PlaylistCreate,
@@ -45,8 +46,10 @@ def to_response(
         ],
     )
 
-def get_all(db: Session) -> list[Playlist]:
-    statement = select(Playlist)
+def get_all(db: Session, user_id: int) -> list[Playlist]:
+    statement = select(Playlist) \
+    .where(Playlist.user_id == user_id) \
+    .options(selectinload(Lesson.folders))
 
     return list(
         db.scalars(statement).all()
@@ -56,38 +59,50 @@ def get_all(db: Session) -> list[Playlist]:
 def get_by_id(
     db: Session,
     playlist_id: int,
+    user_id: int
 ) -> Playlist | None:
-    return db.get(
-        Playlist,
-        playlist_id,
+    statement = (
+        select(Playlist)
+        .where(
+            Playlist.id == playlist_id,
+            Playlist.user_id == user_id,
+        )
+        .options(
+            selectinload(Playlist.folders)
+        )
     )
+    return db.scalar(statement)
 
 
 def create(
     db: Session,
     data: PlaylistCreate,
+    user_id: int
 ) -> Playlist:
     playlist = Playlist(
         title=data.title,
         description=data.description,
         topic=data.topic,
-        slug=slugify(data.title)
+        slug=slugify(data.title),
+        user_id=user_id,
     )
 
     if data.folder_ids is not None:
         playlist.folders = get_folders_by_slugs(
             db,
             data.folder_ids,
+            user_id
         )
 
     lessons = get_lessons_by_slugs(
         db,
         data.lesson_ids,
+        user_id
     )
 
     set_playlist_lessons(
         playlist,
-        lessons,
+        lessons
     )
 
     db.add(playlist)
@@ -101,6 +116,7 @@ def update(
     db: Session,
     playlist: Playlist,
     data: PlaylistUpdate,
+    user_id: int
 ) -> Playlist:
     values = data.model_dump(
         exclude_unset=True,
@@ -122,17 +138,19 @@ def update(
         playlist.folders = get_folders_by_slugs(
             db,
             data.folder_ids,
+            user_id,
         )
 
     if data.lesson_ids is not None:
         lessons = get_lessons_by_slugs(
             db,
             data.lesson_ids,
+            user_id,
         )
 
         set_playlist_lessons(
             playlist,
-            lessons,
+            lessons
         )
 
     db.commit()

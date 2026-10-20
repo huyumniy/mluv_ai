@@ -14,7 +14,10 @@ from .helpers import (
 async def test_create_playlist(
     client: AsyncClient,
 ):
-    response = await client.post(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
+    response = await auth_client.post(
         "/playlists/",
         json={
             "title": "Grammar Essentials",
@@ -42,14 +45,19 @@ async def test_create_playlist(
 async def test_create_playlist_with_lessons(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     first = await create_lesson(
         client,
         title="Czech Cases",
+        token=auth_client.token
     )
 
     second = await create_lesson(
         client,
         title="Czech Pronouns",
+        token=auth_client.token
     )
 
     playlist = await create_playlist(
@@ -58,6 +66,7 @@ async def test_create_playlist_with_lessons(
             first["slug"],
             second["slug"],
         ],
+        token=auth_client.token
     )
 
     assert playlist["lessonIds"] == [
@@ -70,14 +79,19 @@ async def test_create_playlist_with_lessons(
 async def test_playlist_preserves_lesson_order(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     first = await create_lesson(
         client,
         title="Czech Cases",
+        token=auth_client.token
     )
 
     second = await create_lesson(
         client,
         title="Czech Pronouns",
+        token=auth_client.token
     )
 
     playlist = await create_playlist(
@@ -86,6 +100,7 @@ async def test_playlist_preserves_lesson_order(
             second["slug"],
             first["slug"],
         ],
+        token=auth_client.token
     )
 
     assert playlist["lessonIds"] == [
@@ -112,6 +127,7 @@ async def test_create_playlist_with_folder(
         folder_ids=[
             folder["id"],
         ],
+        token=auth_client.token
     )
 
     assert playlist["folderIds"] == [
@@ -122,11 +138,15 @@ async def test_create_playlist_with_folder(
 async def test_get_playlist(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     playlist = await create_playlist(
         client,
+        token=auth_client.token
     )
 
-    response = await client.get(
+    response = await auth_client.get(
         f"/playlists/{playlist['id']}"
     )
 
@@ -142,7 +162,10 @@ async def test_get_playlist(
 async def test_get_non_existing_playlist_returns_404(
     client: AsyncClient,
 ):
-    response = await client.get(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
+    response = await auth_client.get(
         "/playlists/999999"
     )
 
@@ -153,7 +176,10 @@ async def test_get_non_existing_playlist_returns_404(
 async def test_get_invalid_playlist_id_returns_422(
     client: AsyncClient,
 ):
-    response = await client.get(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
+    response = await auth_client.get(
         "/playlists/invalid"
     )
 
@@ -163,11 +189,15 @@ async def test_get_invalid_playlist_id_returns_422(
 async def test_update_playlist(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     playlist = await create_playlist(
         client,
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/playlists/{playlist['id']}",
         json={
             "title": "Advanced Grammar",
@@ -189,13 +219,17 @@ async def test_update_playlist(
 async def test_update_playlist_preserves_omitted_fields(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     playlist = await create_playlist(
         client,
         title="Grammar Essentials",
         topic="Grammar",
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/playlists/{playlist['id']}",
         json={
             "title": "Updated title",
@@ -216,14 +250,19 @@ async def test_update_playlist_preserves_omitted_fields(
 async def test_update_playlist_replaces_lessons(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     first = await create_lesson(
         client,
         title="Lesson One",
+        token=auth_client.token
     )
 
     second = await create_lesson(
         client,
         title="Lesson Two",
+        token=auth_client.token
     )
 
     playlist = await create_playlist(
@@ -231,9 +270,10 @@ async def test_update_playlist_replaces_lessons(
         lesson_ids=[
             first["slug"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/playlists/{playlist['id']}",
         json={
             "lessonIds": [
@@ -253,8 +293,12 @@ async def test_update_playlist_replaces_lessons(
 async def test_update_playlist_removes_all_lessons(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     lesson = await create_lesson(
         client,
+        token=auth_client.token
     )
 
     playlist = await create_playlist(
@@ -262,9 +306,10 @@ async def test_update_playlist_removes_all_lessons(
         lesson_ids=[
             lesson["slug"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/playlists/{playlist['id']}",
         json={
             "lessonIds": [],
@@ -280,8 +325,12 @@ async def test_update_playlist_removes_all_lessons(
 async def test_update_playlist_keeps_lessons_when_omitted(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     lesson = await create_lesson(
         client,
+        token=auth_client.token
     )
 
     playlist = await create_playlist(
@@ -289,9 +338,10 @@ async def test_update_playlist_keeps_lessons_when_omitted(
         lesson_ids=[
             lesson["slug"],
         ],
+        token=auth_client.token
     )
 
-    response = await client.patch(
+    response = await auth_client.patch(
         f"/playlists/{playlist['id']}",
         json={
             "title": "Updated Playlist",
@@ -309,17 +359,21 @@ async def test_update_playlist_keeps_lessons_when_omitted(
 async def test_delete_playlist(
     client: AsyncClient,
 ):
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
     playlist = await create_playlist(
         client,
+        token=auth_client.token
     )
 
-    response = await client.delete(
+    response = await auth_client.delete(
         f"/playlists/{playlist['id']}"
     )
 
     assert response.status_code == 204
 
-    response = await client.get(
+    response = await auth_client.get(
         f"/playlists/{playlist['id']}"
     )
 
@@ -330,7 +384,10 @@ async def test_delete_playlist(
 async def test_delete_non_existing_playlist_returns_404(
     client: AsyncClient,
 ):
-    response = await client.delete(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
+    response = await auth_client.delete(
         "/playlists/999999"
     )
 
@@ -341,7 +398,10 @@ async def test_delete_non_existing_playlist_returns_404(
 async def test_create_playlist_with_non_existing_lesson_returns_422(
     client: AsyncClient,
 ):
-    response = await client.post(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
+    response = await auth_client.post(
         "/playlists/",
         json={
             "title": "Grammar Essentials",
@@ -361,7 +421,10 @@ async def test_create_playlist_with_non_existing_lesson_returns_422(
 async def test_create_playlist_with_non_existing_folder_returns_422(
     client: AsyncClient,
 ):
-    response = await client.post(
+    await register_user(client)
+    auth_client = await get_authenticated_client(client)
+
+    response = await auth_client.post(
         "/playlists/",
         json={
             "title": "Grammar Essentials",

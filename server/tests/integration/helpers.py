@@ -134,9 +134,13 @@ async def create_lesson(
     topic: str = "Grammar",
     level: str = "B1",
     folder_ids: list[str] | None = None,
+    token: str
 ) -> dict:
     response = await client.post(
         "/lessons/",
+        headers={
+            "Authorization": f"Bearer {token}",
+        },
         json={
             "title": title,
             "description": f"Description for {title}",
@@ -156,36 +160,16 @@ async def create_playlist(
     *,
     title: str = "Grammar Essentials",
     topic: str = "Grammar",
-    lesson_ids: list[str] | None = None,
-    folder_ids: list[str] | None = None,
-) -> dict:
-    response = await client.post(
-        "/playlists/",
-        json={
-            "title": title,
-            "description": f"Description for {title}",
-            "topic": topic,
-            "lessonIds": lesson_ids or [],
-            "folderIds": folder_ids or [],
-        },
-    )
-
-    assert response.status_code == 201
-
-    return response.json()
-
-
-async def create_playlist(
-    client: AsyncClient,
-    *,
-    title: str = "Grammar Essentials",
-    topic: str = "Grammar",
     description: str = "Useful grammar lessons",
     lesson_ids: list[str] | None = None,
     folder_ids: list[str] | None = None,
+    token: str
 ) -> dict:
     response = await client.post(
         "/playlists/",
+        headers={
+            "Authorization": f"Bearer {token}",
+        },
         json={
             "title": title,
             "description": description,

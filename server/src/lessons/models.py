@@ -1,4 +1,4 @@
-from sqlalchemy import DateTime, String, Text, Enum, Integer, func
+from sqlalchemy import DateTime, String, Text, Enum, Integer, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from datetime import datetime
@@ -84,6 +84,15 @@ class Lesson(Base):
     pdf_key: Mapped[str | None] = mapped_column(
         String(512),
         nullable=True,
+    )
+
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE",
+        ),
+        nullable=True,
+        index=True,
     )
 
     created_at: Mapped[datetime] = mapped_column(

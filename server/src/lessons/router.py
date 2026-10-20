@@ -13,6 +13,7 @@ from fastapi import (
 from sqlalchemy.orm import Session
 
 from src.database import get_db
+from src.auth.dependencies import CurrentUser
 from src.lessons import service
 from src.lessons.schemas import (
     LessonCreate,
@@ -42,8 +43,9 @@ DbSession = Annotated[
 )
 def get_lessons(
     db: DbSession,
+    current_user: CurrentUser,
 ):
-    lessons = service.get_all(db)
+    lessons = service.get_all(db, current_user.id)
     return paginate([
         service.to_response(lesson)
         for lesson in lessons
@@ -57,10 +59,12 @@ def get_lessons(
 def get_lesson(
     lesson_id: Annotated[int, Path(gt=0)],
     db: DbSession,
+    current_user: CurrentUser,
 ):
     lesson = service.get_by_id(
         db,
-        lesson_id
+        lesson_id,
+        current_user.id,
     )
 
     if not lesson:
@@ -71,6 +75,7 @@ def get_lesson(
 
     return service.to_response(lesson)
 
+
 @router.post(
     "/",
     response_model=LessonResponse,
@@ -79,10 +84,12 @@ def get_lesson(
 def create_lesson(
     data: LessonCreate,
     db: DbSession,
+    current_user: CurrentUser
 ):
     result = service.create(
         db,
         data,
+        current_user.id
     )
 
     return service.to_response(result)
@@ -96,10 +103,12 @@ def update_lesson(
     lesson_id: Annotated[int, Path(gt=0)],
     data: LessonUpdate,
     db: DbSession,
+    current_user: CurrentUser
 ):
     lesson = service.get_by_id(
         db,
         lesson_id,
+        current_user.id
     )
 
     if not lesson:
@@ -112,6 +121,7 @@ def update_lesson(
         db,
         lesson,
         data,
+        current_user.id
     )
 
     return service.to_response(result)
@@ -124,6 +134,7 @@ def update_lesson(
 def update_lesson_files(
     lesson_id: Annotated[int, Path(gt=0)],
     db: DbSession,
+    current_user: CurrentUser,
 
     image: Annotated[
         UploadFile | None,
@@ -143,6 +154,7 @@ def update_lesson_files(
     lesson = service.get_by_id(
         db,
         lesson_id,
+        current_user.id
     )
 
     if not lesson:
@@ -169,10 +181,12 @@ def update_lesson_files(
 def delete_lesson(
     lesson_id: Annotated[int, Path(gt=0)],
     db: DbSession,
+    current_user: CurrentUser,
 ):
     lesson = service.get_by_id(
         db,
         lesson_id,
+        current_user.id,
     )
 
     if not lesson:

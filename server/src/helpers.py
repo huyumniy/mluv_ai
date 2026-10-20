@@ -8,6 +8,7 @@ from src.lessons.models import Lesson
 def get_folders_by_slugs(
     db: Session,
     folder_ids: list[str],
+    user_id: str,
 ) -> list[Folder]:
     if not folder_ids:
         return []
@@ -15,7 +16,8 @@ def get_folders_by_slugs(
     folders = list(
         db.scalars(
             select(Folder).where(
-                Folder.slug.in_(folder_ids)
+                Folder.slug.in_(folder_ids),
+                Folder.user_id == user_id
             )
         ).all()
     )
@@ -46,6 +48,7 @@ def get_folders_by_slugs(
 def get_lessons_by_slugs(
     db: Session,
     lesson_ids: list[str],
+    user_id: int,
 ) -> list[Lesson]:
     if not lesson_ids:
         return []
@@ -53,7 +56,8 @@ def get_lessons_by_slugs(
     lessons = list(
         db.scalars(
             select(Lesson).where(
-                Lesson.slug.in_(lesson_ids)
+                Lesson.slug.in_(lesson_ids),
+                Lesson.user_id == user_id
             )
         ).all()
     )

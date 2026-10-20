@@ -8,7 +8,7 @@ from fastapi import (
     status,
 )
 from sqlalchemy.orm import Session
-
+from src.auth.dependencies import CurrentUser
 from src.database import get_db
 from src.playlists import service
 from src.playlists.schemas import (
@@ -39,8 +39,9 @@ DbSession = Annotated[
 )
 def get_playlists(
     db: DbSession,
+    current_user: CurrentUser
 ):
-    playlists = service.get_all(db)
+    playlists = service.get_all(db, current_user.id)
     return paginate([
         service.to_response(playlist)
         for playlist in playlists
@@ -54,10 +55,12 @@ def get_playlists(
 def get_playlist(
     playlist_id: int,
     db: DbSession,
+    current_user: CurrentUser
 ):
     playlist = service.get_by_id(
         db,
         playlist_id,
+        current_user.id
     )
 
     if not playlist:
@@ -76,10 +79,12 @@ def get_playlist(
 def create_playlist(
     data: PlaylistCreate,
     db: DbSession,
+    current_user: CurrentUser
 ):
     result = service.create(
         db,
         data,
+        current_user.id
     )
 
     return service.to_response(result)
@@ -93,10 +98,12 @@ def update_playlist(
     playlist_id: int,
     data: PlaylistUpdate,
     db: DbSession,
+    current_user: CurrentUser
 ):
     playlist = service.get_by_id(
         db,
         playlist_id,
+        current_user.id
     )
 
     if not playlist:
@@ -109,6 +116,7 @@ def update_playlist(
         db,
         playlist,
         data,
+        current_user.id
     )
 
     return service.to_response(result)
@@ -121,10 +129,12 @@ def update_playlist(
 def delete_playlist(
     playlist_id: int,
     db: DbSession,
+    current_user: CurrentUser
 ):
     playlist = service.get_by_id(
         db,
         playlist_id,
+        current_user.id
     )
 
     if not playlist:

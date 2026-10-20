@@ -35,13 +35,11 @@ async def test_get_non_existing_folder_returns_404(
     client: AsyncClient,
 ):
     await register_user(client)
-    token = await login_user(client)
+    auth_client = await get_authenticated_client(client)
+   
     
-    response = await client.get(
+    response = await auth_client.get(
         "/folders/does-not-exist",
-        headers={
-            "Authorization": f"Bearer {token}",
-        },
 
     )
 
@@ -54,6 +52,7 @@ async def test_update_folder(
 ):
     await register_user(client)
     token = await login_user(client)
+
     folder = await create_folder(
         client,
         name="Grammar",

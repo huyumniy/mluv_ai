@@ -41,6 +41,15 @@ class Playlist(Base):
         nullable=True,
     )
 
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE",
+        ),
+        nullable=True,
+        index=True,
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -82,6 +91,15 @@ class PlaylistLesson(Base):
             ondelete="CASCADE",
         ),
         primary_key=True,
+    )
+
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE",
+        ),
+        nullable=True,
+        index=True,
     )
 
     position: Mapped[int] = mapped_column(
