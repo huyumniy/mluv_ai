@@ -11,6 +11,22 @@ UPLOAD_DIR.mkdir(
     exist_ok=True,
 )
 
+def get_lesson_directory(
+    lesson_id: int,
+) -> Path:
+    folder = (
+        UPLOAD_DIR
+        / "lessons"
+        / str(lesson_id)
+    )
+
+    folder.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    return folder
+
 def save_file(
     file: UploadFile,
     directory: str,

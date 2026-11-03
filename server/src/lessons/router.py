@@ -19,6 +19,7 @@ from src.lessons.schemas import (
     LessonCreate,
     LessonResponse,
     LessonUpdate,
+    LessonPhraseResponse
 )
 
 router = APIRouter(
@@ -86,6 +87,7 @@ def create_lesson(
     db: DbSession,
     current_user: CurrentUser
 ):
+    
     result = service.create(
         db,
         data,
@@ -199,3 +201,26 @@ def delete_lesson(
         db,
         lesson,
     )
+
+@router.get(
+    "/{lesson_id}/phrases",
+    response_model=list[LessonPhraseResponse],
+)
+def get_lesson_phrases(
+    lesson_id: int,
+    db: DbSession,
+    current_user: CurrentUser,
+):
+    lesson = service.get_by_id(
+        db,
+        lesson_id,
+        current_user.id,
+    )
+
+    if lesson is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Lesson not found",
+        )
+
+    return lesson.phrases

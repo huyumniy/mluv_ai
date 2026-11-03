@@ -121,3 +121,35 @@ class LessonResponse(LessonBase):
         from_attributes=True,
         populate_by_name=True,
     )
+
+
+class LessonPhrase(BaseModel):
+    position: int | None = Field(
+        default=None,
+        ge=0,
+    )
+
+    translation: str = Field(
+        min_length=1,
+        max_length=500,
+    )
+
+    original: str = Field(
+        min_length=1,
+        max_length=500,
+    )
+
+    original_slowed: str = Field(
+        min_length=1,
+        max_length=1000,
+    )
+
+class LessonPhraseResponse(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True
+    )
+    id: int
+    position: int
+    translation: str
+    original: str
+    original_slowed: str

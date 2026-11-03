@@ -37,6 +37,10 @@ class Lesson(Base):
         nullable=False
     )
 
+    topic_lesson_number: Mapped[int] = mapped_column(
+        nullable=True,
+    )
+
     level: Mapped[LessonLevel] = mapped_column(
         Enum(
             LessonLevel,
@@ -95,6 +99,18 @@ class Lesson(Base):
         index=True,
     )
 
+    phrases: Mapped[list["LessonPhrase"]] = relationship(
+        back_populates="lesson",
+        cascade="all, delete-orphan",
+        order_by="LessonPhrase.position",
+    )
+
+    grammar: Mapped["LessonGrammar"] = relationship(
+        back_populates="lesson",
+        cascade="all, delete-orphan",
+        order_by="LessonGrammar.id",
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -110,4 +126,68 @@ class Lesson(Base):
 
     folders: Mapped[list["Folder"]] = relationship(
         secondary="lesson_folders",
+    )
+
+
+class LessonPhrase(Base):
+    __tablename__ = "lesson_phrases"
+
+    id: Mapped[int] = mapped_column(
+        primary_key=True
+    )
+
+    lesson_id: Mapped[int] = mapped_column(
+        ForeignKey(
+            "lessons.id",
+            ondelete="CASCADE",
+        ),
+        index=True,
+    )
+
+    position: Mapped[int]
+
+    translation: Mapped[str]
+    original: Mapped[str]
+    original_slowed: Mapped[str]
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+    lesson: Mapped["Lesson"] = relationship(
+        back_populates="phrases"
+    )
+
+
+class LessonGrammar(Base): 
+    __tablename__ = "lesson_grammar"
+
+    id: Mapped[int] = mapped_column(
+        primary_key=True
+    )
+
+    lesson_id: Mapped[int] = mapped_column(
+        ForeignKey(
+            "lessons.id",
+            ondelete="CASCADE",
+        ),
+        index=True,
+    )
+
+    description: Mapped[str] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    lesson: Mapped["Lesson"] = relationship(
+        back_populates="grammar"
     )

@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 from slugify import slugify
 from src.lessons.models import Lesson
@@ -24,6 +24,7 @@ def to_response(
         title=lesson.title,
         description=lesson.description,
         topic=lesson.topic,
+        topic_lesson_number=lesson.topic_lesson_number,
         level=lesson.level,
 
         duration_seconds=lesson.duration_seconds,
@@ -85,10 +86,25 @@ def create(
     data: LessonCreate,
     user_id: int,
 ) -> Lesson:
+    last_number = db.scalar(
+        select(
+            func.max(
+                Lesson.topic_lesson_number
+            )
+        ).where(
+            Lesson.user_id == user_id,
+            Lesson.topic == data.topic,
+        )
+    )
+
+    next_number = (
+        (last_number or 0) + 1
+    )
     lesson = Lesson(
         title=data.title,
         description=data.description,
         topic=data.topic,
+        topic_lesson_number=next_number,
         level=data.level,
         slug=slugify(data.title),
         user_id=user_id
