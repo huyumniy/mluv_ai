@@ -1,5 +1,6 @@
 import pytest
 from httpx import AsyncClient
+from unittest.mock import Mock
 
 from src.generation.schemas import (
     MissingGrammarError,
@@ -55,6 +56,175 @@ async def test_generation_status(
     assert response.json() == {
         "status": "ok"
     }
+
+
+@pytest.mark.anyio
+async def test_generate_lesson_queues_task(
+    client: AsyncClient,
+    monkeypatch,
+):
+    await register_user(client)
+
+    auth_client = await get_authenticated_client(
+        client
+    )
+
+    lesson = await create_lesson(
+        client,
+        title="Czech Cases",
+        token=auth_client.token,
+    )
+
+    apply_async_mock = Mock()
+
+    monkeypatch.setattr(
+        generation_router.generate_lesson_task,
+        "apply_async",
+        apply_async_mock,
+    )
+
+    response = await auth_client.post(
+        f"/generation/lessons/{lesson['id']}",
+        json={
+            "type": GenerationType.NEW,
+            "phrase_count": 5,
+        },
+    )
+
+    assert response.status_code == 202
+
+    data = response.json()
+
+    assert data["lesson_id"] == lesson["id"]
+    assert data["status"] == "queued"
+    assert data["job_id"]
+    assert data["task_id"]
+
+    apply_async_mock.assert_called_once()
+
+    call = apply_async_mock.call_args.kwargs
+
+    assert call["task_id"] == data["task_id"]
+
+    assert (
+        call["kwargs"]["job_id"]
+        == data["job_id"]
+    )
+
+    assert call["kwargs"]["user_id"]
+
+    assert (
+        call["kwargs"]["generation_type"]
+        == GenerationType.NEW.value
+    )
+
+    assert (
+        call["kwargs"]["phrase_count"]
+        == 5
+    )
+
+
+@pytest.mark.anyio
+async def test_get_generation_job(
+    client: AsyncClient,
+    monkeypatch,
+):
+    await register_user(client)
+
+    auth_client = await get_authenticated_client(
+        client
+    )
+
+    lesson = await create_lesson(
+        client,
+        title="Czech Cases",
+        token=auth_client.token,
+    )
+
+    monkeypatch.setattr(
+        generation_router.generate_lesson_task,
+        "apply_async",
+        Mock(),
+    )
+
+    create_response = await auth_client.post(
+        f"/generation/lessons/{lesson['id']}",
+        json={
+            "type": GenerationType.NEW,
+            "phrase_count": 5,
+        },
+    )
+
+    assert create_response.status_code == 202
+
+    job_id = (
+        create_response
+        .json()["job_id"]
+    )
+
+    response = await auth_client.get(
+        f"/generation/jobs/{job_id}"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["id"] == job_id
+
+    assert (
+        data["lesson_id"]
+        == lesson["id"]
+    )
+
+    assert data["status"] == "queued"
+    assert data["error"] is None
+
+
+@pytest.mark.anyio
+async def test_duplicate_generation_returns_409(
+    client: AsyncClient,
+    monkeypatch,
+):
+    await register_user(client)
+
+    auth_client = await get_authenticated_client(
+        client
+    )
+
+    lesson = await create_lesson(
+        client,
+        title="Czech Cases",
+        token=auth_client.token,
+    )
+
+    monkeypatch.setattr(
+        generation_router.generate_lesson_task,
+        "apply_async",
+        Mock(),
+    )
+
+    # First generation
+    first_response = await auth_client.post(
+        f"/generation/lessons/{lesson['id']}",
+        json={
+            "type": GenerationType.NEW,
+            "phrase_count": 5,
+        },
+    )
+
+    assert first_response.status_code == 202
+
+    # Same lesson while first job is still queued
+    second_response = await auth_client.post(
+        f"/generation/lessons/{lesson['id']}",
+        json={
+            "type": GenerationType.NEW,
+            "phrase_count": 5,
+        },
+    )
+
+    assert second_response.status_code == 409
 
 
 @pytest.mark.anyio

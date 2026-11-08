@@ -4,15 +4,15 @@ from unittest.mock import Mock
 
 from src.generation.helpers import make_slow_phrase, normalize_phrase
 from src.generation import service
-from src.generation.enums import GenerationType
+from src.generation.enums import GenerationType, GenerationStatus
 from src.generation.schemas import (
     GroqPhraseBatch,
     GroqGeneratedPhrase,
     PhraseGenerationError,
     MissingGrammarError,
-    GeneratedPhrase,
     LessonGenerationRequest
 )
+from src.worker import tasks as worker_tasks
 
 def test_make_slow_phrase():
     result1 = make_slow_phrase(phrase="ty nechceš jít")
@@ -377,3 +377,250 @@ def test_repeat_mode_returns_existing_phrases(monkeypatch):
 
     generate_mock.assert_not_called()
     db.commit.assert_not_called()
+
+
+def test_generate_lesson_task_success(
+    monkeypatch,
+):
+    db = Mock()
+
+    job = SimpleNamespace(
+        id=1,
+        user_id=10,
+        lesson_id=20,
+        status=GenerationStatus.QUEUED.value,
+        error=None,
+    )
+
+    lesson = SimpleNamespace(
+        id=20,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks,
+        "SessionLocal",
+        lambda: db,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.generation_service,
+        "get_by_id",
+        lambda **kwargs: job,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.lesson_service,
+        "get_by_id",
+        lambda **kwargs: lesson,
+    )
+
+    def fake_generate_lesson(
+        db,
+        data,
+        lesson,
+        on_stage,
+    ):
+        on_stage(
+            GenerationStatus.GENERATING_PHRASES
+        )
+
+        on_stage(
+            GenerationStatus.GENERATING_AUDIO
+        )
+
+        on_stage(
+            GenerationStatus.GENERATING_PDF
+        )
+
+    monkeypatch.setattr(
+        worker_tasks.generation_service,
+        "generate_lesson",
+        fake_generate_lesson,
+    )
+
+    result = (
+        worker_tasks
+        .generate_lesson_task
+        .run(
+            job_id=job.id,
+            user_id=job.user_id,
+            generation_type=(
+                GenerationType.REPEAT.value
+            ),
+            phrase_count=5,
+        )
+    )
+
+    assert result == {
+        "job_id": job.id,
+        "lesson_id": lesson.id,
+    }
+
+    assert (
+        job.status
+        == GenerationStatus.SUCCESS.value
+    )
+
+    assert job.error is None
+
+    db.close.assert_called_once()
+
+
+def test_generate_lesson_task_failure(
+    monkeypatch,
+):
+    db = Mock()
+
+    job = SimpleNamespace(
+        id=1,
+        user_id=10,
+        lesson_id=20,
+        status=GenerationStatus.QUEUED.value,
+        error=None,
+    )
+
+    lesson = SimpleNamespace(
+        id=20,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks,
+        "SessionLocal",
+        lambda: db,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.generation_service,
+        "get_by_id",
+        lambda **kwargs: job,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.lesson_service,
+        "get_by_id",
+        lambda **kwargs: lesson,
+    )
+
+    def fake_generate_lesson(**kwargs):
+        raise ValueError(
+            "Generation failed"
+        )
+
+    monkeypatch.setattr(
+        worker_tasks.generation_service,
+        "generate_lesson",
+        fake_generate_lesson,
+    )
+
+    db.get.return_value = job
+
+    with pytest.raises(
+        ValueError,
+        match="Generation failed",
+    ):
+        (
+            worker_tasks
+            .generate_lesson_task
+            .run(
+                job_id=job.id,
+                user_id=job.user_id,
+                generation_type=(
+                    GenerationType.REPEAT.value
+                ),
+                phrase_count=5,
+            )
+        )
+
+    assert (
+        job.status
+        == GenerationStatus.FAILED.value
+    )
+
+    assert (
+        job.error
+        == "Generation failed"
+    )
+
+    db.rollback.assert_called_once()
+    db.close.assert_called_once()
+
+
+def test_generate_lesson_task_retries(
+    monkeypatch,
+):
+    db = Mock()
+
+    job = SimpleNamespace(
+        id=1,
+        user_id=10,
+        lesson_id=20,
+        status=GenerationStatus.QUEUED.value,
+        error=None,
+    )
+
+    lesson = SimpleNamespace(
+        id=20,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks,
+        "SessionLocal",
+        lambda: db,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.generation_service,
+        "get_by_id",
+        lambda **kwargs: job,
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.lesson_service,
+        "get_by_id",
+        lambda **kwargs: lesson,
+    )
+
+    def fake_generate_lesson(**kwargs):
+        raise PhraseGenerationError(
+            "Temporary generation error"
+        )
+
+    monkeypatch.setattr(
+        worker_tasks.generation_service,
+        "generate_lesson",
+        fake_generate_lesson,
+    )
+
+    retry_mock = Mock(
+        side_effect=RuntimeError(
+            "retry called"
+        )
+    )
+
+    monkeypatch.setattr(
+        worker_tasks.generate_lesson_task,
+        "retry",
+        retry_mock,
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="retry called",
+    ):
+        (
+            worker_tasks
+            .generate_lesson_task
+            .run(
+                job_id=job.id,
+                user_id=job.user_id,
+                generation_type=(
+                    GenerationType.REPEAT.value
+                ),
+                phrase_count=5,
+            )
+        )
+
+    retry_mock.assert_called_once()
+
+    db.rollback.assert_called_once()
+    db.close.assert_called_once()
