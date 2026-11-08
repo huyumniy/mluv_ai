@@ -23,7 +23,8 @@ from src.database import Base
 from src.lessons import models as lesson_models
 from src.playlists import models as playlist_models
 from src.folders import models as folder_models
-from src.users import models as user_model
+from src.users import models as user_models
+from src.generation import models as generation_models
 
 config = context.config
 

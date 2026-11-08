@@ -1,5 +1,5 @@
 import httpx
-from src.generation.settings import GROQ_API_KEY, GROQ_URL, GROQ_MODELS
+from src.generation.config import GROQ_API_KEY, GROQ_URL, GROQ_MODELS
 from src.generation.schemas import GroqPhraseBatch
 from src.generation.limits import (
     check_groq_budget,

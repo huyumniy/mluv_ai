@@ -1,4 +1,4 @@
-from src.generation.settings import CACHE_DIR
+from src.generation.config import CACHE_DIR
 
 import os
 import hashlib

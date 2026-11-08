@@ -8,18 +8,26 @@ from fastapi import (
     HTTPException,
 )
 from sqlalchemy.orm import Session
-
+from src.generation.models import GenerationJob
+from uuid import uuid4
+from src.generation.enums import GenerationStatus
 from src.generation.helpers import get_random_phrases
 from src.generation.client import (
     GroqAPIError,
     GroqRateLimitError,
 )
-
-from src.generation.settings import TARGET_LESSON_PHRASES
+from src.worker.tasks import generate_lesson_task
+from src.generation.config import TARGET_LESSON_PHRASES
 from src.database import get_db
 from src.auth.dependencies import CurrentUser
 from src.lessons.schemas import (LessonPhraseResponse)
-from src.generation.schemas import (LessonGenerationRequest, PhraseGenerationError, MissingGrammarError, LessonGenerationResponse)
+from src.generation.schemas import (
+    LessonGenerationRequest,
+    PhraseGenerationError,
+    MissingGrammarError,
+    LessonGenerationResponse,
+    GenerationTaskResponse
+)
 from src.generation.limits import (
     check_user_limits,
     get_generation_lock,
@@ -42,10 +50,41 @@ def generation_status():
         "status": "ok"
     }
 
+@router.get("/jobs/{job_id}")
+def get_job(
+    job_id: int,
+    db: DbSession,
+    current_user: CurrentUser,
+):
+    check_user_limits(
+        current_user.id
+    )
+
+    job = generation_service.get_by_id(
+        db=db,
+        job_id=job_id,
+        user_id=current_user.id,
+    )
+
+    if not job:
+        raise HTTPException(
+            status_code=404,
+            detail="Generation job is not found",
+        )
+    
+    return {
+        "id": job.id,
+        "task_id": job.task_id,
+        "lesson_id": job.lesson_id,
+        "status": job.status,
+        "error": job.error
+
+    }
+
 @router.post(
     "/lessons/{lesson_id}",
-    response_model_exclude_none=True,
-    response_model=LessonGenerationResponse
+    status_code=202,
+    response_model=GenerationTaskResponse
 )
 def generate_lesson(
     lesson_id: int,
@@ -57,82 +96,80 @@ def generate_lesson(
         current_user.id
     )
 
-    lock = get_generation_lock(
-        user_id=current_user.id,
-        lesson_id=lesson_id,
-    )
-    if not lock.acquire():
-        raise HTTPException(
-            status_code=409,
-            detail=("Generation already in progress"),
-        )
-
     lesson = lesson_service.get_by_id(
         db=db,
         lesson_id=lesson_id,
         user_id=current_user.id,
     )
-    
+
     if lesson is None:
         raise HTTPException(
             status_code=404,
             detail="Lesson not found",
         )
+    generation_jobs = generation_service.get_all(db=db, user_id=current_user.id)
+
+    active_statuses = {
+        GenerationStatus.GENERATING_PDF.value,
+        GenerationStatus.GENERATING_AUDIO.value,
+        GenerationStatus.RETRYING.value,
+        GenerationStatus.QUEUED.value,
+        GenerationStatus.GENERATING_PHRASES.value,
+    }
+    existing_job = next(
+        (
+            job
+            for job in generation_jobs
+            if (
+                job.status in active_statuses
+                and job.lesson_id == lesson_id
+            )
+        ),
+        None,
+    )
+    if existing_job:
+        raise HTTPException(409)
+
+    task_id = str(uuid4())
+
+    job = GenerationJob(
+        task_id=task_id,
+        user_id=current_user.id,
+        lesson_id=lesson.id,
+        status="queued",
+    )
+
+    db.add(job)
+    db.commit()
+    db.refresh(job)
 
     try:
-        lesson = generation_service.generate_lesson(
-            db=db,
-            data=data,
-            lesson=lesson,
+        generate_lesson_task.apply_async(
+            kwargs={
+                "job_id": job.id,
+                "user_id": current_user.id,
+                "generation_type": data.type.value,
+                "phrase_count": data.phrase_count,
+            },
+            task_id=task_id,
         )
+    except Exception as exc:
+        job.status = "failed"
+        job.error = exc
 
-    except MissingGrammarError as exc:
-        raise HTTPException(
-            status_code=422,
-            detail=str(exc),
-        ) from exc
+        db.commit()
 
-    except GroqRateLimitError as exc:
         raise HTTPException(
             status_code=503,
-            detail={
-                "message": (
-                    "AI rate limit reached. "
-                    "Generation can be resumed."
-                ),
+            detail="Failed to queue generation task",
+        )
 
-                "generated_count": len(
-                    lesson.phrases
-                ),
-
-                "target_count": (
-                    TARGET_LESSON_PHRASES
-                ),
-            },
-        ) from exc
-
-    except PhraseGenerationError as exc:
-        raise HTTPException(
-            status_code=502,
-            detail=str(exc),
-        ) from exc
-
-    except GroqAPIError as exc:
-        raise HTTPException(
-            status_code=502,
-            detail=f"AI provider error, {str(exc)}",
-
-        ) from exc
-
-    finally:
-        if lock.owned():
-            lock.release()
 
     return {
-        "lesson": lesson,
-        "phrases": [LessonPhraseResponse.model_validate(phrase) for phrase in lesson.phrases],
-        "audio_url": get_file_url(lesson.audio_key),
-        "pdf_url": get_file_url(lesson.pdf_key)
+        "job_id": job.id,
+        "lesson_id": lesson.id,
+        "task_id": job.task_id,
+        "status": job.status,
     }
 
 

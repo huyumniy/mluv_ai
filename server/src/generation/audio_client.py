@@ -1,5 +1,5 @@
 from elevenlabs.client import ElevenLabs
-from src.generation.settings import ELEVENLABS_API_KEY, ELEVENLABS_MODEL_ID
+from src.generation.config import ELEVENLABS_API_KEY, ELEVENLABS_MODEL_ID
 
 elevenlabs = ElevenLabs(api_key=ELEVENLABS_API_KEY)
 

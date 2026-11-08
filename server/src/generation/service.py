@@ -1,11 +1,10 @@
 from sqlalchemy.orm import Session
 
 from src.lessons.models import (
-    Lesson
+    Lesson,
+    LessonPhrase
 )
-from src.lessons.models import LessonPhrase
-from src.lessons import service as lesson_service
-
+from src.generation.models import GenerationJob
 from src.generation.schemas import (
     LessonGenerationRequest,
     GeneratedPhrase,
@@ -14,13 +13,15 @@ from src.generation.schemas import (
     PhraseGenerationError,
 )
 from .client import groq_chat_request
+from sqlalchemy import func, select
 
-from src.generation.settings import (
+from src.generation.config import (
     ALGORITHM,
     BATCH_SIZE,
     TARGET_LESSON_PHRASES,
     VOICE_ID
 )
+from sqlalchemy.orm import Session
 from markdown import markdown
 from weasyprint import HTML
 from src.generation.enums import GenerationType
@@ -31,18 +32,56 @@ import random
 import os
 from random import choice
 from pydub import AudioSegment
+from collections.abc import Callable
+from src.generation.enums import GenerationStatus
+
+
+def get_all(
+    db: Session,
+    user_id: int,
+) -> list[GenerationJob]:
+    statement = select(GenerationJob) \
+        .where(GenerationJob.user_id == user_id)
+
+    return list(db.scalars(statement).all())
+
+
+def get_by_id(
+    db: Session,
+    job_id: int,
+    user_id: int,
+) -> GenerationJob | None:
+    statement = (
+        select(GenerationJob)
+        .where(
+            GenerationJob.id == job_id,
+            GenerationJob.user_id == user_id,
+        )
+    )
+
+    return db.scalar(statement)
 
 
 def generate_lesson(
     db: Session,
     data: LessonGenerationRequest,
     lesson: Lesson,
+    on_stage: Callable[[GenerationStatus], None] | None = None,
 ) -> Lesson:
+    def set_stage(status: GenerationStatus):
+        if on_stage:
+            on_stage(status)
+
+    
+
     if len(lesson.phrases) < 50:
         fill_lesson_phrases(
             db=db,
             lesson=lesson,
         )
+    set_stage(
+        GenerationStatus.GENERATING_PHRASES
+    )
     
     new_phrases, phrases = generate_phrases_for_lesson(
         db=db,
@@ -50,12 +89,20 @@ def generate_lesson(
         lesson=lesson
     )
 
+    set_stage(
+        GenerationStatus.GENERATING_AUDIO
+    )
+
     build_audio(
         db=db,
         lesson=lesson,
         phrases=lesson.phrases,
     )
-    
+
+    set_stage(
+        GenerationStatus.GENERATING_PDF
+    )
+
     build_pdf(
         db=db,
         lesson=lesson,

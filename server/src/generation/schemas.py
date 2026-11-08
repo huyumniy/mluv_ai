@@ -23,6 +23,12 @@ class LessonGenerationResponse(BaseModel):
     pdf_url: str | None = None
 
 
+class GenerationTaskResponse(BaseModel):
+    job_id: int
+    lesson_id: int
+    task_id: str
+    status: str
+
 class GroqGeneratedPhrase(BaseModel):
     model_config = ConfigDict(
         extra="forbid"

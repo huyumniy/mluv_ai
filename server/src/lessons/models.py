@@ -38,6 +38,7 @@ class Lesson(Base):
     )
 
     topic_lesson_number: Mapped[int] = mapped_column(
+
         nullable=True,
     )
 

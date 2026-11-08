@@ -28,6 +28,9 @@ dist/
 celerybeat-schedule
 celerybeat.pid
 uploads/
+audio_cache/
+.pytest_cache
+share/
 
 .cache/
 !alembic/
