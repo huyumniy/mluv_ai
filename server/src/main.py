@@ -5,13 +5,14 @@ from src.lessons.router import router as lessons_router
 from src.generation.router import router as generation_router
 from src.users.router import router as users_router
 from src.playlists.router import router as playlists_router
+from src.payments.router import router as payments_router
 from src.folders.router import router as folders_router
 from fastapi.staticfiles import StaticFiles
 from src.storage import UPLOAD_DIR
 
 app = FastAPI(
     title="MLUV API",
-    version="0.4.0"
+    version="0.4.1"
 )
 
 @app.get('/')
@@ -26,6 +27,7 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(generation_router)
 app.include_router(lessons_router)
+app.include_router(payments_router)
 
 add_pagination(app)
 

@@ -6,6 +6,7 @@ from src.database import Base
 from src.folders.models import Folder
 from src.lessons.models import Lesson
 from src.playlists.models import Playlist
+from src.payments.models import Subscription
 
 
 class User(Base):
@@ -19,6 +20,12 @@ class User(Base):
     username: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
+    )
+
+    stripe_customer_id: Mapped[str | None] = mapped_column(
+        String(100),
+        unique=True,
+        nullable=True,
     )
 
     password_hash: Mapped[str] = mapped_column(
@@ -44,6 +51,13 @@ class User(Base):
         server_default=func.now(),
         onupdate=func.now(),
         nullable=False,
+    )
+
+    subscription: Mapped["Subscription | None"] = relationship(
+        "Subscription",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
     )
 
     # lessons: Mapped[list["Lesson"]] = relationship(
