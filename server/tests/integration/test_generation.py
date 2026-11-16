@@ -14,6 +14,7 @@ from src.generation import router as generation_router
 from .helpers import (
     register_user,
     get_authenticated_client,
+    grant_subscription
 )
 from .helpers import create_lesson
 
@@ -23,7 +24,7 @@ def disable_generation_limits(
 ):
     monkeypatch.setattr(
         generation_router,
-        "check_user_limits",
+        "check_generation_rate_limit",
         lambda user_id: None,
     )
 
@@ -64,6 +65,8 @@ async def test_generate_lesson_queues_task(
     monkeypatch,
 ):
     await register_user(client)
+    
+    grant_subscription(monkeypatch)
 
     auth_client = await get_authenticated_client(
         client
@@ -528,7 +531,7 @@ async def test_generation_rate_limit_returns_429(
 
     monkeypatch.setattr(
         generation_router,
-        "check_user_limits",
+        "check_generation_rate_limit",
         fake_limit,
     )
 

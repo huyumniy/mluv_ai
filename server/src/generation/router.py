@@ -17,7 +17,7 @@ from src.generation.client import (
     GroqRateLimitError,
 )
 from src.worker.tasks import generate_lesson_task
-from src.generation.config import TARGET_LESSON_PHRASES
+from src.payments.service import get_current_user_subscription, get_user_plan
 from src.database import get_db
 from src.auth.dependencies import CurrentUser
 from src.lessons.schemas import (LessonPhraseResponse)
@@ -29,9 +29,10 @@ from src.generation.schemas import (
     GenerationTaskResponse
 )
 from src.generation.limits import (
-    check_user_limits,
+    check_generation_rate_limit,
     get_generation_lock,
 )
+from src.settings import PLAN_LIMITS
 from src.storage import get_file_url
 
 router = APIRouter(
@@ -56,9 +57,6 @@ def get_job(
     db: DbSession,
     current_user: CurrentUser,
 ):
-    check_user_limits(
-        current_user.id
-    )
 
     job = generation_service.get_by_id(
         db=db,
@@ -92,9 +90,29 @@ def generate_lesson(
     db: DbSession,
     current_user: CurrentUser,
 ):
-    check_user_limits(
+    check_generation_rate_limit(
         current_user.id
     )
+
+    subscription = get_current_user_subscription(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    plan = get_user_plan(subscription)
+
+    used = generation_service.get_monthly_generations(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    limit = PLAN_LIMITS[plan]
+
+    if used >= limit:
+        raise HTTPException(
+            status_code=403,
+            detail="Monthly generation limit reached",
+        )
 
     lesson = lesson_service.get_by_id(
         db=db,
@@ -184,7 +202,7 @@ def generate_lesson_phrases(
     db: DbSession,
     current_user: CurrentUser
 ):
-    check_user_limits(
+    check_generation_rate_limit(
         current_user.id
     )
 
@@ -192,6 +210,27 @@ def generate_lesson_phrases(
         user_id=current_user.id,
         lesson_id=lesson_id,
     )
+
+    subscription = get_current_user_subscription(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    plan = get_user_plan(subscription)
+
+    used = generation_service.get_monthly_generations(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    limit = PLAN_LIMITS[plan]
+
+    if used >= limit:
+        raise HTTPException(
+            status_code=403,
+            detail="Monthly generation limit reached",
+        )
+    
     try:
 
         lesson = lesson_service.get_by_id(
@@ -264,7 +303,7 @@ def generate_lesson_audio(
     db: DbSession,
     current_user: CurrentUser
 ):
-    check_user_limits(
+    check_generation_rate_limit(
         current_user.id
     )
 
@@ -272,6 +311,26 @@ def generate_lesson_audio(
         user_id=current_user.id,
         lesson_id=lesson_id,
     )
+
+    subscription = get_current_user_subscription(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    plan = get_user_plan(subscription)
+
+    used = generation_service.get_monthly_generations(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    limit = PLAN_LIMITS[plan]
+
+    if used >= limit:
+        raise HTTPException(
+            status_code=403,
+            detail="Monthly generation limit reached",
+        )
     try:
 
         lesson = lesson_service.get_by_id(
@@ -340,7 +399,7 @@ def generate_lesson_pdf(
     db: DbSession,
     current_user: CurrentUser
 ):
-    check_user_limits(
+    check_generation_rate_limit(
         current_user.id
     )
 
@@ -348,6 +407,26 @@ def generate_lesson_pdf(
         user_id=current_user.id,
         lesson_id=lesson_id,
     )
+    
+    subscription = get_current_user_subscription(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    plan = get_user_plan(subscription)
+
+    used = generation_service.get_monthly_generations(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    limit = PLAN_LIMITS[plan]
+
+    if used >= limit:
+        raise HTTPException(
+            status_code=403,
+            detail="Monthly generation limit reached",
+        )
     try:
 
         lesson = lesson_service.get_by_id(

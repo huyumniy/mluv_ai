@@ -85,7 +85,7 @@ def test_increment_limit_raises_429(
     )
 
 
-def test_check_user_limits(
+def test_check_generation_rate_limit(
     monkeypatch,
 ):
     increment_mock = Mock()
@@ -96,22 +96,14 @@ def test_check_user_limits(
         increment_mock,
     )
 
-    limits.check_user_limits(
-        user_id=42
+    limits.check_generation_rate_limit(
+        user_id=42,
     )
 
-    assert increment_mock.call_count == 2
-
-    increment_mock.assert_any_call(
+    increment_mock.assert_called_once_with(
         key="generation:user:42:minute",
         limit=3,
         ttl=60,
-    )
-
-    increment_mock.assert_any_call(
-        key="generation:user:42:day",
-        limit=30,
-        ttl=86400,
     )
 
 

@@ -34,7 +34,7 @@ from random import choice
 from pydub import AudioSegment
 from collections.abc import Callable
 from src.generation.enums import GenerationStatus
-
+from datetime import datetime, timezone
 
 def get_all(
     db: Session,
@@ -60,6 +60,31 @@ def get_by_id(
     )
 
     return db.scalar(statement)
+
+
+def get_monthly_generations(
+    db: Session,
+    user_id: int,
+) -> int:
+    now = datetime.now(timezone.utc)
+
+    month_start = datetime(
+        now.year,
+        now.month,
+        1,
+        tzinfo=timezone.utc,
+    )
+
+    statement = (
+        select(func.count(GenerationJob.id))
+        .where(
+            GenerationJob.user_id == user_id,
+            GenerationJob.created_at >= month_start,
+            GenerationJob.status != "failed",
+        )
+    )
+
+    return db.scalar(statement) or 0
 
 
 def generate_lesson(

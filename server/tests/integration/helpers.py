@@ -205,6 +205,32 @@ async def register_user(
     return response.json()
 
 
+from types import SimpleNamespace
+
+
+def grant_subscription(
+    monkeypatch,
+    *,
+    used: int = 0,
+):
+    subscription = SimpleNamespace(
+        status="active",
+        cancel_at_period_end=False,
+        stripe_price_id="price_pro_monthly",
+    )
+
+    monkeypatch.setattr(
+        "src.generation.router.get_current_user_subscription",
+        lambda db, user_id: subscription,
+    )
+    monkeypatch.setattr(
+        "src.generation.service.get_monthly_generations",
+        lambda db, user_id: used,
+    )
+
+    return subscription
+
+
 async def login_user(
     client: AsyncClient,
     *,

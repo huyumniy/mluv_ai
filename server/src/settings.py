@@ -12,3 +12,8 @@ RABBITMQ_VHOST = os.getenv("RABBITMQ_VHOST")
 
 CELERY_BACKEND_URL="redis://localhost:6379/1"
 CELERY_BROKER_URL=F"amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@localhost:5672/{RABBITMQ_VHOST}"
+
+PLAN_LIMITS = {
+    "free": 5,
+    "pro": 100,
+}

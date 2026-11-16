@@ -28,7 +28,7 @@ def increment_limit(
         )
 
 
-def check_user_limits(
+def check_generation_rate_limit(
     user_id: int,
 ):
     # 3 generation requests per minute
@@ -36,13 +36,6 @@ def check_user_limits(
         key=f"generation:user:{user_id}:minute",
         limit=3,
         ttl=60,
-    )
-
-    # 30 generation requests per day
-    increment_limit(
-        key=f"generation:user:{user_id}:day",
-        limit=30,
-        ttl=86400,
     )
 
 

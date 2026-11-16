@@ -12,16 +12,16 @@ PLANS = {
 }
 
 
-def has_pro_access(
+def get_user_plan(
     subscription: Subscription | None,
 ) -> bool:
-    if not subscription:
-        return False
-
-    return subscription.status in {
+    if subscription and subscription.status in {
         "active",
         "trialing",
-    }
+    }:
+        return "pro"
+
+    return "free"
 
 
 def get_current_user_subscription(
