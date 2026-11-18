@@ -26,6 +26,25 @@ def anyio_backend():
     return "asyncio"
 
 
+@pytest.fixture(autouse=True)
+def disable_auth_external_tasks(
+    monkeypatch,
+):
+    monkeypatch.setattr(
+        "src.auth.router.check_auth_limit",
+        lambda *args, **kwargs: None,
+    )
+
+    monkeypatch.setattr(
+        "src.auth.router.send_verification_email_task.delay",
+        lambda *args, **kwargs: None,
+    )
+
+    monkeypatch.setattr(
+        "src.auth.router.send_password_reset_email_task.delay",
+        lambda *args, **kwargs: None,
+    )
+
 @pytest.fixture
 async def client() -> AsyncGenerator[AsyncClient, None]:
     engine = create_engine(

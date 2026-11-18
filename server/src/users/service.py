@@ -34,6 +34,53 @@ def get_by_email(
     return db.scalar(statement)
 
 
+def get_or_create_google_user(
+    db: Session,
+    user_info: dict,
+) -> User:
+    email = user_info["email"]
+    google_sub = user_info["sub"]
+
+    user = db.scalar(
+        select(User).where(
+            User.google_sub == google_sub
+        )
+    )
+
+    if user:
+        return user
+
+    user = get_by_email(
+        db,
+        email,
+    )
+
+    if user:
+        user.google_sub = google_sub
+        user.is_verified = True
+
+        db.commit()
+        db.refresh(user)
+
+        return user
+
+    username = f"{email.split('@')[0]}_{user_info['sub'][-6:]}"
+
+    user = User(
+        email=email,
+        username=username,
+        password_hash=None,
+        google_sub=google_sub,
+        is_verified=True,
+    )
+
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return user
+
+
 def create(
     db: Session,
     data: UserCreate,
@@ -53,15 +100,19 @@ def create(
 
 
 def login(
-    db: Session,
     data: UserCreate,
 ) -> User:
     user_exist = User.find_one(User.email == data.email)
-
     if not user_exist:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User with email does not exist."
+        )
+
+    if not user_exist.password_hash:
+        raise HTTPException(
+            status_code=400,
+            detail="Use Google to sign in",
         )
 
     if verify_password(data.password, user_exist.password):

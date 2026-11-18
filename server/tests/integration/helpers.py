@@ -1,6 +1,7 @@
 from httpx import AsyncClient
 
 from httpx import AsyncClient, Response
+from src.auth.security import create_email_verification_token
 
 
 class AuthClient:
@@ -190,6 +191,7 @@ async def register_user(
     email: str = "alice@example.com",
     username: str = "alice",
     password: str = "password123",
+    verify: bool = True,
 ):
     response = await client.post(
         "/auth/register",
@@ -199,8 +201,23 @@ async def register_user(
             "password": password,
         },
     )
-
     assert response.status_code == 201
+
+    user = response.json()
+    
+    if verify:
+        token = create_email_verification_token(
+            user["id"]
+        )
+
+        verify_response = await client.get(
+            "/auth/verify-email",
+            params={
+                "token": token,
+            },
+        )
+
+        assert verify_response.status_code == 200
 
     return response.json()
 

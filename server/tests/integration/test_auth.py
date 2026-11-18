@@ -1,29 +1,13 @@
 import pytest
 from httpx import AsyncClient
-
+from tests.integration.helpers import login_user, register_user
 
 @pytest.mark.anyio
 async def test_get_me_returns_authenticated_user(
     client: AsyncClient,
 ):
-    await client.post(
-        "/auth/register",
-        json={
-            "username": "alice",
-            "email": "alice@example.com",
-            "password": "password123",
-        },
-    )
-
-    login = await client.post(
-        "/auth/login",
-        data={
-            "username": "alice",
-            "password": "password123",
-        },
-    )
-
-    token = login.json()["access_token"]
+    await register_user(client)
+    token = await login_user(client)
 
     response = await client.get(
         "/users/me",

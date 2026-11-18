@@ -139,13 +139,13 @@ def create_checkout_session(
             ],
 
             "success_url": (
-                f"{settings.frontend_url}"
+                f"{settings.backend_url}"
                 "/payments/success"
                 "?session_id={CHECKOUT_SESSION_ID}"
             ),
 
             "cancel_url": (
-                f"{settings.frontend_url}"
+                f"{settings.backend_url}"
                 "/payments/cancel"
             ),
 
@@ -272,7 +272,7 @@ def create_billing_portal_session(
 ):
     session = stripe_client.v1.billing_portal.sessions.create({
         "customer": customer_id,
-        "return_url": f"{settings.frontend_url}/settings/subscription",
+        "return_url": f"{settings.backend_url}/settings/subscription",
     })
 
     return session.url

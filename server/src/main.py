@@ -9,10 +9,29 @@ from src.payments.router import router as payments_router
 from src.folders.router import router as folders_router
 from fastapi.staticfiles import StaticFiles
 from src.storage import UPLOAD_DIR
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+from src.config import settings
 
 app = FastAPI(
     title="MLUV API",
     version="0.4.2"
+)
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.secret_key,
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        settings.frontend_url,
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get('/')

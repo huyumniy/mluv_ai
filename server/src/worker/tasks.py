@@ -6,6 +6,8 @@ from src.generation.schemas import LessonGenerationRequest, PhraseGenerationErro
 from src.generation.enums import GenerationStatus
 from src.generation.client import GroqAPIError, GroqRateLimitError
 from src.generation.models import GenerationJob
+from src.config import settings
+from src.email.service import send_email
 from src.users.models import User
 
 
@@ -103,3 +105,62 @@ def generate_lesson_task(
 
     finally:
         db.close()
+
+
+@app.task(
+    autoretry_for=(
+        Exception,
+    ),
+    retry_kwargs={
+        "max_retries": 3,
+    },
+    retry_backoff=True,
+)
+def send_verification_email_task(
+    email: str,
+    token: str,
+):
+    verification_url = (
+        f"{settings.backend_url}"
+        f"/auth/verify-email?token={token}"
+    )
+
+    send_email(
+        to=email,
+        subject="Verify your Mluv account",
+        html=f"""
+        <h2>Welcome to Mluv</h2>
+
+        <p>Please verify your email address.</p>
+
+        <a href="{verification_url}">
+            Verify email
+        </a>
+        """,
+    )
+
+
+@app.task(
+    autoretry_for=(Exception,),
+    retry_backoff=True,
+    retry_kwargs={"max_retries": 3},
+)
+def send_password_reset_email_task(
+    email: str,
+    token: str,
+):
+    url = (
+        f"{settings.backend_url}"
+        f"/reset-password?token={token}"
+    )
+
+    send_email(
+        to=email,
+        subject="Reset your Mluv password",
+        html=f"""
+        <h2>Reset your password</h2>
+        <p>Click below to set a new password.</p>
+        <a href="{url}">Reset password</a>
+        <p>This link expires in 30 minutes.</p>
+        """,
+    )
